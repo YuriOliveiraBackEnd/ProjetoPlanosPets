@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Configuration;
 using bibliotecaModel;
+using bibliotecaBanco;
 
 namespace bibliotecaDAO
 {
     public class ClienteDAO
     {
+
+        public Banco db;
+
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
 
@@ -32,6 +36,41 @@ namespace bibliotecaDAO
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
             conexao.Close();
+        }
+
+        public List<ModelCliente> Listar()
+        {
+            using (db = new Banco())
+            {
+                var strQuery = "Select * from cliente;";
+                var retorno = db.Retornar(strQuery);
+                return ListaDeClientes(retorno);
+            }
+
+        }
+        public List<ModelCliente> ListaDeClientes(MySqlDataReader retorno)
+        {
+            var clientes = new List<ModelCliente>();
+            while (retorno.Read())
+            {
+                var TempCliente = new ModelCliente()
+                {
+                    id_cli = int.Parse(retorno["id_cli"].ToString()),
+                    nome_cli = retorno["nome_cli"].ToString(),
+                    email_cli = retorno["email_cli"].ToString(),
+                    CPF_cli = retorno["CPF_cli"].ToString(),
+                    tel_cli = retorno["tel_cli"].ToString(),
+                    num_cli = int.Parse(retorno["num_cli"].ToString()),
+                    cep_cli = retorno["cep_cli"].ToString(),
+                    logradouro_cli = retorno["logradouro_cli"].ToString(),
+                    nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())
+
+                };
+
+                clientes.Add(TempCliente);
+            }
+            retorno.Close();
+            return clientes;
         }
     }
 }

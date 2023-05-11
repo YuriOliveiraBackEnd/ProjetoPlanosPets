@@ -12,12 +12,12 @@ namespace bibliotecaBanco
 {
     public class Banco : IDisposable
     {
-        private readonly MySqlConnection conexaobanco;
+        private readonly MySqlConnection conexao;
 
         public Banco()
         {
-            conexaobanco = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
-            conexaobanco.Open();
+            conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
+            conexao.Open();
         }
 
         public void Executar(string StrQuery)
@@ -26,21 +26,21 @@ namespace bibliotecaBanco
             {
                 CommandText = StrQuery,
                 CommandType = CommandType.Text,
-                Connection = conexaobanco
+                Connection = conexao
             };
             vComando.ExecuteNonQuery();
         }
 
         public MySqlDataReader Retornar(string StrQuery)
         {
-            var comandoreturn = new MySqlCommand(StrQuery, conexaobanco);
+            var comandoreturn = new MySqlCommand(StrQuery, conexao);
             return comandoreturn.ExecuteReader();
         }
 
         public void Dispose()
         {
-            if (conexaobanco.State == ConnectionState.Open)
-                conexaobanco.Close();   
+            if (conexao.State == ConnectionState.Open)
+                conexao.Close();   
         }
 
     }

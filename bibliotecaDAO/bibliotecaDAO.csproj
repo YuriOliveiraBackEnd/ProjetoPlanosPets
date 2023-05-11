@@ -97,6 +97,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\bibliotecaBanco\bibliotecaBanco.csproj">
+      <Project>{adf67370-0f81-4f7c-9d65-0b57b7462d50}</Project>
+      <Name>bibliotecaBanco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\bibliotecaModel\bibliotecaModel.csproj">
       <Project>{9CDC4133-5606-4841-8BA6-73739136CD9E}</Project>
       <Name>bibliotecaModel</Name>

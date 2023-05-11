@@ -1,4 +1,5 @@
-﻿using bibliotecaModel;
+﻿using bibliotecaBanco;
+using bibliotecaModel;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace bibliotecaDAO
 {
     public class ProdutoDAO
     {
+        public Banco db;
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
 
@@ -29,6 +31,39 @@ namespace bibliotecaDAO
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
             conexao.Close();
+        }
+        public List<ModelProduto> Listar()
+        {
+            using (db = new Banco())
+            {
+                var strQuery = "Select * from produto;";
+                var retorno = db.Retornar(strQuery);
+                return ListaDeFuncionarios(retorno);
+            }
+
+        }
+        public List<ModelProduto> ListaDeFuncionarios(MySqlDataReader retorno)
+        {
+            var produtos = new List<ModelProduto>();
+            while (retorno.Read())
+            {
+                var TempProd = new ModelProduto()
+                {
+                    id_prod = int.Parse(retorno["id_prod"].ToString()),
+                    id_categoria = int.Parse(retorno["id_categoria"].ToString()),
+                    id_func = int.Parse(retorno["id_func"].ToString()),
+                    quant = int.Parse(retorno["quant"].ToString()),
+                    valor_unitario = double.Parse(retorno["valor_unitario"].ToString()),
+                    desc_prod = retorno["desc_prod"].ToString(),
+                    categoria = retorno["categoria"].ToString(),
+                    ft_prod = retorno["ft_prod"].ToString()
+
+                };
+
+                produtos.Add(TempProd);
+            }
+            retorno.Close();
+            return produtos;
         }
 
     }

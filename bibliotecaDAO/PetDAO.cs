@@ -1,4 +1,5 @@
-﻿using bibliotecaModel;
+﻿using bibliotecaBanco;
+using bibliotecaModel;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace bibliotecaDAO
 {
     public class PetDAO
     {
+        public Banco db; 
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
 
@@ -30,7 +32,38 @@ namespace bibliotecaDAO
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+        public List<ModelPets> Listar()
+        {
+            using (db = new Banco())
+            {
+                var strQuery = "Select * from pet;";
+                var retorno = db.Retornar(strQuery);
+                return ListaDeFuncionarios(retorno);
+            }
 
+        }
+        public List<ModelPets> ListaDeFuncionarios(MySqlDataReader retorno)
+        {
+            var pets = new List<ModelPets>();
+            while (retorno.Read())
+            {
+                var TempPets = new ModelPets()
+                {
+                    id_pet = int.Parse(retorno["id_pet"].ToString()),
+                    id_cli = int.Parse(retorno["id_cli"].ToString()),
+                    id_raca = int.Parse(retorno["id_raca"].ToString()),
+                    nome_pet = retorno["nome_pet"].ToString(),
+                    ft_pet = retorno["ft_pet"].ToString(),
+                    RGA = retorno["RGA"].ToString(),
+                    nasc_pet = DateTime.Parse(retorno["nasc_pet"].ToString())
+
+                };
+
+                pets.Add(TempPets);
+            }
+            retorno.Close();
+            return pets;
+        }
 
     }
 }

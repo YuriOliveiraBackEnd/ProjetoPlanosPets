@@ -1,4 +1,5 @@
-﻿using bibliotecaModel;
+﻿using bibliotecaBanco;
+using bibliotecaModel;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace bibliotecaDAO
 {
     public class FuncionarioDAO
     {
+        public Banco db;
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
 
@@ -32,6 +34,39 @@ namespace bibliotecaDAO
             conexao.Close();
         }
 
+        public List<ModelFuncionario> Listar()
+        {
+            using (db = new Banco())
+            {
+                var strQuery = "Select * from funcionario;";
+                var retorno = db.Retornar(strQuery);
+                return ListaDeFuncionarios(retorno);
+            }
 
+        }
+        public List<ModelFuncionario> ListaDeFuncionarios(MySqlDataReader retorno)
+        {
+            var funcionarios = new List<ModelFuncionario>();
+            while (retorno.Read())
+            {
+                var TempFunc = new ModelFuncionario()
+                {
+                    id_func = int.Parse(retorno["id_func"].ToString()),
+                    nome_func = retorno["nome_func"].ToString(),
+                    email_func = retorno["email_func"].ToString(),
+                    CPF_func = retorno["CPF_func"].ToString(),
+                    tel_func = retorno["tel_func"].ToString(),
+                    num_func = int.Parse(retorno["num_func"].ToString()),
+                    cep_func = retorno["cep_func"].ToString(),
+                    logradouro_func = retorno["logradouro_func"].ToString(),
+                    nasc_func = DateTime.Parse(retorno["nasc_func"].ToString())
+
+                };
+
+                funcionarios.Add(TempFunc);
+            }
+            retorno.Close();
+            return funcionarios;
+        }
     }
 }
