@@ -32,7 +32,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from categoria;";
+                var strQuery = "Select * from Categoria;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDeCategoria(retorno);
             }
@@ -55,6 +55,53 @@ namespace bibliotecaDAO
             }
             retorno.Close();
             return categorias;
+        }
+
+
+        public ModelCategorias ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Categoria where id_categoria = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeCategoria(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdateCategoria(ModelCategorias categorias)
+        {
+            var strQuery = "";
+            strQuery += "update Categoria set ";
+            strQuery += string.Format("nome_categoria = '{0}', desc_categorias = '{1}' where id_categoria = '{3}';", categorias.nome_categoria, categorias.desc_categoria, categorias.id_categoria);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteCategoria(ModelCategorias categorias)
+        {
+            var strQuery = "";
+            strQuery += "delete from Categorias ";
+            strQuery += string.Format("where id_categoria = {0};", categorias.id_categoria);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelCategorias categorias)
+        {
+            if (categorias.id_categoria > 0)
+            {
+                UpdateCategoria(categorias);
+            }
+            else
+            {
+                InsertCategoria(categorias);
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strquery = ("select * from racas;");
+                var strquery = ("select * from Raca;");
                 var retorno = db.Retornar(strquery);
                 return ListaDeRacas(retorno);
 
@@ -59,5 +59,51 @@ namespace bibliotecaDAO
             retorno.Close();
             return racas;
         }
+        public ModelRacas ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Raca where id_raca = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeRacas(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdateRaca(ModelRacas raca)
+        {
+            var strQuery = "";
+            strQuery += "update Raca set ";
+            strQuery += string.Format("nome_raca = '{0}', ft_raca = '{1}', id_func = '{2}' where id_raca = {3};", raca.nome_raca, raca.ft_raca, raca.id_func, raca.id_raca);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteRaca(ModelRacas raca)
+        {
+            var strQuery = "";
+            strQuery += "delete from Raca ";
+            strQuery += string.Format("where id_raca = {0};", raca.id_raca);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelRacas raca)
+        {
+            if (raca.id_raca > 0)
+            {
+                UpdateRaca(raca);
+            }
+            else
+            {
+                InsertRaca(raca);
+            }
+        }
+
     }
 }

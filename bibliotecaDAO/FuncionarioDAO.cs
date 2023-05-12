@@ -38,7 +38,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from funcionario;";
+                var strQuery = "Select * from Funcionario;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDeFuncionarios(retorno);
             }
@@ -67,6 +67,52 @@ namespace bibliotecaDAO
             }
             retorno.Close();
             return funcionarios;
+        }
+
+        public ModelFuncionario ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Funcionario where id_func = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeFuncionarios(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdateFuncionario(ModelFuncionario funcionario)
+        {
+            var strQuery = "";
+            strQuery += "update Funcionario set ";
+            strQuery += string.Format("nome_func = '{0}', email_func = '{1}', CPF_func = '{2}', cep_func = '{3}', num_func = '{4}', logradouro_func = '{5}', nasc_func = str_to_date('{6}', '%d/%m/%Y %T'), tel_func = '{7}', senha_func = '{8}' where id_func = {8};", funcionario.nome_func, funcionario.email_func, funcionario.CPF_func, funcionario.num_func, funcionario.nasc_func, funcionario.tel_func, funcionario.senha_func, funcionario.id_func);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteFuncionario(ModelFuncionario funcionario)
+        {
+            var strQuery = "";
+            strQuery += "delete from Funcionario ";
+            strQuery += string.Format("where id_func = {0};", funcionario.id_func);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelFuncionario funcionario)
+        {
+            if (funcionario.id_func > 0)
+            {
+                UpdateFuncionario(funcionario);
+            }
+            else
+            {
+                InsertFuncionario(funcionario);
+            }
         }
     }
 }

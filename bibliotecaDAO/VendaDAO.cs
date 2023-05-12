@@ -61,6 +61,51 @@ namespace bibliotecaDAO
             return vendas;
         }
 
+        public ModelVenda ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Venda where id_venda = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeVendas(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdateVenda(ModelVenda venda)
+        {
+            var strQuery = "";
+            strQuery += "update Venda set ";
+            strQuery += string.Format("data_venda = '{0}', quant_venda = '{1}', id_prod = '{2}', id_compra = '{3}' where id_venda = {4};", venda.data_venda, venda.quant_venda, venda.id_prod, venda.id_compra, venda.id_venda);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteVenda(ModelVenda venda)
+        {
+            var strQuery = "";
+            strQuery += "delete from Venda ";
+            strQuery += string.Format("where id_venda = {0};", venda.id_venda);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelVenda venda)
+        {
+            if (venda.id_venda > 0)
+            {
+                UpdateVenda(venda);
+            }
+            else
+            {
+                InsertVenda(venda);
+            }
+        }
 
     }
 }

@@ -33,7 +33,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from compras;";
+                var strQuery = "Select * from Compra;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDeCompras(retorno);
             }
@@ -49,9 +49,7 @@ namespace bibliotecaDAO
                     id_compra = int.Parse(retorno["id_compra"].ToString()),
                     id_cli = int.Parse(retorno["id_cli"].ToString()),
                     pagamento = retorno["pagamento"].ToString(),
-                    valor_total = Double.Parse(retorno["valor_total"].ToString()),
-                  
-
+                    valor_total = Double.Parse(retorno["valor_total"].ToString())
                 };
 
                 compras.Add(TempCompras);
@@ -60,6 +58,50 @@ namespace bibliotecaDAO
             return compras;
         }
 
+        public ModelCompra ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Compra where id_compra = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeCompras(retorno).FirstOrDefault();
+            }
+        }
 
+        public void UpdateCompra(ModelCompra compra)
+        {
+            var strQuery = "";
+            strQuery += "update Compra set ";
+            strQuery += string.Format("pagamento = '{0}', valor_total = '{1}', id_cli = '{2}', where id_compra = {3};", compra.pagamento, compra.valor_total, compra.id_cli);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteCompra(ModelCompra compra)
+        {
+            var strQuery = "";
+            strQuery += "delete from Compra ";
+            strQuery += string.Format("where id_compra = {0};", compra.id_compra);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelCompra compra)
+        {
+            if (compra.id_compra > 0)
+            {
+                UpdateCompra(compra);
+            }
+            else
+            {
+                InsertCompra(compra);
+            }
+        }
     }
 }

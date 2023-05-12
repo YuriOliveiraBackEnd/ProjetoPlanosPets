@@ -36,13 +36,13 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from pet;";
+                var strQuery = "Select * from Pet;";
                 var retorno = db.Retornar(strQuery);
-                return ListaDeFuncionarios(retorno);
+                return ListaDePets(retorno);
             }
 
         }
-        public List<ModelPets> ListaDeFuncionarios(MySqlDataReader retorno)
+        public List<ModelPets> ListaDePets(MySqlDataReader retorno)
         {
             var pets = new List<ModelPets>();
             while (retorno.Read())
@@ -63,6 +63,52 @@ namespace bibliotecaDAO
             }
             retorno.Close();
             return pets;
+        }
+
+        public ModelPets ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Pets where id_pet = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDePets(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdatePet(ModelPets pets)
+        {
+            var strQuery = "";
+            strQuery += "update Pets set ";
+            strQuery += string.Format("nome_pet = '{0}', ft_pet = '{1}',  nasc_pet = '{3}',  RGA = '{4}', id_raca = '{5}', id_cli = '{6}' where id_pet = '{7}';", pets.nome_pet, pets.ft_pet, pets.nasc_pet, pets.RGA, pets.id_raca, pets.id_cli, pets.id_pet);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeletePet(ModelPets pets)
+        {
+            var strQuery = "";
+            strQuery += "delete from Pets ";
+            strQuery += string.Format("where id_pet = {0};", pets.id_pet);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelPets pets)
+        {
+            if (pets.id_pet > 0)
+            {
+                UpdatePet(pets);
+            }
+            else
+            {
+                InsertPet(pets);
+            }
         }
 
     }

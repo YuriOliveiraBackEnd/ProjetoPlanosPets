@@ -36,13 +36,13 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from produto;";
+                var strQuery = "Select * from Produto;";
                 var retorno = db.Retornar(strQuery);
-                return ListaDeFuncionarios(retorno);
+                return ListaDeProduto(retorno);
             }
 
         }
-        public List<ModelProduto> ListaDeFuncionarios(MySqlDataReader retorno)
+        public List<ModelProduto> ListaDeProduto(MySqlDataReader retorno)
         {
             var produtos = new List<ModelProduto>();
             while (retorno.Read())
@@ -66,5 +66,51 @@ namespace bibliotecaDAO
             return produtos;
         }
 
+
+        public ModelProduto ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Produto where id_prod = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeProduto(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdateProduto(ModelProduto produto)
+        {
+            var strQuery = "";
+            strQuery += "update Produto set ";
+            strQuery += string.Format("nome_prod = '{0}', valor_unitario = '{1}', quant = '{2}', desc_prod = '{3}', ft_prod = '{4}', id_categoria = '{5}', id_func = '{6}' where id_prod = {8};", produto.valor_unitario, produto.quant, produto.desc_prod, produto.ft_prod, produto.id_categoria, produto.id_func, produto.id_prod);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteProduto(ModelProduto produto)
+        {
+            var strQuery = "";
+            strQuery += "delete from Produto ";
+            strQuery += string.Format("where id_prod = {0};", produto.id_prod);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelProduto produto)
+        {
+            if (produto.id_prod > 0)
+            {
+                UpdateProduto(produto);
+            }
+            else
+            {
+                InsertProduto(produto);
+            }
+        }
     }
 }

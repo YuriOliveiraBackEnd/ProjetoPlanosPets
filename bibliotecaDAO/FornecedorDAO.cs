@@ -38,7 +38,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from fornecedor;";
+                var strQuery = "Select * from Fornecedor;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDeFornecedor(retorno);
             }
@@ -67,6 +67,53 @@ namespace bibliotecaDAO
             }
             retorno.Close();
             return fornecedores;
+        }
+
+
+        public ModelFornecedor ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Fornecedor where id_forn = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeFornecedor(retorno).FirstOrDefault();
+            }
+        }
+
+        public void Updatefornecedor(ModelFornecedor fornecedor)
+        {
+            var strQuery = "";
+            strQuery += "update Fornecedor set ";
+            strQuery += string.Format("nome_forn = '{0}', email_forn = '{1}', CNPJ_forn = '{2}', cep_forn = '{3}', num_forn = '{4}', logradouro_forn = '{5}', tel_forn = '{6}' where id_forn = {7};", fornecedor.nome_forn, fornecedor.email_forn, fornecedor.CNPJ_forn, fornecedor.cep_forn, fornecedor.num_forn, fornecedor.logradouro_forn, fornecedor.tel_forn, fornecedor.id_forn);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Deletefornecedor(ModelFornecedor fornecedor)
+        {
+            var strQuery = "";
+            strQuery += "delete from Fornecedor ";
+            strQuery += string.Format("where id_forn = {0};", fornecedor.id_forn);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelFornecedor fornecedor)
+        {
+            if (fornecedor.id_forn > 0)
+            {
+                Updatefornecedor(fornecedor);
+            }
+            else
+            {
+                InsertFornecedor(fornecedor);
+            }
         }
 
     }

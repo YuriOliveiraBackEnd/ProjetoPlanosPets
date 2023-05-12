@@ -42,12 +42,13 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from cliente;";
+                var strQuery = "Select * from Cliente;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDeClientes(retorno);
             }
 
         }
+
         public List<ModelCliente> ListaDeClientes(MySqlDataReader retorno)
         {
             var clientes = new List<ModelCliente>();
@@ -71,6 +72,53 @@ namespace bibliotecaDAO
             }
             retorno.Close();
             return clientes;
+        }
+
+
+        public ModelCliente ListarId(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Cliente where id_cli = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeClientes(retorno).FirstOrDefault();
+            }
+        }
+
+        public void UpdateCliente(ModelCliente cliente)
+        {
+            var strQuery = "";
+            strQuery += "update Cliente set ";
+            strQuery += string.Format("nome_cli = '{0}', email_cli = '{1}', CPF_cli = '{2}', cep_cli = '{3}', num_cli = '{4}', logradouro_cli = '{5}', nasc_cli = str_to_date('{6}', '%d/%m/%Y %T'), tel_cli = '{7}', senha_cli = '{8}' where id_cli = {8};", cliente.nome_cli, cliente.email_cli, cliente.CPF_cli, cliente.num_cli, cliente.nasc_cli, cliente.tel_cli, cliente.senha_cli, cliente.id_cli);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void DeleteCliente(ModelCliente cliente)
+        {
+            var strQuery = "";
+            strQuery += "delete from Cliente ";
+            strQuery += string.Format("where id_cli = {0};", cliente.id_cli);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
+
+        public void Save(ModelCliente cliente)
+        {
+            if (cliente.id_cli > 0)
+            {
+                UpdateCliente(cliente);
+            }
+            else
+            {
+                InsertCliente(cliente);
+            }
         }
     }
 }
