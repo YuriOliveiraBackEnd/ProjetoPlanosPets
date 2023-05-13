@@ -15,7 +15,7 @@ namespace bibliotecaModel
         public string email_cli { get; set; }
         public string CPF_cli { get; set; }
         public string cep_cli { get; set; }
-        public int num_cli { get; set; }
+        public string num_cli { get; set; }
         public string logradouro_cli { get; set; }
         public DateTime nasc_cli { get; set; }
         public string senha_cli { get; set; }

@@ -29,13 +29,26 @@ namespace PlanosPets.Controllers
             if (ModelState.IsValid)
             {
                 var metodoFuncionario = new FuncionarioDAO();
-                metodoFuncionario.InsertFuncionario(funcionario);
-                return RedirectToAction("Index");
+                ModelFuncionario novoFuncionario = new ModelFuncionario()
+                {
+                    nome_func = funcionario.nome_func,
+                    email_func = funcionario.email_func,
+                    CPF_func = funcionario.CPF_func,
+                    cep_func = funcionario.cep_func,
+                    num_func = funcionario.num_func,
+                    logradouro_func = funcionario.logradouro_func,
+                    nasc_func = funcionario.nasc_func,
+                    tel_func = funcionario.tel_func,
+                    senha_func = funcionario.senha_func
+                };
+                metodoFuncionario.InsertFuncionario(novoFuncionario);
+
             }
-            return View(funcionario);
+
+            return RedirectToAction("Index");
         }
 
-        public ActionResult Atualizar(int id)
+            public ActionResult Atualizar(int id)
         {
             var metodoFuncionario = new FuncionarioDAO();
             var funcionario = metodoFuncionario.ListarId(id);

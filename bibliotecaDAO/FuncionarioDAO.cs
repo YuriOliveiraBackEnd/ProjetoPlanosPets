@@ -19,16 +19,16 @@ namespace bibliotecaDAO
         public void InsertFuncionario(ModelFuncionario funcionario)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCliente(@nome_func, @tel_func, @email_func, @CPF_func, @cep_func, @num_func, @logradouro_func, @nasc_func);";
-            comand.Parameters.Add("@nome_cli", MySqlDbType.VarChar).Value = funcionario.nome_func;
-            comand.Parameters.Add("@tel_cli", MySqlDbType.VarChar).Value = funcionario.tel_func;
-            comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = funcionario.email_func;
-            comand.Parameters.Add("@CPF_cli", MySqlDbType.VarChar).Value = funcionario.CPF_func;
-            comand.Parameters.Add("@cep_cli", MySqlDbType.VarChar).Value = funcionario.cep_func;
-            comand.Parameters.Add("@num_cli", MySqlDbType.VarChar).Value = funcionario.num_func;
-            comand.Parameters.Add("@logradouro_cli", MySqlDbType.VarChar).Value = funcionario.logradouro_func;
-            comand.Parameters.Add("@nasc_cli", MySqlDbType.VarChar).Value = funcionario.nasc_func;
-
+            comand.CommandText = "call InsertFuncionario(@nome_func,@email_func, @CPF_func, @cep_func, @num_func, @logradouro_func, @nasc_func, @tel_func,@senha_func);";
+            comand.Parameters.Add("@nome_func", MySqlDbType.VarChar).Value = funcionario.nome_func;
+            comand.Parameters.Add("@email_func", MySqlDbType.VarChar).Value = funcionario.email_func;
+            comand.Parameters.Add("@CPF_func", MySqlDbType.VarChar).Value = funcionario.CPF_func;          
+            comand.Parameters.Add("@cep_func", MySqlDbType.VarChar).Value = funcionario.cep_func;
+            comand.Parameters.Add("@num_func", MySqlDbType.VarChar).Value = funcionario.num_func;
+            comand.Parameters.Add("@logradouro_func", MySqlDbType.VarChar).Value = funcionario.logradouro_func;
+            comand.Parameters.Add("@nasc_func", MySqlDbType.DateTime).Value = funcionario.nasc_func;
+            comand.Parameters.Add("@tel_func", MySqlDbType.VarChar).Value = funcionario.tel_func;
+            comand.Parameters.Add("@senha_func", MySqlDbType.VarChar).Value = funcionario.senha_func;
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
             conexao.Close();
@@ -56,7 +56,7 @@ namespace bibliotecaDAO
                     email_func = retorno["email_func"].ToString(),
                     CPF_func = retorno["CPF_func"].ToString(),
                     tel_func = retorno["tel_func"].ToString(),
-                    num_func = int.Parse(retorno["num_func"].ToString()),
+                    num_func = retorno["num_func"].ToString(),
                     cep_func = retorno["cep_func"].ToString(),
                     logradouro_func = retorno["logradouro_func"].ToString(),
                     nasc_func = DateTime.Parse(retorno["nasc_func"].ToString())

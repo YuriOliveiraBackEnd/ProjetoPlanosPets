@@ -221,13 +221,13 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Funcionario\Cadastrar.cshtml" />
+    <Content Include="Views\Cliente\Cadastrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Cliente\" />
     <Folder Include="Views\Fornecedor\" />
-    <Folder Include="Views\Funcionario\" />
     <Folder Include="Views\Produto\" />
     <Folder Include="Views\Raca\" />
   </ItemGroup>

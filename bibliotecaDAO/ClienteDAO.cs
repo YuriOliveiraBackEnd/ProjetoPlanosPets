@@ -23,7 +23,7 @@ namespace bibliotecaDAO
         public void InsertCliente(ModelCliente cliente)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCliente(@nome_cli, @tel_cli, @email_cli, @CPF_cli, @cep_cli, @num_cli, @logradouro_cli, @nasc_cli);";
+            comand.CommandText = "call InsertCliente(@nome_cli, @tel_cli, @email_cli, @CPF_cli, @cep_cli, @num_cli, @logradouro_cli, @nasc_cli,@senha_cli);";
             comand.Parameters.Add("@nome_cli", MySqlDbType.VarChar).Value = cliente.nome_cli;
             comand.Parameters.Add("@tel_cli", MySqlDbType.VarChar).Value = cliente.tel_cli;
             comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = cliente.email_cli;
@@ -31,7 +31,8 @@ namespace bibliotecaDAO
             comand.Parameters.Add("@cep_cli", MySqlDbType.VarChar).Value = cliente.cep_cli;
             comand.Parameters.Add("@num_cli", MySqlDbType.VarChar).Value = cliente.num_cli;
             comand.Parameters.Add("@logradouro_cli", MySqlDbType.VarChar).Value = cliente.logradouro_cli;
-            comand.Parameters.Add("@nasc_cli", MySqlDbType.VarChar).Value = cliente.nasc_cli;
+            comand.Parameters.Add("@nasc_cli", MySqlDbType.DateTime).Value = cliente.nasc_cli;
+            comand.Parameters.Add("@senha_cli", MySqlDbType.VarChar).Value = cliente.senha_cli;
            
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
@@ -61,7 +62,7 @@ namespace bibliotecaDAO
                     email_cli = retorno["email_cli"].ToString(),
                     CPF_cli = retorno["CPF_cli"].ToString(),
                     tel_cli = retorno["tel_cli"].ToString(),
-                    num_cli = int.Parse(retorno["num_cli"].ToString()),
+                    num_cli = retorno["num_cli"].ToString(),
                     cep_cli = retorno["cep_cli"].ToString(),
                     logradouro_cli = retorno["logradouro_cli"].ToString(),
                     nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())

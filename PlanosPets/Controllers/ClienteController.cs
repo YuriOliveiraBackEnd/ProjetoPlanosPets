@@ -29,10 +29,21 @@ namespace PlanosPets.Controllers
             if (ModelState.IsValid)
             {
                 var metodoCliente = new ClienteDAO();
-                metodoCliente.InsertCliente(cliente);
-                return RedirectToAction("Index");
+                ModelCliente novoCliente = new ModelCliente()
+                {
+                    nome_cli = cliente.nome_cli,
+                    email_cli = cliente.email_cli,
+                    CPF_cli = cliente.CPF_cli,
+                    cep_cli = cliente.cep_cli,
+                    num_cli = cliente.num_cli,
+                    logradouro_cli = cliente.logradouro_cli,
+                    nasc_cli = cliente.nasc_cli,
+                    tel_cli = cliente.tel_cli,
+                    senha_cli = cliente.senha_cli
+                };
+                metodoCliente.InsertCliente(novoCliente);
             }
-            return View(cliente);
+            return View();
         }
 
         public ActionResult Atualizar(int id)
