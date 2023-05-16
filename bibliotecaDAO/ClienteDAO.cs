@@ -10,15 +10,23 @@ using System.Configuration;
 using bibliotecaModel;
 using bibliotecaBanco;
 
+
+
 namespace bibliotecaDAO
 {
     public class ClienteDAO
     {
 
+
+
         public Banco db;
+
+
 
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
+
+
 
         public void InsertCliente(ModelCliente cliente)
         {
@@ -33,12 +41,48 @@ namespace bibliotecaDAO
             comand.Parameters.Add("@logradouro_cli", MySqlDbType.VarChar).Value = cliente.logradouro_cli;
             comand.Parameters.Add("@nasc_cli", MySqlDbType.DateTime).Value = cliente.nasc_cli;
             comand.Parameters.Add("@senha_cli", MySqlDbType.VarChar).Value = cliente.senha_cli;
-           
+
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+        public string SelectEmailDoCliente(string vEmail)
+        {
+            conexao.Open();
+            comand.CommandText = "call spSelecEmailDoCliente(@email_cli);";
+            comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = vEmail;
+            comand.Connection = conexao;
+            string Email = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (Email == null)
 
+
+
+                Email = "";
+            return Email;
+        }
+
+
+
+        public string SelectCPFDoCliente(string vCPF)
+        {
+            conexao.Open();
+            comand.CommandText = "call spSelectCPFDoCliente(@CPF_cli);";
+            comand.Parameters.Add("@CPF_cli", MySqlDbType.String).Value = vCPF;
+            comand.Connection = conexao;
+            string CPF = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (CPF == null)
+
+
+
+                CPF = "";
+            return CPF;
+
+
+
+
+        }
         public List<ModelCliente> Listar()
         {
             using (db = new Banco())
@@ -48,7 +92,11 @@ namespace bibliotecaDAO
                 return ListaDeClientes(retorno);
             }
 
+
+
         }
+
+
 
         public List<ModelCliente> ListaDeClientes(MySqlDataReader retorno)
         {
@@ -67,13 +115,19 @@ namespace bibliotecaDAO
                     logradouro_cli = retorno["logradouro_cli"].ToString(),
                     nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())
 
+
+
                 };
+
+
 
                 clientes.Add(TempCliente);
             }
             retorno.Close();
             return clientes;
         }
+
+
 
 
         public ModelCliente ListarId(int Id)
@@ -86,17 +140,23 @@ namespace bibliotecaDAO
             }
         }
 
+
+
         public void UpdateCliente(ModelCliente cliente)
         {
             var strQuery = "";
             strQuery += "update Cliente set ";
             strQuery += string.Format("nome_cli = '{0}', email_cli = '{1}', CPF_cli = '{2}', cep_cli = '{3}', num_cli = '{4}', logradouro_cli = '{5}', nasc_cli = str_to_date('{6}', '%d/%m/%Y %T'), tel_cli = '{7}', senha_cli = '{8}' where id_cli = {8};", cliente.nome_cli, cliente.email_cli, cliente.CPF_cli, cliente.num_cli, cliente.nasc_cli, cliente.tel_cli, cliente.senha_cli, cliente.id_cli);
 
+
+
             using (db = new Banco())
             {
                 db.Executar(strQuery);
             }
         }
+
+
 
         public void DeleteCliente(ModelCliente cliente)
         {
@@ -104,11 +164,15 @@ namespace bibliotecaDAO
             strQuery += "delete from Cliente ";
             strQuery += string.Format("where id_cli = {0};", cliente.id_cli);
 
+
+
             using (db = new Banco())
             {
                 db.Executar(strQuery);
             }
         }
+
+
 
         public void Save(ModelCliente cliente)
         {
