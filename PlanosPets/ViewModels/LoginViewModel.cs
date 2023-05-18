@@ -24,6 +24,6 @@ namespace PlanosPets.ViewModels
 
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "Informe a semha")]
-        public string Senha { get; set; }
+        public string senha { get; set; }
     }
 }

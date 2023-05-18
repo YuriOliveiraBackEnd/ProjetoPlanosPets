@@ -9,7 +9,6 @@ using System.Web;
 using System.Web.Mvc;
 
 
-
 namespace PlanosPets.Controllers
 {
     public class FuncionarioController : Controller
@@ -21,41 +20,12 @@ namespace PlanosPets.Controllers
             var listaFuncionario = metodoFuncionario.Listar();
             return View(listaFuncionario);
         }
-        //public ActionResult Login()
-        //{
-        //    return View();
-        //}
-        //LoginDAO login = new LoginDAO();
+       
 
-
-
-        //[HttpPost]
-        //public ActionResult Login(ModelFuncionario verLoginFunc)
-        //{
-        //    login.TestarUsuario(verLoginFunc);
-
-
-
-        //    if (verLoginFunc.email_func != null && verLoginFunc.senha_func != null)
-        //    {
-        //        Session["emaillogadofunc"] = verLoginFunc.email_func;
-        //        Session["senhalogadofunc"] = verLoginFunc.senha_func;
-
-
-
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    else
-        //    {
-        //        ViewBag.msgLogar = "Usuário não encontrado. Verifique se o nome e a senha estão corretos";
-        //        return View();
-        //    }
-        //   }
-
-        //    public ActionResult Cadastrar()
-        //{
-        //    return View();
-        //}
+         public ActionResult Cadastrar()
+        {
+            return View();
+        }
 
 
 
@@ -73,7 +43,6 @@ namespace PlanosPets.Controllers
                 ViewBag.CPF = "CPF já existente";
                 return View(funcionario);
             }
-
 
 
             else if (cpf == funcionario.CPF_func)
@@ -119,24 +88,14 @@ namespace PlanosPets.Controllers
             string email = new FuncionarioDAO().SelectEmailFunc(Email);
             if (email.Length == 0)
 
-
-
                 EmailExists = false;
-
-
 
             else
 
-
-
                 EmailExists = true;
-
-
 
             return Json(!EmailExists, JsonRequestBehavior.AllowGet);
         }
-
-
 
         public ActionResult SelectCPF(string CPF)
         {
@@ -144,16 +103,9 @@ namespace PlanosPets.Controllers
             string cpf = new FuncionarioDAO().SelectCPFFunc(CPF);
             if (cpf.Length == 0)
 
-
-
                 CPFExists = false;
 
-
-
             else
-
-
-
                 CPFExists = true;
 
 
@@ -187,19 +139,14 @@ namespace PlanosPets.Controllers
             funcionario = funcionarioDAO.SelectFuncionario(vielmodel.senha);
 
 
-
-
-            if (funcionario == null | funcionario.CPF_func != vielmodel.senha)
-            {
-                ModelState.AddModelError("CPF", "CPF incorreto");
-                return View(vielmodel);
-            }
-
-
-
             if (funcionario == null | funcionario.email_func != vielmodel.Email)
             {
                 ModelState.AddModelError("Email", "Email incorreto");
+                return View(vielmodel);
+            }
+            if (funcionario == null | funcionario.senha_func != vielmodel.senha)
+            {
+                ModelState.AddModelError("Senha", "senha incorreta");
                 return View(vielmodel);
             }
 
@@ -207,17 +154,14 @@ namespace PlanosPets.Controllers
 
             var identity = new ClaimsIdentity(new[]
             {
-  new Claim(ClaimTypes.Name, funcionario.CPF_func),
-  new Claim("CPF", funcionario.CPF_func)
-  }, "AppAplicationCookie");
+                 new Claim(ClaimTypes.Name, funcionario.senha_func),
+                 new Claim("CPF", funcionario.senha_func) 
+            }, "AppAplicationCookie");
             Request.GetOwinContext().Authentication.SignIn(identity);
             if (!String.IsNullOrWhiteSpace(vielmodel.UrlRetorno) || Url.IsLocalUrl(vielmodel.UrlRetorno))
 
-
-
+ 
                 return Redirect(vielmodel.UrlRetorno);
-
-
 
 
             else

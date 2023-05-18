@@ -41,7 +41,7 @@ namespace bibliotecaDAO
         public string SelectEmailFunc(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectEmailDoFunc(@email_func);";
+            comand.CommandText = "call  spSelectEmailDoFunc(@email_func);";
             comand.Parameters.Add("email_func", MySqlDbType.VarChar).Value = vEmail;
 
 
@@ -66,8 +66,8 @@ namespace bibliotecaDAO
         public string SelectCPFFunc(string vCPF)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectCPFDoFunc(@noCPF);";
-            comand.Parameters.Add("@noCPF", MySqlDbType.VarChar).Value = vCPF;
+            comand.CommandText = "call spSelectCPFDoFunc(@CPF_func);";
+            comand.Parameters.Add("@CPF_func", MySqlDbType.VarChar).Value = vCPF;
 
 
 
@@ -87,14 +87,11 @@ namespace bibliotecaDAO
         }
 
 
-
-
-
         public ModelFuncionario SelectFuncionario(string vNoCPF)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectFuncionario(@noCPF);";
-            comand.Parameters.Add("@noCPF", MySqlDbType.VarChar).Value = vNoCPF;
+            comand.CommandText = "call spSelectFuncionario(@CPF_func);";
+            comand.Parameters.Add("@CPF_func", MySqlDbType.VarChar).Value = vNoCPF;
 
 
 

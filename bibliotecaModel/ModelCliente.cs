@@ -1,13 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-
 
 
 namespace bibliotecaModel
@@ -66,7 +66,7 @@ namespace bibliotecaModel
 
         [DisplayName("Data de nascimento do cliente")]
         [Required(ErrorMessage = "insira sua data de nascimento")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode =  true, DataFormatString  = "{0:dd/MM/yyyy}")]
         public DateTime nasc_cli { get; set; }
 
 
