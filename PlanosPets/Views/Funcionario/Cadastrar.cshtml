@@ -30,20 +30,38 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="itens-cadastro">
                 @Html.LabelFor(model => model.email_func, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.email_func, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.email_func, "", new { @class = "text-danger" })
                 </div>
+=======
+        <div class="form-group">
+            @Html.LabelFor(model => model.email_func, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email_func, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email_func, "", new { @class = "text-danger" })
+                @ViewBag.Email
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
             </div>
 
+<<<<<<< HEAD
             <div class="itens-cadastro">
                 @Html.LabelFor(model => model.tel_func, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.tel_func, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.tel_func, "", new { @class = "text-danger" })
                 </div>
+=======
+        <div class="form-group">
+            @Html.LabelFor(model => model.CPF_func, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CPF_func, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CPF_func, "", new { @class = "text-danger" })
+                @ViewBag.CPF
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
             </div>
 
             <div class="itens-cadastro">

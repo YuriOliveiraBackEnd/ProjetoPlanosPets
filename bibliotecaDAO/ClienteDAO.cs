@@ -10,15 +10,23 @@ using System.Configuration;
 using bibliotecaModel;
 using bibliotecaBanco;
 
+
+
 namespace bibliotecaDAO
 {
     public class ClienteDAO
     {
 
+
+
         public Banco db;
+
+
 
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
+
+
 
         public void InsertCliente(ModelCliente cliente)
         {
@@ -33,7 +41,7 @@ namespace bibliotecaDAO
             comand.Parameters.Add("@logradouro_cli", MySqlDbType.VarChar).Value = cliente.logradouro_cli;
             comand.Parameters.Add("@nasc_cli", MySqlDbType.DateTime).Value = cliente.nasc_cli;
             comand.Parameters.Add("@senha_cli", MySqlDbType.VarChar).Value = cliente.senha_cli;
-           
+
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
             conexao.Close();
@@ -48,10 +56,20 @@ namespace bibliotecaDAO
             conexao.Close();
             if (Email == null)
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 Email = "";
             return Email;
         }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         public string SelectCPFDoCliente(string vCPF)
         {
             conexao.Open();
@@ -62,10 +80,20 @@ namespace bibliotecaDAO
             conexao.Close();
             if (CPF == null)
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 CPF = "";
             return CPF;
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         }
         public List<ModelCliente> Listar()
         {
@@ -76,7 +104,11 @@ namespace bibliotecaDAO
                 return ListaDeClientes(retorno);
             }
 
+
+
         }
+
+
 
         public List<ModelCliente> ListaDeClientes(MySqlDataReader retorno)
         {
@@ -93,15 +125,26 @@ namespace bibliotecaDAO
                     num_cli = retorno["num_cli"].ToString(),
                     cep_cli = retorno["cep_cli"].ToString(),
                     logradouro_cli = retorno["logradouro_cli"].ToString(),
+<<<<<<< HEAD
                     nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString()),
                     senha_cli = retorno["senha_cli"].ToString()
+=======
+                    nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())
+
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 };
+
+
 
                 clientes.Add(TempCliente);
             }
             retorno.Close();
             return clientes;
         }
+
+
 
 
         public ModelCliente ListarId(int Id)
@@ -114,11 +157,15 @@ namespace bibliotecaDAO
             }
         }
 
+
+
         public void UpdateCliente(ModelCliente cliente)
         {
             var strQuery = "";
             strQuery += "update Cliente set ";
             strQuery += string.Format("nome_cli = '{0}', email_cli = '{1}', CPF_cli = '{2}', cep_cli = '{3}', num_cli = '{4}', logradouro_cli = '{5}', nasc_cli = str_to_date('{6}', '%d/%m/%Y %T'), tel_cli = '{7}', senha_cli = '{8}' where id_cli = {8};", cliente.nome_cli, cliente.email_cli, cliente.CPF_cli, cliente.num_cli, cliente.nasc_cli, cliente.tel_cli, cliente.senha_cli, cliente.id_cli);
+
+
 
             using (db = new Banco())
             {
@@ -126,12 +173,19 @@ namespace bibliotecaDAO
             }
         }
 
+<<<<<<< HEAD
         public bool Excluir(int id)
+=======
+
+
+        public void DeleteCliente(ModelCliente cliente)
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         {
             conexao.Open();
             comand.CommandText = ("delete from Cliente where id_func=@id_cli;");
             comand.Parameters.AddWithValue("@id_cli", id);
 
+<<<<<<< HEAD
             comand.Connection = conexao;
             int i = comand.ExecuteNonQuery();
             conexao.Close();
@@ -140,7 +194,17 @@ namespace bibliotecaDAO
                 return true;
             else
                 return false;
+=======
+
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         }
+
+
 
         public void Save(ModelCliente cliente)
         {

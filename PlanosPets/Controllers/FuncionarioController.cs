@@ -1,6 +1,9 @@
 ﻿using bibliotecaDAO;
 using bibliotecaModel;
+<<<<<<< HEAD
 using MySqlX.XDevAPI;
+=======
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
 using PlanosPets.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,17 +12,19 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace PlanosPets.Controllers
 {
     public class FuncionarioController : Controller
     {
-        // GET: Funcionario
-        public ActionResult Index()
+        // GET: Funcionario
+        public ActionResult Index()
         {
             var metodoFuncionario = new FuncionarioDAO();
             var listaFuncionario = metodoFuncionario.Listar();
             return View(listaFuncionario);
         }
+<<<<<<< HEAD
         //public ActionResult Login()
         //{
         //    return View();
@@ -44,11 +49,16 @@ namespace PlanosPets.Controllers
         //        return View();
         //    }
         //   }
+=======
+       
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
 
-        public ActionResult Cadastrar()
+         public ActionResult Cadastrar()
         {
-            return View();
+            return View();
         }
+
+
 
         [HttpPost]
         public ActionResult Cadastrar(ModelFuncionario funcionario)
@@ -56,6 +66,7 @@ namespace PlanosPets.Controllers
             if (!ModelState.IsValid)
                 return View(funcionario);
             FuncionarioDAO novoFuncionarioDAO = new FuncionarioDAO();
+<<<<<<< HEAD
             //string cpf = new FuncionarioDAO().SelectCPFFunc(funcionario.CPF_func);
             //string email = new FuncionarioDAO().SelectEmailFunc(funcionario.email_func);
             //if (cpf == funcionario.CPF_func && email == funcionario.email_func)
@@ -93,6 +104,52 @@ namespace PlanosPets.Controllers
                 };
                 metodoFuncionario.InsertFuncionario(novoFuncionario);
 
+=======
+            string cpf = new FuncionarioDAO().SelectCPFFunc(funcionario.CPF_func);
+            string email = new FuncionarioDAO().SelectEmailFunc(funcionario.email_func);
+            if (cpf == funcionario.CPF_func && email == funcionario.email_func)
+            {
+                ViewBag.Email = "Email já existente";
+                ViewBag.CPF = "CPF já existente";
+                return View(funcionario);
+            }
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
+
+
+            else if (cpf == funcionario.CPF_func)
+            {
+                ViewBag.CPF = "CPF já existente";
+                return View(funcionario);
+            }
+
+
+
+            else if (email == funcionario.email_func)
+            {
+                ViewBag.Email = "Email já existente";
+                return View(funcionario);
+            };
+
+
+
+
+            var metodoFuncionario = new FuncionarioDAO();
+            ModelFuncionario novoFuncionario = new ModelFuncionario()
+            {
+                nome_func = funcionario.nome_func,
+                email_func = funcionario.email_func,
+                CPF_func = funcionario.CPF_func,
+                cep_func = funcionario.cep_func,
+                num_func = funcionario.num_func,
+                logradouro_func = funcionario.logradouro_func,
+                nasc_func = funcionario.nasc_func,
+                tel_func = funcionario.tel_func,
+                senha_func = funcionario.senha_func
+            };
+            metodoFuncionario.InsertFuncionario(novoFuncionario);
+
+
+
 
             return RedirectToAction("Index");
         }
@@ -111,6 +168,7 @@ namespace PlanosPets.Controllers
             return Json(!EmailExists, JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
         //public ActionResult SelectCPF(string CPF)
         //{
         //    bool CPFExists;
@@ -125,6 +183,25 @@ namespace PlanosPets.Controllers
 
         //    return Json(!CPFExists, JsonRequestBehavior.AllowGet);
         //}
+=======
+        public ActionResult SelectCPF(string CPF)
+        {
+            bool CPFExists;
+            string cpf = new FuncionarioDAO().SelectCPFFunc(CPF);
+            if (cpf.Length == 0)
+
+                CPFExists = false;
+
+            else
+                CPFExists = true;
+
+
+
+            return Json(!CPFExists, JsonRequestBehavior.AllowGet);
+        }
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
 
         [HttpGet]
         public ActionResult Login(string ReturnUrl)
@@ -136,6 +213,11 @@ namespace PlanosPets.Controllers
             return View(viewmodel);
         }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [HttpPost]
         public ActionResult Login(LoginViewModel vielmodel)
         {
@@ -148,17 +230,21 @@ namespace PlanosPets.Controllers
             funcionario = funcionarioDAO.SelectFuncionario(vielmodel.senha);
 
 
+<<<<<<< HEAD
             if (funcionario == null | funcionario.senha_func != vielmodel.senha)
             {
                 ModelState.AddModelError("Senha", "Senha incorreto");
                 return View(vielmodel);
             }
 
+=======
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
             if (funcionario == null | funcionario.email_func != vielmodel.Email)
             {
                 ModelState.AddModelError("Email", "Email incorreto");
                 return View(vielmodel);
             }
+<<<<<<< HEAD
 
             var identity = new ClaimsIdentity(new[]
              {
@@ -168,6 +254,25 @@ namespace PlanosPets.Controllers
            Request.GetOwinContext().Authentication.SignIn(identity);
             if (!String.IsNullOrWhiteSpace(vielmodel.UrlRetorno) || Url.IsLocalUrl(vielmodel.UrlRetorno))
 
+=======
+            if (funcionario == null | funcionario.senha_func != vielmodel.senha)
+            {
+                ModelState.AddModelError("Senha", "senha incorreta");
+                return View(vielmodel);
+            }
+
+
+
+            var identity = new ClaimsIdentity(new[]
+            {
+                 new Claim(ClaimTypes.Name, funcionario.senha_func),
+                 new Claim("CPF", funcionario.senha_func) 
+            }, "AppAplicationCookie");
+            Request.GetOwinContext().Authentication.SignIn(identity);
+            if (!String.IsNullOrWhiteSpace(vielmodel.UrlRetorno) || Url.IsLocalUrl(vielmodel.UrlRetorno))
+
+ 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 return Redirect(vielmodel.UrlRetorno);
 
 
@@ -175,14 +280,28 @@ namespace PlanosPets.Controllers
             {
                 funcionario = funcionarioDAO.SelectFuncionario(vielmodel.senha);
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 Session["id_cli"] = funcionario.id_func.ToString();
                 return RedirectToAction("Index", "Produto");
             }
 
 
 
+<<<<<<< HEAD
         }
 
+=======
+
+
+        }
+
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         public ActionResult Atualizar(int id)
         {
             var metodoFuncionario = new FuncionarioDAO();
@@ -193,6 +312,8 @@ namespace PlanosPets.Controllers
             }
             return View(funcionario);
         }
+
+
 
         [HttpPost]
         public ActionResult Atualizar(ModelFuncionario funcionario)
@@ -206,12 +327,42 @@ namespace PlanosPets.Controllers
             return View(funcionario);
         }
 
+<<<<<<< HEAD
         public ActionResult Excluir(int id)
         {
             var metodoFuncionario = new FuncionarioDAO();
             metodoFuncionario.Excluir(id);
             return RedirectToAction("Index");
+=======
+
+
+        public ActionResult Deletar(int id)
+        {
+            var metodoFuncionario = new FuncionarioDAO();
+            var funcionario = metodoFuncionario.ListarId(id);
+            if (funcionario == null)
+            {
+                return HttpNotFound();
+            }
+            return View(funcionario);
         }
+
+
+
+        [HttpPost]
+        public ActionResult Deletar(ModelFuncionario funcionario)
+        {
+            if (ModelState.IsValid)
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                metodoFuncionario.DeleteFuncionario(funcionario);
+                return RedirectToAction("Index");
+            }
+            return View(funcionario);
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
+        }
+
+
 
         public ActionResult Detalhes(int id)
         {
@@ -224,5 +375,11 @@ namespace PlanosPets.Controllers
             return View(funcionario);
         }
     }
+<<<<<<< HEAD
     
 }
+=======
+}
+
+
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
