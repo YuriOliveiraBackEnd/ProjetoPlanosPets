@@ -38,7 +38,35 @@ namespace bibliotecaDAO
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+        public string SelectEmailDoCliente(string vEmail)
+        {
+            conexao.Open();
+            comand.CommandText = "call spSelecEmailDoCliente(@email_cli);";
+            comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = vEmail;
+            comand.Connection = conexao;
+            string Email = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (Email == null)
 
+                Email = "";
+            return Email;
+        }
+
+        public string SelectCPFDoCliente(string vCPF)
+        {
+            conexao.Open();
+            comand.CommandText = "call spSelectCPFDoCliente(@CPF_cli);";
+            comand.Parameters.Add("@CPF_cli", MySqlDbType.String).Value = vCPF;
+            comand.Connection = conexao;
+            string CPF = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (CPF == null)
+
+                CPF = "";
+            return CPF;
+
+
+        }
         public List<ModelCliente> Listar()
         {
             using (db = new Banco())
@@ -65,8 +93,8 @@ namespace bibliotecaDAO
                     num_cli = retorno["num_cli"].ToString(),
                     cep_cli = retorno["cep_cli"].ToString(),
                     logradouro_cli = retorno["logradouro_cli"].ToString(),
-                    nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())
-
+                    nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString()),
+                    senha_cli = retorno["senha_cli"].ToString()
                 };
 
                 clientes.Add(TempCliente);
@@ -98,16 +126,20 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeleteCliente(ModelCliente cliente)
+        public bool Excluir(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from Cliente ";
-            strQuery += string.Format("where id_cli = {0};", cliente.id_cli);
+            conexao.Open();
+            comand.CommandText = ("delete from Cliente where id_func=@id_cli;");
+            comand.Parameters.AddWithValue("@id_cli", id);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
+            comand.Connection = conexao;
+            int i = comand.ExecuteNonQuery();
+            conexao.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
         }
 
         public void Save(ModelCliente cliente)

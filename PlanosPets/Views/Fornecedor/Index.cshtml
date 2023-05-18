@@ -1,0 +1,80 @@
+﻿@model IEnumerable<bibliotecaModel.ModelFornecedor>
+
+
+@{
+    ViewBag.Title = "Lista de Fornecedores";
+}
+
+<h2>Listar Fornecedor</h2>
+
+<p>
+    @Html.ActionLink("Adicionar novo Fornecedor", "Cadastrar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CNPJ_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tel_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cep_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.num_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.logradouro_forn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome_forn)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nome_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CNPJ_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tel_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cep_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.num_forn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.logradouro_forn)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_forn }) |
+                @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_forn }) |
+                @Html.ActionLink("Excluir", "Excluir", new { id = item.id_forn }, new { onclick = "return confirm('Deseja realmente excluir?');" })
+            </td>
+        </tr>
+    }
+
+</table>

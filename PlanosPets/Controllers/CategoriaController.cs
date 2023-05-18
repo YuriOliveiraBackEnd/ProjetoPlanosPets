@@ -8,15 +8,8 @@ using System.Web.Mvc;
 
 namespace PlanosPets.Controllers
 {
-    public class RacaController : Controller
+    public class CategoriaController : Controller
     {
-        // GET: Raca
-        public ActionResult Index()
-        {
-            var metodoRaca = new RacaDAO();
-            var listaRaca = metodoRaca.Listar();
-            return View(listaRaca);
-        }
 
         public ActionResult Cadastrar()
         {
@@ -24,46 +17,47 @@ namespace PlanosPets.Controllers
         }
 
         [HttpPost]
-        public ActionResult Cadastrar(ModelRacas raca)
+        public ActionResult Cadastrar(ModelCategorias categoria)
         {
             if (ModelState.IsValid)
             {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.InsertRaca(raca);
+                var metodoCategoria = new CategoriaDAO();
+                metodoCategoria.InsertCategoria(categoria);
                 return RedirectToAction("Index");
             }
-            return View(raca);
+            return View(categoria);
         }
 
         public ActionResult Atualizar(int id)
         {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
+            var metodoCategoria = new CategoriaDAO();
+            var categoria = metodoCategoria.ListarId(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(raca);
+            return View(categoria);
         }
 
         [HttpPost]
-        public ActionResult Atualizar(ModelRacas raca)
+        public ActionResult Atualizar(ModelCategorias categoria)
         {
             if (ModelState.IsValid)
             {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.UpdateRaca(raca);
+                var metodoCategoria = new CategoriaDAO();
+                metodoCategoria.UpdateCategoria(categoria);
                 return RedirectToAction("Index");
             }
-            return View(raca);
+            return View(categoria);
         }
 
         public ActionResult Excluir(int id)
         {
-            var metodoRaca = new RacaDAO();
-            metodoRaca.Excluir(id);
+            var metodoCategoria = new CategoriaDAO();
+            metodoCategoria.Excluir(id);
             return RedirectToAction("Index");
         }
+
 
         public ActionResult Detalhes(int id)
         {
@@ -74,6 +68,6 @@ namespace PlanosPets.Controllers
                 return HttpNotFound();
             }
             return View(raca);
-        }   
+        }
     }
 }

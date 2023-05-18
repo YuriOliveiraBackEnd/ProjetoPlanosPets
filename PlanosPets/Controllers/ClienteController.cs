@@ -26,8 +26,30 @@ namespace PlanosPets.Controllers
         [HttpPost]
         public ActionResult Cadastrar(ModelCliente cliente)
         {
-            if (ModelState.IsValid)
-            {
+           
+                if (!ModelState.IsValid)
+                    return View(cliente);
+                ClienteDAO novoClienteDAO = new ClienteDAO();
+                string cpf = new ClienteDAO().SelectCPFDoCliente(cliente.CPF_cli);
+                string email = new ClienteDAO().SelectEmailDoCliente(cliente.email_cli);
+                if (cpf == cliente.CPF_cli && email == cliente.email_cli)
+                {
+                    ViewBag.Email = "Email já existente";
+                    ViewBag.CPF = "CPF já existente";
+                    return View(cliente);
+                }
+
+                else if (cpf == cliente.CPF_cli)
+                {
+                    ViewBag.CPF = "CPF já existente";
+                    return View(cliente);
+                }
+
+                else if (email == cliente.email_cli)
+                {
+                    ViewBag.Email = "Email já existente";
+                    return View(cliente);
+                };
                 var metodoCliente = new ClienteDAO();
                 ModelCliente novoCliente = new ModelCliente()
                 {
@@ -42,8 +64,8 @@ namespace PlanosPets.Controllers
                     senha_cli = cliente.senha_cli
                 };
                 metodoCliente.InsertCliente(novoCliente);
-            }
-            return View();
+         
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Atualizar(int id)
@@ -80,27 +102,40 @@ namespace PlanosPets.Controllers
             return View(cliente);
         }
 
-        [HttpPost]
-        public ActionResult Deletar(ModelCliente cliente)
-        {
-            if (ModelState.IsValid)
-            {
-                var metodoCliente = new ClienteDAO();
-                metodoCliente.DeleteCliente(cliente);
-                return RedirectToAction("Index");
-            }
-            return View(cliente);
-        }
-
-        public ActionResult Detalhes(int id)
+        public ActionResult Excluir(int id)
         {
             var metodoCliente = new ClienteDAO();
-            var cliente = metodoCliente.ListarId(id);
-            if(cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
+            metodoCliente.Excluir(id);
+            return RedirectToAction("Index");
+        }
+        public ActionResult SelectEmailDoCliente(string Email)
+        {
+            bool EmailExists;
+            string email = new ClienteDAO().SelectEmailDoCliente(Email);
+            if (email.Length == 0)
+
+                EmailExists = false;
+
+            else
+
+                EmailExists = true;
+
+            return Json(!EmailExists, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SelectCPFDoCliente(string CPF)
+        {
+            bool CPFExists;
+            string cpf = new ClienteDAO().SelectCPFDoCliente(CPF);
+            if (cpf.Length == 0)
+
+                CPFExists = false;
+
+            else
+
+                CPFExists = true;
+
+            return Json(!CPFExists, JsonRequestBehavior.AllowGet);
         }
     }
 }

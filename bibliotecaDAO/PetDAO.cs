@@ -87,28 +87,20 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeletePet(ModelPets pets)
+        public bool Excluir(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from Pets ";
-            strQuery += string.Format("where id_pet = {0};", pets.id_pet);
+            conexao.Open();
+            comand.CommandText = ("delete from Pets where id_pet=@id_pet;");
+            comand.Parameters.AddWithValue("@id_pet", id);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
-        }
+            comand.Connection = conexao;
+            int i = comand.ExecuteNonQuery();
+            conexao.Close();
 
-        public void Save(ModelPets pets)
-        {
-            if (pets.id_pet > 0)
-            {
-                UpdatePet(pets);
-            }
+            if (i >= 1)
+                return true;
             else
-            {
-                InsertPet(pets);
-            }
+                return false;
         }
 
     }

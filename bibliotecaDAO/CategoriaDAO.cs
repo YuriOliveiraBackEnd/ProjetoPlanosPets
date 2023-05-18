@@ -80,16 +80,20 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeleteCategoria(ModelCategorias categorias)
+        public bool Excluir(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from Categorias ";
-            strQuery += string.Format("where id_categoria = {0};", categorias.id_categoria);
+            conexao.Open();
+            comand.CommandText = ("delete from Categoria where id_categoria=@id_categoria;");
+            comand.Parameters.AddWithValue("@id_categoria", id);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
+            comand.Connection = conexao;
+            int i = comand.ExecuteNonQuery();
+            conexao.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
         }
 
         public void Save(ModelCategorias categorias)

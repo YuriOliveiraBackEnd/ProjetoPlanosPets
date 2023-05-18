@@ -58,27 +58,11 @@ namespace PlanosPets.Controllers
             return View(fornecedor);
         }
 
-        public ActionResult Deletar(int id)
+        public ActionResult Excluir(int id)
         {
-            var metodoFornecedor = new FornecedorDAO();
-            var fornecedor = metodoFornecedor.ListarId(id);
-            if (fornecedor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(fornecedor);
-        }
-
-        [HttpPost]
-        public ActionResult Deletar(ModelFornecedor fornecedor)
-        {
-            if (ModelState.IsValid)
-            {
-                var metodoFornecedor = new FornecedorDAO();
-                metodoFornecedor.Deletefornecedor(fornecedor);
-                return RedirectToAction("Index");
-            }
-            return View(fornecedor);
+            var metodoFuncionario = new FuncionarioDAO();
+            metodoFuncionario.Excluir(id);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Detalhes(int id)

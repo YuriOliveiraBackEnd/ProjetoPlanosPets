@@ -80,16 +80,20 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeleteCompra(ModelCompra compra)
+        public bool Excluir(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from Compra ";
-            strQuery += string.Format("where id_compra = {0};", compra.id_compra);
+            conexao.Open();
+            comand.CommandText = ("delete from Compra where id_compra=@id_compra;");
+            comand.Parameters.AddWithValue("@id_compra", id);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
+            comand.Connection = conexao;
+            int i = comand.ExecuteNonQuery();
+            conexao.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
         }
 
         public void Save(ModelCompra compra)
