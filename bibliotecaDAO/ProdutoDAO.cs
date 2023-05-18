@@ -55,9 +55,7 @@ namespace bibliotecaDAO
                     quant = int.Parse(retorno["quant"].ToString()),
                     valor_unitario = double.Parse(retorno["valor_unitario"].ToString()),
                     desc_prod = retorno["desc_prod"].ToString(),
-                    categoria = retorno["categoria"].ToString(),
                     ft_prod = retorno["ft_prod"].ToString()
-
                 };
 
                 produtos.Add(TempProd);
@@ -89,28 +87,21 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeleteProduto(ModelProduto produto)
+        public bool Excluir(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from Produto ";
-            strQuery += string.Format("where id_prod = {0};", produto.id_prod);
+            conexao.Open();
+            comand.CommandText = ("delete from Produto where id_prod=@id_prod;");
+            comand.Parameters.AddWithValue("@id_prod", id);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
-        }
+            comand.Connection = conexao;
+            int i = comand.ExecuteNonQuery();
+            conexao.Close();
 
-        public void Save(ModelProduto produto)
-        {
-            if (produto.id_prod > 0)
-            {
-                UpdateProduto(produto);
-            }
+            if (i >= 1)
+                return true;
             else
-            {
-                InsertProduto(produto);
-            }
+                return false;
         }
+
     }
 }

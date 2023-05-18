@@ -1,8 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+=======
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Net.Mail;
@@ -17,24 +22,33 @@ namespace bibliotecaModel
         [DisplayName("Id do cliente")]
         public int id_cli { get; set; }
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("Nome do cliente")]
         [Required(ErrorMessage = "insira seu nome")]
         [MaxLength(80, ErrorMessage = "O nome deve conter no maximo 80 caracteres")]
         public string nome_cli { get; set; }
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("Email do cliente")]
         [RegularExpression(@"^[a-zA-Z]+(([\'\,\.\-][a-zA-Z ])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})$", ErrorMessage = "Digite um Email válido")]
         [Required(ErrorMessage = "insira seu email")]
         public string email_cli { get; set; }
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("CPF do cliente")]
         [Required(ErrorMessage = "insira seu cpf")]
         [MaxLength(11, ErrorMessage = "O CPF deve conter no maximo 11 caracteres")]
@@ -42,26 +56,42 @@ namespace bibliotecaModel
         public string CPF_cli { get; set; }
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("Cep do cliente")]
         [Required(ErrorMessage = "insira seu cep")]
         public string cep_cli { get; set; }
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("Número do cliente")]
         [Required(ErrorMessage = "insira seu número")]
         public string num_cli { get; set; }
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("Logradouro do cliente")]
         [Required(ErrorMessage = "insira seu logradouro")]
         public string logradouro_cli { get; set; }
 
+<<<<<<< HEAD
+        [DisplayName("Data de nascimento do cliente")]
+        [Required(ErrorMessage = "insira sua data de nascimento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")] 
+        public DateTime nasc_cli { get; set; }
+
+=======
 
 
         [DisplayName("Data de nascimento do cliente")]
@@ -71,12 +101,16 @@ namespace bibliotecaModel
 
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [DisplayName("Senha do cliente")]
         [Required(ErrorMessage = "insira sua senha")]
         public string senha_cli { get; set; }
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         [Display(Name = "Número do Telefone")]
         [Required(ErrorMessage = "Digite o número de telefone")]
         [MaxLength(11, ErrorMessage = "O telefone deve conter 11 caracteres")]

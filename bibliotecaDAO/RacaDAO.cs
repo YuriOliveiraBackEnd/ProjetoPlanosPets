@@ -81,28 +81,20 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeleteRaca(ModelRacas raca)
+        public bool Excluir(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from Raca ";
-            strQuery += string.Format("where id_raca = {0};", raca.id_raca);
+            conexao.Open();
+            comand.CommandText = ("delete from Raca where id_raca=@id_raca;");
+            comand.Parameters.AddWithValue("@id_raca", id);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
-        }
+            comand.Connection = conexao;
+            int i = comand.ExecuteNonQuery();
+            conexao.Close();
 
-        public void Save(ModelRacas raca)
-        {
-            if (raca.id_raca > 0)
-            {
-                UpdateRaca(raca);
-            }
+            if (i >= 1)
+                return true;
             else
-            {
-                InsertRaca(raca);
-            }
+                return false;
         }
 
     }

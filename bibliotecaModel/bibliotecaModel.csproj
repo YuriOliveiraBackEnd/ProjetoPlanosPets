@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DisplayFormatAttribute.cs" />
     <Compile Include="ModelCategorias.cs" />
     <Compile Include="ModelCliente.cs" />
     <Compile Include="ModelCompra.cs" />

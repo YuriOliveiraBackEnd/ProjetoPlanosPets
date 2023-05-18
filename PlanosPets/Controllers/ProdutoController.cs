@@ -1,5 +1,6 @@
 ﻿using bibliotecaDAO;
 using bibliotecaModel;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,33 @@ namespace PlanosPets.Controllers
 {
     public class ProdutoController : Controller
     {
-        // GET: Produto
+
+        CategoriaDAO cat = new CategoriaDAO();
+
+        public void CarregaCategoria()
+        {
+            List<SelectListItem> categoria = new List<SelectListItem>();
+
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=12345678"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Categorias", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    categoria.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+            }
+
+            ViewBag.cat = new SelectList(categoria, "Value", "Text");
+        }
+
         public ActionResult Index()
         {
             var metodoProduto = new ProdutoDAO();
@@ -20,6 +47,7 @@ namespace PlanosPets.Controllers
 
         public ActionResult Cadastrar()
         {
+            CarregaCategoria();
             return View();
         }
 
@@ -58,27 +86,11 @@ namespace PlanosPets.Controllers
             return View(produto);
         }
 
-        public ActionResult Deletar(int id)
+        public ActionResult Excluir(int id)
         {
             var metodoProduto = new ProdutoDAO();
-            var produto = metodoProduto.ListarId(id);
-            if (produto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(produto);
-        }
-
-        [HttpPost]
-        public ActionResult Deletar(ModelProduto produto)
-        {
-            if (ModelState.IsValid)
-            {
-                var metodoProduto = new ProdutoDAO();
-                metodoProduto.DeleteProduto(produto);
-                return RedirectToAction("Index");
-            }
-            return View(produto);
+            metodoProduto.Excluir(id);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Detalhes(int id)
