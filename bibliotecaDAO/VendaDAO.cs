@@ -83,20 +83,28 @@ namespace bibliotecaDAO
             }
         }
 
-        public bool Excluir(int id)
+        public void DeleteVenda(ModelVenda venda)
         {
-            conexao.Open();
-            comand.CommandText = ("delete from Venda where id_venda=@id_venda;");
-            comand.Parameters.AddWithValue("@id_venda", id);
+            var strQuery = "";
+            strQuery += "delete from Venda ";
+            strQuery += string.Format("where id_venda = {0};", venda.id_venda);
 
-            comand.Connection = conexao;
-            int i = comand.ExecuteNonQuery();
-            conexao.Close();
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+        }
 
-            if (i >= 1)
-                return true;
+        public void Save(ModelVenda venda)
+        {
+            if (venda.id_venda > 0)
+            {
+                UpdateVenda(venda);
+            }
             else
-                return false;
+            {
+                InsertVenda(venda);
+            }
         }
 
     }

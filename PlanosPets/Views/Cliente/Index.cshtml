@@ -24,24 +24,6 @@
         <th>
             @Html.DisplayNameFor(model => model.tel_cli)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.email_cli)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nasc_cli)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.logradouro_cli)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cep_cli)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.num_cli)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.senha_cli)
-        </th>
         <th></th>
     </tr>
 
@@ -61,28 +43,9 @@
                 @Html.DisplayFor(modelItem => item.tel_cli)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.email_cli)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nasc_cli)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.logradouro_cli)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cep_cli)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.num_cli)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.senha_cli)
-            </td>
-
-            <td>
                 @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_cli }) |
                 @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_cli }) |
-                @Html.ActionLink("Excluir", "Excluir", new { id = item.id_cli }, new { onclick = "return confirm('Deseja realmente excluir?');" })
+                @Html.ActionLink("Apagar", "Deletar", new { Id = item.id_cli })
             </td>
         </tr>
     }

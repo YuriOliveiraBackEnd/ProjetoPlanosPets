@@ -19,25 +19,10 @@
             @Html.DisplayNameFor(model => model.nome_forn)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email_forn)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.CNPJ_forn)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.tel_forn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cep_forn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.num_forn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.logradouro_forn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nome_forn)
         </th>
         <th></th>
     </tr>
@@ -52,27 +37,15 @@
                 @Html.DisplayFor(modelItem => item.nome_forn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.email_forn)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CNPJ_forn)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.tel_forn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.cep_forn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.num_forn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.logradouro_forn)
-            </td>
-            <td>
                 @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_forn }) |
                 @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_forn }) |
-                @Html.ActionLink("Excluir", "Excluir", new { id = item.id_forn }, new { onclick = "return confirm('Deseja realmente excluir?');" })
+                @Html.ActionLink("Apagar", "Deletar", new { Id = item.id_forn })
             </td>
         </tr>
     }

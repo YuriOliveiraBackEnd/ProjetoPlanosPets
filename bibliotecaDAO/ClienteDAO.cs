@@ -49,51 +49,39 @@ namespace bibliotecaDAO
         public string SelectEmailDoCliente(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call spSelecEmailDoCliente(@email_cli);";
+            comand.CommandText = "call spSelectEmailCli(@email_cli);";
             comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = vEmail;
             comand.Connection = conexao;
             string Email = (string)comand.ExecuteScalar();
             conexao.Close();
             if (Email == null)
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 Email = "";
             return Email;
         }
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         public string SelectCPFDoCliente(string vCPF)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectCPFDoCliente(@CPF_cli);";
+            comand.CommandText = "call spSelectCPFDoCli(@CPF_cli);";
             comand.Parameters.Add("@CPF_cli", MySqlDbType.String).Value = vCPF;
             comand.Connection = conexao;
             string CPF = (string)comand.ExecuteScalar();
             conexao.Close();
             if (CPF == null)
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 CPF = "";
             return CPF;
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         }
         public List<ModelCliente> Listar()
         {
@@ -125,15 +113,10 @@ namespace bibliotecaDAO
                     num_cli = retorno["num_cli"].ToString(),
                     cep_cli = retorno["cep_cli"].ToString(),
                     logradouro_cli = retorno["logradouro_cli"].ToString(),
-<<<<<<< HEAD
-                    nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString()),
-                    senha_cli = retorno["senha_cli"].ToString()
-=======
                     nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())
 
 
 
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
                 };
 
 
@@ -173,35 +156,20 @@ namespace bibliotecaDAO
             }
         }
 
-<<<<<<< HEAD
-        public bool Excluir(int id)
-=======
 
 
         public void DeleteCliente(ModelCliente cliente)
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         {
-            conexao.Open();
-            comand.CommandText = ("delete from Cliente where id_func=@id_cli;");
-            comand.Parameters.AddWithValue("@id_cli", id);
+            var strQuery = "";
+            strQuery += "delete from Cliente ";
+            strQuery += string.Format("where id_cli = {0};", cliente.id_cli);
 
-<<<<<<< HEAD
-            comand.Connection = conexao;
-            int i = comand.ExecuteNonQuery();
-            conexao.Close();
-
-            if (i >= 1)
-                return true;
-            else
-                return false;
-=======
 
 
             using (db = new Banco())
             {
                 db.Executar(strQuery);
             }
->>>>>>> df03e5be2f99826adbabb601c2f089a01fb38c06
         }
 
 

@@ -24,24 +24,6 @@
         <th>
             @Html.DisplayNameFor(model => model.tel_func)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.email_func)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nasc_func)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.logradouro_func)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cep_func)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.num_func)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.senha_func)
-        </th>
         <th></th>
     </tr>
 
@@ -61,28 +43,9 @@
                 @Html.DisplayFor(modelItem => item.tel_func)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.email_func)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nasc_func)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.logradouro_func)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cep_func)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.num_func)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.senha_func)
-            </td>
-
-            <td>
                 @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_func }) |
                 @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_func }) |
-                @Html.ActionLink("Excluir", "Excluir", new { id = item.id_func }, new { onclick = "return confirm('Deseja realmente excluir?');" })
+                @Html.ActionLink("Deletar", "Deletar", new { Id = item.id_func })
             </td>
         </tr>
     }

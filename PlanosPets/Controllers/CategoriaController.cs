@@ -17,47 +17,62 @@ namespace PlanosPets.Controllers
         }
 
         [HttpPost]
-        public ActionResult Cadastrar(ModelCategorias categoria)
+        public ActionResult Cadastrar(ModelRacas raca)
         {
             if (ModelState.IsValid)
             {
-                var metodoCategoria = new CategoriaDAO();
-                metodoCategoria.InsertCategoria(categoria);
+                var metodoRaca = new RacaDAO();
+                metodoRaca.InsertRaca(raca);
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            return View(raca);
         }
 
         public ActionResult Atualizar(int id)
         {
-            var metodoCategoria = new CategoriaDAO();
-            var categoria = metodoCategoria.ListarId(id);
-            if (categoria == null)
+            var metodoRaca = new RacaDAO();
+            var raca = metodoRaca.ListarId(id);
+            if (raca == null)
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View(raca);
         }
 
         [HttpPost]
-        public ActionResult Atualizar(ModelCategorias categoria)
+        public ActionResult Atualizar(ModelRacas raca)
         {
             if (ModelState.IsValid)
             {
-                var metodoCategoria = new CategoriaDAO();
-                metodoCategoria.UpdateCategoria(categoria);
+                var metodoRaca = new RacaDAO();
+                metodoRaca.UpdateRaca(raca);
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            return View(raca);
         }
 
-        public ActionResult Excluir(int id)
+        public ActionResult Deletar(int id)
         {
-            var metodoCategoria = new CategoriaDAO();
-            metodoCategoria.Excluir(id);
-            return RedirectToAction("Index");
+            var metodoRaca = new RacaDAO();
+            var raca = metodoRaca.ListarId(id);
+            if (raca == null)
+            {
+                return HttpNotFound();
+            }
+            return View(raca);
         }
 
+        [HttpPost]
+        public ActionResult Deletar(ModelRacas raca)
+        {
+            if (ModelState.IsValid)
+            {
+                var metodoRaca = new RacaDAO();
+                metodoRaca.DeleteRaca(raca);
+                return RedirectToAction("Index");
+            }
+            return View(raca);
+        }
 
         public ActionResult Detalhes(int id)
         {

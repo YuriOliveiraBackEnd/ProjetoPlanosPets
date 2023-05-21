@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using System.Windows.Input;
 
 namespace bibliotecaDAO
@@ -93,20 +92,16 @@ namespace bibliotecaDAO
             }
         }
 
-        public bool Excluir(int id)
+        public void Deletefornecedor(ModelFornecedor fornecedor)
         {
-            conexao.Open();
-            comand.CommandText = ("delete from Fornecedor where id_forn=@id_forn;");
-            comand.Parameters.AddWithValue("@id_forn", id);
+            var strQuery = "";
+            strQuery += "delete from Fornecedor ";
+            strQuery += string.Format("where id_forn = {0};", fornecedor.id_forn);
 
-            comand.Connection = conexao;
-            int i = comand.ExecuteNonQuery();
-            conexao.Close();
-
-            if (i >= 1)
-                return true;
-            else
-                return false;
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
         }
 
         public void Save(ModelFornecedor fornecedor)

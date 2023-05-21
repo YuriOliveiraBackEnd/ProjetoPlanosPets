@@ -58,11 +58,27 @@ namespace PlanosPets.Controllers
             return View(raca);
         }
 
-        public ActionResult Excluir(int id)
+        public ActionResult Deletar(int id)
         {
             var metodoRaca = new RacaDAO();
-            metodoRaca.Excluir(id);
-            return RedirectToAction("Index");
+            var raca = metodoRaca.ListarId(id);
+            if (raca == null)
+            {
+                return HttpNotFound();
+            }
+            return View(raca);
+        }
+
+        [HttpPost]
+        public ActionResult Deletar(ModelRacas raca)
+        {
+            if (ModelState.IsValid)
+            {
+                var metodoRaca = new RacaDAO();
+                metodoRaca.DeleteRaca(raca);
+                return RedirectToAction("Index");
+            }
+            return View(raca);
         }
 
         public ActionResult Detalhes(int id)

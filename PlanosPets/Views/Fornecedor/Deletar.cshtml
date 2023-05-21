@@ -1,0 +1,97 @@
+﻿@model bibliotecaModel.ModelFornecedor
+
+@{
+    ViewBag.Title = "Deletar";
+}
+
+<h2>Deletar</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <h3>deseja deletar este fornecedor?</h3>
+    <div>
+        <h4>Fornecedor</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.id_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.id_forn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.nome_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.nome_forn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.email_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.email_forn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CNPJ_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CNPJ_forn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.cep_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.cep_forn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.num_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.num_forn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.logradouro_forn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.logradouro_forn)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.id_prod)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.id_prod)
+            </dd>
+
+
+        </dl>
+        <div class="form-group">
+            @Html.HiddenFor(model => model.id_forn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.id_forn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.id_forn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-actions no-color">
+            <input type="submit" value="Deletar" class="btn btn-default" /> |
+            @Html.ActionLink("Cancelar", "Index")
+        </div>
+    </div>
+}
