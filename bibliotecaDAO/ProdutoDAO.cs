@@ -65,7 +65,15 @@ namespace bibliotecaDAO
             retorno.Close();
             return produtos;
         }
-
+        public ModelProduto Pesquisa(string pesquisar)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Produto where nome_prod = '%{0}%';", pesquisar);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeProduto(retorno).FirstOrDefault();
+            }
+        }
 
         public ModelProduto ListarId(int Id)
         {

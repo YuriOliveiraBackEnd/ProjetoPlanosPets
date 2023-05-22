@@ -13,18 +13,22 @@ namespace PlanosPets.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Buscar(string pesquisar)
         {
-            ViewBag.Message = "Your application description page.";
+            if (pesquisar == "Planos")
+                return RedirectToAction("Planos");
 
-            return View();
-        }
+            else
+            {
+                var metodoProduto = new ProdutoDAO();
+                var produto = metodoProduto.Pesquisa(pesquisar);
+                if (produto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(produto);
+            }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
