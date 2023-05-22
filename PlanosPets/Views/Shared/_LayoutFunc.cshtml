@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastrar</title>
+        <link rel="stylesheet" href="~/CSS/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+</head>
+<body>
+
+
+
+    <header>
+        <!--Header com pesquisar-->
+        <section class="primeiro-header">
+            <!--Logo Header-->
+            <div class="logo">
+                <img class="imagem-logo" src="~/Images/logo-branca.svg">
+            </div>
+            <!--Barra de Pesquisa-->
+            <div class="barra-pesquisa">
+                @using (Html.BeginForm("Buscar", "Home", FormMethod.Post))
+                {
+                    <input type="text" name="pesquisar" id="pesquisar" placeholder="Pesquise aqui!">
+                    <input type="submit" text="Buscar" />
+                }
+                <!--Lupa da Barra de Pesquisa-->
+                <i class="fa-solid fa-magnifying-glass" id="lupa-pesquisar"></i>
+            </div>
+            <!--Botões de Login e Carrinho-->
+            <div class="botoes-header">
+                <!--Login-->
+                <div class="botao-login">
+                    <i class="fa-solid fa-user"></i>
+                    <a class="login" href="login.html">Login</a>
+                </div>
+                <!--Carrinho-->
+                <div class="botao-carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <p>Carrinho</p>
+                </div>
+            </div>
+        </section>
+        <!--Nav de Categorias-->
+        <section class="segundo-header">
+            <nav class="nav">
+                <a class="nav-botao" href="index.html">Inicio</a>
+                <a class="nav-botao" href="#">Planos</a>
+                <a class="nav-botao" href="#">Cachorros</a>
+                <a class="nav-botao" href="#">Gatos</a>
+                <a class="nav-botao" href="#">Contato</a>
+                <a class="nav-botao" href="#">Sobre</a>
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-botao" })
+                @Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-botao" })
+                @Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-botao" })
+            </nav>
+        </section>
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
