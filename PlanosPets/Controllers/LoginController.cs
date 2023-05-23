@@ -33,25 +33,25 @@ namespace PlanosPets.Controllers
             ClienteDAO clienteDAO = new ClienteDAO();
             funcionario = funcionarioDAO.SelectFuncionario(vielmodel.Email);
             cliente = clienteDAO.SelectCliente(vielmodel.Email);
-            if (funcionario == null | funcionario.email_func != vielmodel.Email | cliente == null | cliente.email_cli != vielmodel.Email)
+            if (funcionario == null | funcionario.email_func != vielmodel.Email && cliente == null | cliente.email_cli != vielmodel.Email)
             {
                 ModelState.AddModelError("Email", "Email incorreto");
                 return View(vielmodel);
             }
 
-            if (funcionario == null | funcionario.senha_func != vielmodel.senha | cliente == null | cliente.senha_cli != vielmodel.senha)
+            if (funcionario == null | funcionario.senha_func != vielmodel.senha &&  cliente == null | cliente.senha_cli != vielmodel.senha)
             {
                 ModelState.AddModelError("Senha", "Senha incorreto");
                 return View(vielmodel);
             }
-            else if (funcionario != null | funcionario.email_func == vielmodel.Email)
+            else if (funcionario.email_func == vielmodel.Email && funcionario.senha_func == vielmodel.senha)
             {
                 Session["FuncLogado"] = vielmodel.Email.ToString();
                 Session["senhaLogado"] = vielmodel.senha.ToString();
 
                 return RedirectToAction("IndexFunc", "Home");
             }
-            else if (cliente != null | cliente.email_cli == vielmodel.Email)
+            else if (cliente != null | cliente.email_cli == vielmodel.Email && cliente.senha_cli == vielmodel.senha)
             {
                 Session["ClienteLogado"] = vielmodel.Email.ToString();
                 Session["senhaLogado"] = vielmodel.senha.ToString();

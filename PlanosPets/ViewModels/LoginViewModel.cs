@@ -20,7 +20,7 @@ namespace PlanosPets.ViewModels
 
 
 
-
+        [DataType(DataType.Password)]
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "Informe a semha")]
         public string senha { get; set; }
