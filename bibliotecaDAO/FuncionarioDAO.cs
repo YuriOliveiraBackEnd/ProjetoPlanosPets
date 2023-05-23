@@ -67,11 +67,11 @@ namespace bibliotecaDAO
 
         }
 
-        public ModelFuncionario SelectFuncionario(string vNoCPF)
+        public ModelFuncionario SelectFuncionario(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectFuncionario(@email_func);";
-            comand.Parameters.Add("@email_func", MySqlDbType.VarChar).Value = vNoCPF;
+            comand.CommandText = "call SelectFuncionario(@email_func);";
+            comand.Parameters.Add("@email_func", MySqlDbType.VarChar).Value = vEmail;
 
 
 

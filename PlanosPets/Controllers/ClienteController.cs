@@ -18,7 +18,7 @@ namespace PlanosPets.Controllers
             return View(listaCliente);
         }
 
-        public ActionResult Cadastrar()
+        public ActionResult CadastrarCli()
         {
             return View();
         }

@@ -11,7 +11,6 @@ namespace PlanosPets.ViewModels
 {
     public class LoginViewModel
     {
-        public string UrlRetorno { get; set; }
 
 
 

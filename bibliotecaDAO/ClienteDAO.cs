@@ -63,7 +63,38 @@ namespace bibliotecaDAO
         }
 
 
+        public ModelCliente SelectCliente(string vEmail)
+        {
+            conexao.Open();
+            comand.CommandText = "call SelectCliente(@email_cli);";
+            comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = vEmail;
 
+
+
+            comand.Connection = conexao;
+            var readcli = comand.ExecuteReader();
+            var tempcli = new ModelCliente();
+
+
+
+            if (readcli.Read())
+            {
+                tempcli.id_cli = int.Parse(readcli["id_cli"].ToString());
+                tempcli.nome_cli = readcli["nome_cli"].ToString();
+                tempcli.num_cli = readcli["num_cli"].ToString();
+                tempcli.cep_cli = readcli["cep_cli"].ToString();
+                tempcli.tel_cli = readcli["tel_cli"].ToString();
+                tempcli.email_cli = readcli["email_cli"].ToString();
+                tempcli.nasc_cli = DateTime.Parse(readcli["nasc_cli"].ToString());
+                tempcli.logradouro_cli = readcli["logradouro_cli"].ToString();
+                tempcli.senha_cli = readcli["senha_cli"].ToString();
+                tempcli.CPF_cli = readcli["CPF_cli"].ToString();
+
+            }
+            readcli.Close();
+            conexao.Close();
+            return tempcli;
+        }
         public string SelectCPFDoCliente(string vCPF)
         {
             conexao.Open();
