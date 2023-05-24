@@ -18,7 +18,7 @@ namespace PlanosPets.Controllers
             return View(listaCliente);
         }
 
-        public ActionResult CadastrarCli()
+        public ActionResult Cadastrar()
         {
             return View();
         }
@@ -28,44 +28,46 @@ namespace PlanosPets.Controllers
         {
 
             if (!ModelState.IsValid)
-                return View(cliente);
-            ClienteDAO novoClienteDAO = new ClienteDAO();
-            string cpf = new ClienteDAO().SelectCPFDoCliente(cliente.CPF_cli);
-            string email = new ClienteDAO().SelectEmailDoCliente(cliente.email_cli);
-            if (cpf == cliente.CPF_cli && email == cliente.email_cli)
             {
-                ViewBag.Email = "Email já existente";
-                ViewBag.CPF = "CPF já existente";
-                return View(cliente);
+               
+                ClienteDAO novoClienteDAO = new ClienteDAO();
+                string cpf = new ClienteDAO().SelectCPFDoCliente(cliente.CPF_cli);
+                string email = new ClienteDAO().SelectEmailDoCliente(cliente.email_cli);
+                if (cpf == cliente.CPF_cli && email == cliente.email_cli)
+                {
+                    ViewBag.Email = "Email já existente";
+                    ViewBag.CPF = "CPF já existente";
+                    return View(cliente);
+                }
+
+                else if (cpf == cliente.CPF_cli)
+                {
+                    ViewBag.CPF = "CPF já existente";
+                    return View(cliente);
+                }
+
+                else if (email == cliente.email_cli)
+                {
+                    ViewBag.Email = "Email já existente";
+                    return View(cliente);
+                };
+                ModelCliente novoCliente = new ModelCliente()
+                {
+                    nome_cli = cliente.nome_cli,
+                    email_cli = cliente.email_cli,
+                    CPF_cli = cliente.CPF_cli,
+                    cep_cli = cliente.cep_cli,
+                    num_cli = cliente.num_cli,
+                    logradouro_cli = cliente.logradouro_cli,
+                    nasc_cli = cliente.nasc_cli,
+                    tel_cli = cliente.tel_cli,
+                    senha_cli = cliente.senha_cli
+                };
+                novoClienteDAO.InsertCliente(novoCliente);
+
+                return RedirectToAction("Index", "Home");
             }
-
-            else if (cpf == cliente.CPF_cli)
-            {
-                ViewBag.CPF = "CPF já existente";
-                return View(cliente);
-            }
-
-            else if (email == cliente.email_cli)
-            {
-                ViewBag.Email = "Email já existente";
-                return View(cliente);
-            };
-            var metodoCliente = new ClienteDAO();
-            ModelCliente novoCliente = new ModelCliente()
-            {
-                nome_cli = cliente.nome_cli,
-                email_cli = cliente.email_cli,
-                CPF_cli = cliente.CPF_cli,
-                cep_cli = cliente.cep_cli,
-                num_cli = cliente.num_cli,
-                logradouro_cli = cliente.logradouro_cli,
-                nasc_cli = cliente.nasc_cli,
-                tel_cli = cliente.tel_cli,
-                senha_cli = cliente.senha_cli
-            };
-            metodoCliente.InsertCliente(novoCliente);
-
-            return RedirectToAction("Index", "Home");
+            return View(cliente);
         }
 
         public ActionResult Atualizar(int id)
@@ -91,7 +93,7 @@ namespace PlanosPets.Controllers
             return View(cliente);
         }
 
-        public ActionResult Deletar(int id)
+        public ActionResult Excluir(int id)
         {
             var metodoCliente = new ClienteDAO();
             var cliente = metodoCliente.ListarId(id);
@@ -101,17 +103,15 @@ namespace PlanosPets.Controllers
             }
             return View(cliente);
         }
-
-        [HttpPost]
-        public ActionResult Deletar(ModelCliente cliente)
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
         {
-            if (ModelState.IsValid)
-            {
-                var metodoCliente = new ClienteDAO();
-                metodoCliente.DeleteCliente(cliente);
-                return RedirectToAction("Index");
-            }
-            return View(cliente);
+            var metodoCliente = new ClienteDAO();
+            ModelCliente cliente = new ModelCliente();
+            cliente.id_cli = id;
+            metodoCliente.Excluir(cliente);
+            return RedirectToAction("Index");
+
         }
 
         public ActionResult Detalhes(int id)

@@ -22,9 +22,9 @@ namespace PlanosPets.Controllers
             var listaFuncionario = metodoFuncionario.Listar();
             return View(listaFuncionario);
         }
-    
 
 
+        [HttpGet]
         public ActionResult Cadastrar()
         {
             return View();
@@ -36,57 +36,54 @@ namespace PlanosPets.Controllers
         public ActionResult Cadastrar(ModelFuncionario funcionario)
         {
             if (!ModelState.IsValid)
-                return View(funcionario);
-            FuncionarioDAO novoFuncionarioDAO = new FuncionarioDAO();
-            string cpf = new FuncionarioDAO().SelectCPFFunc(funcionario.CPF_func);
-            string email = new FuncionarioDAO().SelectEmailFunc(funcionario.email_func);
-            if (cpf == funcionario.CPF_func && email == funcionario.email_func)
             {
-                ViewBag.Email = "Email já existente";
-                ViewBag.CPF = "CPF já existente";
-                return View(funcionario);
+                FuncionarioDAO novoFuncionarioDAO = new FuncionarioDAO();
+                string cpf = new FuncionarioDAO().SelectCPFFunc(funcionario.CPF_func);
+                string email = new FuncionarioDAO().SelectEmailFunc(funcionario.email_func);
+                if (cpf == funcionario.CPF_func && email == funcionario.email_func)
+                {
+                    ViewBag.Email = "Email já existente";
+                    ViewBag.CPF = "CPF já existente";
+                    return View(funcionario);
+                }
+
+
+                else if (cpf == funcionario.CPF_func)
+                {
+                    ViewBag.CPF = "CPF já existente";
+                    return View(funcionario);
+                }
+
+
+
+                else if (email == funcionario.email_func)
+                {
+                    ViewBag.Email = "Email já existente";
+                    return View(funcionario);
+                };
+
+
+
+
+
+                ModelFuncionario novoFuncionario = new ModelFuncionario()
+                {
+                    nome_func = funcionario.nome_func,
+                    email_func = funcionario.email_func,
+                    CPF_func = funcionario.CPF_func,
+                    cep_func = funcionario.cep_func,
+                    num_func = funcionario.num_func,
+                    logradouro_func = funcionario.logradouro_func,
+                    nasc_func = funcionario.nasc_func,
+                    tel_func = funcionario.tel_func,
+                    senha_func = funcionario.senha_func
+                };
+                novoFuncionarioDAO.InsertFuncionario(novoFuncionario);
+
+                return RedirectToAction("Index");
             }
-
-
-            else if (cpf == funcionario.CPF_func)
-            {
-                ViewBag.CPF = "CPF já existente";
-                return View(funcionario);
-            }
-
-
-
-            else if (email == funcionario.email_func)
-            {
-                ViewBag.Email = "Email já existente";
-                return View(funcionario);
-            };
-
-
-
-
-            var metodoFuncionario = new FuncionarioDAO();
-            ModelFuncionario novoFuncionario = new ModelFuncionario()
-            {
-                nome_func = funcionario.nome_func,
-                email_func = funcionario.email_func,
-                CPF_func = funcionario.CPF_func,
-                cep_func = funcionario.cep_func,
-                num_func = funcionario.num_func,
-                logradouro_func = funcionario.logradouro_func,
-                nasc_func = funcionario.nasc_func,
-                tel_func = funcionario.tel_func,
-                senha_func = funcionario.senha_func
-            };
-            metodoFuncionario.InsertFuncionario(novoFuncionario);
-
-
-
-
-            return RedirectToAction("Index");
+            return View(funcionario);
         }
-       
-
        
 
 

@@ -63,7 +63,6 @@ namespace bibliotecaModel
         [DataType(DataType.Password)]
         [DisplayName("Senha do funcionário")]
         [Required(ErrorMessage = "insira sua senha")]
-        [SenhaBrasil(CaracterEspecialRequerido = true, SenhaForteRequerida = true, SenhaTamanhoMinimo = 5)]
         public string senha_func { get; set; }
 
         [DataType(DataType.Password)]

@@ -140,6 +140,7 @@ namespace bibliotecaDAO
                     nome_cli = retorno["nome_cli"].ToString(),
                     email_cli = retorno["email_cli"].ToString(),
                     CPF_cli = retorno["CPF_cli"].ToString(),
+                    senha_cli = retorno["senha_cli"].ToString(),
                     tel_cli = retorno["tel_cli"].ToString(),
                     num_cli = retorno["num_cli"].ToString(),
                     cep_cli = retorno["cep_cli"].ToString(),
@@ -165,6 +166,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
+                var db = new Banco();
                 var strQuery = string.Format("select * from Cliente where id_cli = {0};", Id);
                 var retorno = db.Retornar(strQuery);
                 return ListaDeClientes(retorno).FirstOrDefault();
@@ -189,18 +191,15 @@ namespace bibliotecaDAO
 
 
 
-        public void DeleteCliente(ModelCliente cliente)
+        public void Excluir(ModelCliente cliente)
         {
-            var strQuery = "";
-            strQuery += "delete from Cliente ";
-            strQuery += string.Format("where id_cli = {0};", cliente.id_cli);
-
-
 
             using (db = new Banco())
             {
+                var strQuery = string.Format("Delete from cliente where id_cli = {0}", cliente.id_cli);
                 db.Executar(strQuery);
             }
+
         }
 
 

@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.tel_cli)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_cli }) |
-                @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_cli }) |
-                @Html.ActionLink("Apagar", "Deletar", new { Id = item.id_cli })
+                @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_cli }) 
+                @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_cli }) 
+                @Html.ActionLink("Excluir", "Excluir", new { Id = item.id_cli })
             </td>
         </tr>
     }
