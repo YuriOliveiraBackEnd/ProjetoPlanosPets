@@ -167,7 +167,7 @@ namespace bibliotecaDAO
             using (db = new Banco())
             {
                 var db = new Banco();
-                var strQuery = string.Format("select * from Cliente where id_cli = {0};", Id);
+                var strQuery = string.Format("select * from Cliente where id_cli = '{0}';", Id);
                 var retorno = db.Retornar(strQuery);
                 return ListaDeClientes(retorno).FirstOrDefault();
             }
@@ -178,8 +178,17 @@ namespace bibliotecaDAO
         public void UpdateCliente(ModelCliente cliente)
         {
             var strQuery = "";
-            strQuery += "update Cliente set ";
-            strQuery += string.Format("nome_cli = '{0}', email_cli = '{1}', CPF_cli = '{2}', cep_cli = '{3}', num_cli = '{4}', logradouro_cli = '{5}', nasc_cli = str_to_date('{6}', '%d/%m/%Y %T'), tel_cli = '{7}', senha_cli = '{8}' where id_cli = {8};", cliente.nome_cli, cliente.email_cli, cliente.CPF_cli, cliente.num_cli, cliente.nasc_cli, cliente.tel_cli, cliente.senha_cli, cliente.id_cli);
+            strQuery += "Update cliente set ";
+            strQuery += string.Format("nome_cli = '{0}',", cliente.nome_cli);
+            strQuery += string.Format("email_cli= '{0}', ", cliente.email_cli);
+            strQuery += string.Format("CPF_cli = '{0}',", cliente.CPF_cli);
+            strQuery += string.Format("tel_cli = '{0}',", cliente.tel_cli);
+            strQuery += string.Format("num_cli = '{0}',", cliente.num_cli);
+            strQuery += string.Format("cep_cli = '{0}',", cliente.cep_cli);
+            strQuery += string.Format("logradouro_cli = '{0}',", cliente.logradouro_cli);
+            strQuery += string.Format("nasc_cli = STR_TO_DATE('{0}', '%d/%m/%Y %H :%i: %s')", cliente.nasc_cli);
+          
+            strQuery += string.Format("where id_cli = '{0}'", cliente.id_cli);
 
 
 

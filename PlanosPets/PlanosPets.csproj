@@ -276,7 +276,7 @@
     <Content Include="Views\Cliente\Detalhes.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Funcionario\Atualizar.cshtml" />
-    <Content Include="Views\Funcionario\Deletar.cshtml" />
+    <Content Include="Views\Funcionario\Excluir.cshtml" />
     <Content Include="Views\Funcionario\Detalhes.cshtml" />
     <Content Include="Views\Funcionario\Index.cshtml" />
     <Content Include="Views\Fornecedor\Atualizar.cshtml" />

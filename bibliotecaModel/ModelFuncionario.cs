@@ -22,7 +22,7 @@ namespace bibliotecaModel
 
 
         [DisplayName("Email do funcionário")]
-        [MaxLength(50, ErrorMessage = "o Email deve conter no maximo 15 caracteres")]
+        [MaxLength(50, ErrorMessage = "o Email deve conter no maximo 50 caracteres")]
         [RegularExpression(@"^[a-zA-Z]+(([\'\,\.\-][a-zA-Z ])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})$", ErrorMessage = "Digite um Email válido")]
         [Required(ErrorMessage = "insira seu email")]
         [Remote("SelectEmailFunc", "Funcionario", ErrorMessage = "Email já foi casdastrado")]
@@ -38,7 +38,7 @@ namespace bibliotecaModel
 
 
         [RegularExpression(@"^[0-9]+${11,11}", ErrorMessage = "Somente números")]
-        [DisplayName("Cep do funcionário")]
+        [DisplayName("Cep")]
         [MaxLength(8, ErrorMessage = "O CEP deve conter 8 caracters")]
         [MinLength(8, ErrorMessage = "O CEP deve conter 8 caracters")]
         [Required(ErrorMessage = "insira seu cep")]

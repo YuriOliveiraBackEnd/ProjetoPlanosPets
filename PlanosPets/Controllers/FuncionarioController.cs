@@ -106,7 +106,7 @@ namespace PlanosPets.Controllers
         [HttpPost]
         public ActionResult Atualizar(ModelFuncionario funcionario)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var metodoFuncionario = new FuncionarioDAO();
                 metodoFuncionario.UpdateFuncionario(funcionario);
@@ -117,7 +117,7 @@ namespace PlanosPets.Controllers
 
 
 
-        public ActionResult Deletar(int id)
+        public ActionResult Excluir(int id)
         {
             var metodoFuncionario = new FuncionarioDAO();
             var funcionario = metodoFuncionario.ListarId(id);
@@ -127,19 +127,15 @@ namespace PlanosPets.Controllers
             }
             return View(funcionario);
         }
-
-
-
-        [HttpPost]
-        public ActionResult Deletar(ModelFuncionario funcionario)
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
         {
-            if (ModelState.IsValid)
-            {
-                var metodoFuncionario = new FuncionarioDAO();
-                metodoFuncionario.DeleteFuncionario(funcionario);
-                return RedirectToAction("Index");
-            }
-            return View(funcionario);
+            var metodoFuncionario = new FuncionarioDAO();
+            ModelFuncionario funcionario = new ModelFuncionario();
+            funcionario.id_func = id;
+            metodoFuncionario.Excluir(funcionario);
+            return RedirectToAction("Index");
+
         }
 
 

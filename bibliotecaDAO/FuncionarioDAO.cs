@@ -139,7 +139,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = string.Format("select * from Funcionario where id_func = {0};", Id);
+                var strQuery = string.Format("select * from Funcionario where id_func = '{0}';", Id);
                 var retorno = db.Retornar(strQuery);
                 return ListaDeFuncionarios(retorno).FirstOrDefault();
             }
@@ -149,8 +149,17 @@ namespace bibliotecaDAO
         public void UpdateFuncionario(ModelFuncionario funcionario)
         {
             var strQuery = "";
-            strQuery += "update Funcionario set ";
-            strQuery += string.Format("nome_func = '{0}', email_func = '{1}', CPF_func = '{2}', cep_func = '{3}', num_func = '{4}', logradouro_func = '{5}', nasc_func = str_to_date('{6}', '%d/%m/%Y %T'), tel_func = '{7}', senha_func = '{8}' where id_func = {8};", funcionario.nome_func, funcionario.email_func, funcionario.CPF_func, funcionario.num_func, funcionario.nasc_func, funcionario.tel_func, funcionario.senha_func, funcionario.id_func);
+            strQuery += "Update funcionario set ";
+            strQuery += string.Format("nome_func = '{0}',", funcionario.nome_func);
+            strQuery += string.Format("email_func= '{0}', ", funcionario.email_func);
+            strQuery += string.Format("CPF_func = '{0}',", funcionario.CPF_func);
+            strQuery += string.Format("tel_func = '{0}',", funcionario.tel_func);
+            strQuery += string.Format("num_func = '{0}',", funcionario.num_func);
+            strQuery += string.Format("cep_func = '{0}',", funcionario.cep_func);
+            strQuery += string.Format("logradouro_func = '{0}',", funcionario.logradouro_func);
+            strQuery += string.Format("nasc_func = STR_TO_DATE('{0}', '%d/%m/%Y %H :%i: %s')", funcionario.nasc_func);
+
+            strQuery += string.Format("where id_func = '{0}'", funcionario.id_func);
 
 
 
@@ -158,21 +167,16 @@ namespace bibliotecaDAO
             {
                 db.Executar(strQuery);
             }
-        }
-        public void DeleteFuncionario(ModelFuncionario funcionario)
+        
+    }
+        public void Excluir(ModelFuncionario funcionario)
         {
-            var strQuery = "";
-            strQuery += "delete from Funcionario ;";
-            strQuery += string.Format("where id_func = {0};", funcionario.id_func);
-
-
-
             using (db = new Banco())
             {
+                var strQuery = string.Format("Delete from funcionario where id_func = {0}", funcionario.id_func);
                 db.Executar(strQuery);
             }
         }
-
 
 
         public void Save(ModelFuncionario funcionario)

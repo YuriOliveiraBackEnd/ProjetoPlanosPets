@@ -20,7 +20,7 @@ namespace bibliotecaDAO
         public void InsertFornecedor(ModelFornecedor fornecedor)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCliente(@nome_forn, @tel_forn, @email_forn, @CNPJ_forn, @cep_forn, @num_forn, @logradouro_forn, @id_prod);";
+            comand.CommandText = "call InsertFornecedor(@nome_forn, @tel_forn, @email_forn, @CNPJ_forn, @cep_forn, @num_forn, @logradouro_forn, @id_prod);";
             comand.Parameters.Add("@nome_forn", MySqlDbType.VarChar).Value = fornecedor.nome_forn;
             comand.Parameters.Add("@tel_forn", MySqlDbType.VarChar).Value = fornecedor.tel_forn;
             comand.Parameters.Add("@email_forn", MySqlDbType.VarChar).Value = fornecedor.email_forn;
@@ -114,6 +114,34 @@ namespace bibliotecaDAO
             {
                 InsertFornecedor(fornecedor);
             }
+        }
+        public string SelectEmailForn(string vEmail)
+        {
+            conexao.Open();
+            comand.CommandText = "call  spSelecEmailDoForn(@email_forn);";
+            comand.Parameters.Add("@email_forn", MySqlDbType.String).Value = vEmail;
+            comand.Connection = conexao;
+            string Email = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (Email == null)
+                Email = "";
+            return Email;
+        }
+        public string SelectCNPJFonc(string vCNPJ)
+        {
+            conexao.Open();
+            comand.CommandText = "call spSelectCNPJDoForn(@CNPJ_forn);";
+            comand.Parameters.Add("@CNPJ_forn", MySqlDbType.VarChar).Value = vCNPJ;
+            comand.Connection = conexao;
+            string CNPJ = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (CNPJ == null)
+
+
+
+                CNPJ = "";
+            return CNPJ;
+
         }
 
     }

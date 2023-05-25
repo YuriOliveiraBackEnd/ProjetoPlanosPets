@@ -74,6 +74,8 @@ namespace PlanosPets.Controllers
         {
             var metodoCliente = new ClienteDAO();
             var cliente = metodoCliente.ListarId(id);
+         
+            
             if (cliente == null)
             {
                 return HttpNotFound();
@@ -84,7 +86,7 @@ namespace PlanosPets.Controllers
         [HttpPost]
         public ActionResult Atualizar(ModelCliente cliente)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var metodoCliente = new ClienteDAO();
                 metodoCliente.UpdateCliente(cliente);
