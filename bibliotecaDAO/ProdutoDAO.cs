@@ -20,8 +20,9 @@ namespace bibliotecaDAO
         public void InsertProduto(ModelProduto produto)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertProduto(@valor_unitario, @quant, @desc_prod, @ft_prod, @id_categoria, @id_func);";
+            comand.CommandText = "call spInsertProduto(@nome_prod,@valor_unitario, @quant, @desc_prod, @ft_prod, @id_categoria, @id_func);";
             comand.Parameters.Add("@valor_unitario", MySqlDbType.VarChar).Value = produto.valor_unitario;
+            comand.Parameters.Add("@nome_prod", MySqlDbType.VarChar).Value = produto.nome_prod;
             comand.Parameters.Add("@quant", MySqlDbType.VarChar).Value = produto.quant;
             comand.Parameters.Add("@desc_prod", MySqlDbType.VarChar).Value = produto.desc_prod;
             comand.Parameters.Add("@ft_prod", MySqlDbType.VarChar).Value = produto.ft_prod;
@@ -120,5 +121,6 @@ namespace bibliotecaDAO
                 InsertProduto(produto);
             }
         }
+
     }
 }

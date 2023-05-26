@@ -9,6 +9,7 @@ namespace bibliotecaModel
     public class ModelProduto
     {
         public int id_prod { get; set; }
+        public string nome_prod { get; set; }
         public string nome_compra { get; set; }
         public double valor_unitario { get; set; }
         public int quant { get; set; }
