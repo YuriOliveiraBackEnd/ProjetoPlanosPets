@@ -110,9 +110,6 @@ namespace bibliotecaDAO
                 CPF = "";
             return CPF;
 
-
-
-
         }
         public List<ModelCliente> Listar()
         {

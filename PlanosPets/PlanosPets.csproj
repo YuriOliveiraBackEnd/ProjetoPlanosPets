@@ -286,12 +286,16 @@
     <Content Include="Views\Fornecedor\Index.cshtml" />
     <Content Include="Views\Produto\Cadastrar.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Categoria\Cadastrar.cshtml" />
+    <Content Include="Views\Categoria\Index.cshtml" />
+    <Content Include="Views\Categoria\Atualizar.cshtml" />
+    <Content Include="Views\Categoria\Excluir.cshtml" />
+    <Content Include="Views\Categoria\Detalhes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Categoria\" />
     <Folder Include="Views\Raca\" />
   </ItemGroup>
   <ItemGroup>

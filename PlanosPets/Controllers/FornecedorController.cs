@@ -34,7 +34,7 @@ namespace PlanosPets.Controllers
                 if (cnpj == fornecedor.CNPJ_forn && email == fornecedor.email_forn)
                 {
                     ViewBag.Email = "Email já cadastrado";
-                    ViewBag.CPF = "CNPJ já cadastrado";
+                    ViewBag.CNPJ = "CNPJ já cadastrado";
                     return View(fornecedor);
                 }
 

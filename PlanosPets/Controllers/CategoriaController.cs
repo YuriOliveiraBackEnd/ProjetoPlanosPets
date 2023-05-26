@@ -10,79 +10,99 @@ namespace PlanosPets.Controllers
 {
     public class CategoriaController : Controller
     {
-
+        public ActionResult Index()
+        {
+            var metodoCategoria = new CategoriaDAO();
+            var listaCategoria = metodoCategoria.Listar();
+            return View(listaCategoria);
+        }
         public ActionResult Cadastrar()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Cadastrar(ModelRacas raca)
+        public ActionResult Cadastrar(ModelCategorias categorias)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(categorias);
+            CategoriaDAO novoCategoriaDAO = new CategoriaDAO();
+            string nome = new CategoriaDAO().SelectNomeCategoria(categorias.nome_categoria);
+            if (nome == categorias.nome_categoria)
             {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.InsertRaca(raca);
-                return RedirectToAction("Index");
+                ViewBag.Categoria = "Categoria já cadastrada";
+                return View(categorias);
             }
-            return View(raca);
+
+
+            ModelCategorias novacategoria = new ModelCategorias()
+            {
+                nome_categoria = categorias.nome_categoria,
+                desc_categoria = categorias.desc_categoria,
+             
+
+            };
+            novoCategoriaDAO.InsertCategoria(novacategoria);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Atualizar(int id)
         {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
+            var metodoCategoria = new CategoriaDAO();
+            var cliente = metodoCategoria.ListarId(id);
+
+
+            if (cliente == null)
             {
                 return HttpNotFound();
             }
-            return View(raca);
+            return View(cliente);
         }
 
         [HttpPost]
-        public ActionResult Atualizar(ModelRacas raca)
+        public ActionResult Atualizar(ModelCategorias categoria)
         {
             if (ModelState.IsValid)
             {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.UpdateRaca(raca);
+                var metodoCategoria = new CategoriaDAO();
+                metodoCategoria.UpdateCategoria(categoria);
                 return RedirectToAction("Index");
             }
-            return View(raca);
+            return View(categoria);
         }
 
-        public ActionResult Deletar(int id)
+        public ActionResult Excluir(int id)
         {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
+            var metodoCategoria = new CategoriaDAO();
+            var categoria = metodoCategoria.ListarId(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(raca);
+            return View(categoria);
         }
-
-        [HttpPost]
-        public ActionResult Deletar(ModelRacas raca)
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
         {
-            if (ModelState.IsValid)
-            {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.DeleteRaca(raca);
-                return RedirectToAction("Index");
-            }
-            return View(raca);
+            var metodoCategoria = new CategoriaDAO();
+            ModelCategorias categoria = new ModelCategorias();
+            categoria.id_categoria = id;
+            metodoCategoria.DeleteCategoria(categoria);
+            return RedirectToAction("Index");
+
         }
 
         public ActionResult Detalhes(int id)
         {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
+            var metodoCategoria = new CategoriaDAO();
+            var categoria = metodoCategoria.ListarId(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(raca);
+            return View(categoria);
         }
+
     }
 }

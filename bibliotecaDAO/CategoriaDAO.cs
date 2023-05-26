@@ -20,7 +20,7 @@ namespace bibliotecaDAO
         public void InsertCategoria(ModelCategorias categorias)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCliente(@nome_categoria, @desc_categoria);";
+            comand.CommandText = "call InsertCategoria(@nome_categoria, @desc_categoria);";
             comand.Parameters.Add("@nome_categoria", MySqlDbType.VarChar).Value = categorias.nome_categoria;
             comand.Parameters.Add("@desc_categoria", MySqlDbType.VarChar).Value = categorias.desc_categoria;
 
@@ -32,10 +32,23 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from Categoria;";
+                var strQuery = "Select * from categorias;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDeCategoria(retorno);
             }
+
+        }
+        public string SelectNomeCategoria(string vNome)
+        {
+            conexao.Open();
+            comand.CommandText = "call SelectNomeCategoria(@nome_categoria);";
+            comand.Parameters.Add("@nome_categoria", MySqlDbType.String).Value = vNome;
+            comand.Connection = conexao;
+            string nome = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (nome == null)
+                nome = "";
+            return nome;
 
         }
         public List<ModelCategorias> ListaDeCategoria(MySqlDataReader retorno)
@@ -46,7 +59,7 @@ namespace bibliotecaDAO
                 var TempCategorias = new ModelCategorias()
                 {
                     id_categoria = int.Parse(retorno["id_categoria"].ToString()),
-                    desc_categoria = retorno["desc_categorias"].ToString(),
+                    desc_categoria = retorno["desc_categoria"].ToString(),
                     nome_categoria = retorno["nome_categoria"].ToString(),
                
                 };
@@ -62,7 +75,7 @@ namespace bibliotecaDAO
         {
             using (db = new Banco())
             {
-                var strQuery = string.Format("select * from Categoria where id_categoria = {0};", Id);
+                var strQuery = string.Format("select * from categorias where id_categoria = '{0}';", Id);
                 var retorno = db.Retornar(strQuery);
                 return ListaDeCategoria(retorno).FirstOrDefault();
             }
@@ -71,8 +84,13 @@ namespace bibliotecaDAO
         public void UpdateCategoria(ModelCategorias categorias)
         {
             var strQuery = "";
-            strQuery += "update Categoria set ";
-            strQuery += string.Format("nome_categoria = '{0}', desc_categorias = '{1}' where id_categoria = '{3}';", categorias.nome_categoria, categorias.desc_categoria, categorias.id_categoria);
+            strQuery += "Update categorias set ";
+            strQuery += string.Format("nome_categoria = '{0}',", categorias.nome_categoria);
+            strQuery += string.Format("desc_categoria= '{0}'", categorias.desc_categoria);
+       
+            strQuery += string.Format("where id_categoria = '{0}'", categorias.id_categoria);
+
+
 
             using (db = new Banco())
             {
@@ -82,12 +100,9 @@ namespace bibliotecaDAO
 
         public void DeleteCategoria(ModelCategorias categorias)
         {
-            var strQuery = "";
-            strQuery += "delete from Categorias ";
-            strQuery += string.Format("where id_categoria = {0};", categorias.id_categoria);
-
             using (db = new Banco())
             {
+                var strQuery = string.Format("Delete from categorias where id_categoria = {0}", categorias.id_categoria);
                 db.Executar(strQuery);
             }
         }
