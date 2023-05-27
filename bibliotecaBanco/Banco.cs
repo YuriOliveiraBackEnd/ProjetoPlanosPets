@@ -13,6 +13,7 @@ namespace bibliotecaBanco
     public class Banco : IDisposable
     {
         private readonly MySqlConnection conexao;
+        public static string msg;
 
         public Banco()
         {
@@ -40,8 +41,8 @@ namespace bibliotecaBanco
         public void Dispose()
         {
             if (conexao.State == ConnectionState.Open)
-                conexao.Close();   
-        }
+                conexao.Close();
 
+        }
     }
 }

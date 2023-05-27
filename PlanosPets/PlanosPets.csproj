@@ -284,13 +284,18 @@
     <Content Include="Views\Fornecedor\Deletar.cshtml" />
     <Content Include="Views\Fornecedor\Detalhes.cshtml" />
     <Content Include="Views\Fornecedor\Index.cshtml" />
-    <Content Include="Views\Produto\Cadastrar.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Categoria\Cadastrar.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Categoria\Atualizar.cshtml" />
     <Content Include="Views\Categoria\Excluir.cshtml" />
     <Content Include="Views\Categoria\Detalhes.cshtml" />
+    <Content Include="Views\Produto\Cadastrar.cshtml" />
+    <Content Include="Views\Home\Listarproduto.cshtml" />
+    <Content Include="Views\Produto\ListaProduto.cshtml" />
+    <Content Include="Views\Produto\Atualizar.cshtml" />
+    <Content Include="Views\Produto\Excluir.cshtml" />
+    <Content Include="Views\Produto\Detalhes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
