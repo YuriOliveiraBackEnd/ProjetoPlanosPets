@@ -2,6 +2,7 @@
 using bibliotecaModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,18 +25,42 @@ namespace PlanosPets.Controllers
         }
 
         [HttpPost]
-        public ActionResult Cadastrar(ModelRacas raca)
+        public ActionResult Cadastrar(ModelRacas raca, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(raca);
+            RacaDAO novaRacaDAO = new RacaDAO();
+            string nome = new RacaDAO().SelectNomeRaca(raca.nome_raca);
+            if (nome == raca.nome_raca)
             {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.InsertRaca(raca);
-                return RedirectToAction("Index");
+                ViewBag.Raca = "raça já cadastrada";
+                return View(raca);
             }
-            return View(raca);
+            var modelRaca = new ModelProduto();
+            var metodoRaca = new ProdutoDAO();
+
+            string arquivo = Path.GetFileName(file.FileName);
+
+            string file2 = "/images/" + Path.GetFileName(file.FileName);
+
+            string _path = Path.Combine(Server.MapPath("~/images"), arquivo);
+
+            file.SaveAs(_path);
+
+            raca.ft_raca = file2;
+
+            ModelRacas novaraca = new ModelRacas()
+            {
+                nome_raca= raca.nome_raca,
+                ft_raca = raca.ft_raca
+            };
+            novaRacaDAO.InsertRaca(novaraca);
+
+            return RedirectToAction("Index");
         }
 
-        public ActionResult Atualizar(int id)
+      
+        public ActionResult Excluir(int id)
         {
             var metodoRaca = new RacaDAO();
             var raca = metodoRaca.ListarId(id);
@@ -46,50 +71,19 @@ namespace PlanosPets.Controllers
             return View(raca);
         }
 
-        [HttpPost]
-        public ActionResult Atualizar(ModelRacas raca)
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
         {
-            if (ModelState.IsValid)
-            {
+              
                 var metodoRaca = new RacaDAO();
-                metodoRaca.UpdateRaca(raca);
+                ModelRacas racas = new ModelRacas();
+                racas.id_raca = id;
+                metodoRaca.DeleteRaca(racas);
                 return RedirectToAction("Index");
-            }
-            return View(raca);
+            
+            
         }
+      
 
-        public ActionResult Deletar(int id)
-        {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
-            {
-                return HttpNotFound();
-            }
-            return View(raca);
-        }
-
-        [HttpPost]
-        public ActionResult Deletar(ModelRacas raca)
-        {
-            if (ModelState.IsValid)
-            {
-                var metodoRaca = new RacaDAO();
-                metodoRaca.DeleteRaca(raca);
-                return RedirectToAction("Index");
-            }
-            return View(raca);
-        }
-
-        public ActionResult Detalhes(int id)
-        {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
-            {
-                return HttpNotFound();
-            }
-            return View(raca);
-        }   
     }
 }

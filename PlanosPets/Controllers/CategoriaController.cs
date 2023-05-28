@@ -39,8 +39,6 @@ namespace PlanosPets.Controllers
             {
                 nome_categoria = categorias.nome_categoria,
                 desc_categoria = categorias.desc_categoria,
-             
-
             };
             novoCategoriaDAO.InsertCategoria(novacategoria);
 

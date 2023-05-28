@@ -296,12 +296,14 @@
     <Content Include="Views\Produto\Atualizar.cshtml" />
     <Content Include="Views\Produto\Excluir.cshtml" />
     <Content Include="Views\Produto\Detalhes.cshtml" />
+    <Content Include="Views\Raca\Cadastrar.cshtml" />
+    <Content Include="Views\Raca\Excluir.cshtml" />
+    <Content Include="Views\Raca\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="images\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Raca\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

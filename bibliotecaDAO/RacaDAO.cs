@@ -20,16 +20,26 @@ namespace bibliotecaDAO
         public void InsertRaca(ModelRacas racas)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCliente(@nome_raca, @ft_raca, @id_func);";
+            comand.CommandText = "call InsertRaca(@nome_raca, @ft_raca);";
             comand.Parameters.Add("@nome_raca", MySqlDbType.VarChar).Value = racas.nome_raca;
-            comand.Parameters.Add("@ft_raca", MySqlDbType.VarChar).Value = racas.ft_raca;
-            comand.Parameters.Add("@id_func", MySqlDbType.VarChar).Value = racas.id_func;
+            comand.Parameters.Add("@ft_raca", MySqlDbType.VarChar).Value = racas.ft_raca; 
 
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
             conexao.Close();
         }
-
+        public string SelectNomeRaca(string vNome)
+        {
+            conexao.Open();
+            comand.CommandText = "call SelectNomeRaca(@nome_raca);";
+            comand.Parameters.Add("@nome_raca", MySqlDbType.String).Value = vNome;
+            comand.Connection = conexao;
+            string nome = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (nome == null)
+                nome = "";
+            return nome;
+        }
         public List<ModelRacas> Listar()
         {
             using (db = new Banco())
@@ -48,7 +58,6 @@ namespace bibliotecaDAO
                 var TempRacas = new ModelRacas()
                 {
                     id_raca = int.Parse(retorno["id_raca"].ToString()),
-                    id_func = int.Parse(retorno["id_func"].ToString()),
                     ft_raca = retorno["ft_raca"].ToString(),
                     nome_raca = retorno["nome_raca"].ToString()
 
@@ -73,7 +82,7 @@ namespace bibliotecaDAO
         {
             var strQuery = "";
             strQuery += "update Raca set ";
-            strQuery += string.Format("nome_raca = '{0}', ft_raca = '{1}', id_func = '{2}' where id_raca = {3};", raca.nome_raca, raca.ft_raca, raca.id_func, raca.id_raca);
+            strQuery += string.Format("nome_raca = '{0}', ft_raca = '{1}', id_func = '{2}' where id_raca = {3};", raca.nome_raca, raca.ft_raca, raca.id_raca);
 
             using (db = new Banco())
             {
@@ -84,8 +93,8 @@ namespace bibliotecaDAO
         public void DeleteRaca(ModelRacas raca)
         {
             var strQuery = "";
-            strQuery += "delete from Raca ";
-            strQuery += string.Format("where id_raca = {0};", raca.id_raca);
+            strQuery += "delete from raca ";
+            strQuery += string.Format("where id_raca = '{0}';", raca.id_raca);
 
             using (db = new Banco())
             {
