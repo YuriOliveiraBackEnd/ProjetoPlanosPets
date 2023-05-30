@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,10 @@ namespace bibliotecaDAO
         public void InsertPet(ModelPets pets)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCliente(@nome_pet, @ft_pet, @nasc_pet, @RGA, @id_cli, @id_raca);";
+            comand.CommandText = "call InsertPet(@nome_pet, @ft_pet, @nasc_pet, @RGA, @id_cli, @id_raca);";
             comand.Parameters.Add("@nome_pet", MySqlDbType.VarChar).Value = pets.nome_pet;
             comand.Parameters.Add("@ft_pet", MySqlDbType.VarChar).Value = pets.ft_pet;
-            comand.Parameters.Add("@nasc_pet", MySqlDbType.VarChar).Value = pets.nasc_pet;
+            comand.Parameters.Add("@nasc_pet", MySqlDbType.DateTime).Value = pets.nasc_pet;
             comand.Parameters.Add("@RGA", MySqlDbType.VarChar).Value = pets.RGA;
             comand.Parameters.Add("@id_cli", MySqlDbType.VarChar).Value = pets.id_cli;
             comand.Parameters.Add("@id_raca", MySqlDbType.VarChar).Value = pets.id_raca;
@@ -32,11 +33,27 @@ namespace bibliotecaDAO
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+        public string SelectRGA(string vRGA)
+        {
+            conexao.Open();
+            comand.CommandText = "call SelectRGA(@RGA);";
+            comand.Parameters.Add("@RGA", MySqlDbType.VarChar).Value = vRGA;
+            comand.Connection = conexao;
+            string RGA = (string)comand.ExecuteScalar();
+            conexao.Close();
+            if (RGA == null)
+
+
+
+                RGA = "";
+            return RGA;
+
+        }
         public List<ModelPets> Listar()
         {
             using (db = new Banco())
             {
-                var strQuery = "Select * from Pet;";
+                var strQuery = "Select * from Pets;";
                 var retorno = db.Retornar(strQuery);
                 return ListaDePets(retorno);
             }
@@ -64,7 +81,8 @@ namespace bibliotecaDAO
             retorno.Close();
             return pets;
         }
-
+  
+              
         public ModelPets ListarId(int Id)
         {
             using (db = new Banco())
@@ -79,7 +97,13 @@ namespace bibliotecaDAO
         {
             var strQuery = "";
             strQuery += "update Pets set ";
-            strQuery += string.Format("nome_pet = '{0}', ft_pet = '{1}',  nasc_pet = '{3}',  RGA = '{4}', id_raca = '{5}', id_cli = '{6}' where id_pet = '{7}';", pets.nome_pet, pets.ft_pet, pets.nasc_pet, pets.RGA, pets.id_raca, pets.id_cli, pets.id_pet);
+            strQuery += string.Format("nome_pet = '{0}',", pets.nome_pet);
+            strQuery += string.Format("ft_pet = '{0}',", pets.ft_pet);
+            strQuery += string.Format ("nasc_pet= STR_TO_DATE('{0}', '%d/%m/%Y %H :%i: %s'),", pets.nasc_pet);
+            strQuery += string.Format(" RGA = '{0}',", pets.RGA);
+            strQuery += string.Format(" id_raca = '{0}',", pets.id_raca);
+            strQuery += string.Format(" id_cli = '{0}'", pets.id_cli);
+            strQuery += string.Format("where id_pet = '{0}'", pets.id_pet);
 
             using (db = new Banco())
             {
@@ -87,16 +111,17 @@ namespace bibliotecaDAO
             }
         }
 
-        public void DeletePet(ModelPets pets)
+
+
+        public void DeletePet(ModelPets pet)
         {
-            var strQuery = "";
-            strQuery += "delete from Pets ";
-            strQuery += string.Format("where id_pet = {0};", pets.id_pet);
 
             using (db = new Banco())
             {
+                var strQuery = string.Format("Delete from pets where id_pet = '{0}'",pet.id_pet);
                 db.Executar(strQuery);
             }
+
         }
 
         public void Save(ModelPets pets)
@@ -111,5 +136,41 @@ namespace bibliotecaDAO
             }
         }
 
+
+        public List<ModelRacas> GetRaca(string vNome)
+        {
+
+            List<ModelRacas> ListRaca = new List<ModelRacas>();
+            conexao.Open();
+            MySqlCommand cmd = new MySqlCommand("call SelectRaca(@nome_raca);");
+            cmd.CommandType = CommandType.StoredProcedure;
+            comand.Parameters.Add("@nome_raca", MySqlDbType.VarChar).Value = vNome;
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sd.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+
+            {
+                ListRaca.Add(
+
+                    new ModelRacas
+
+                    {
+
+                        id_raca = int.Parse(Convert.ToString(dr["id_raca"])),
+
+                        nome_raca = Convert.ToString(dr["nome_raca"]),
+
+                   
+
+                    });
+
+            }
+
+            return ListRaca;
+       
+        }
+  
+        
     }
 }

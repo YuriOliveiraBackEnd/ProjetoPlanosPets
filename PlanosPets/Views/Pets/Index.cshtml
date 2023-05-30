@@ -1,0 +1,63 @@
+﻿@model IEnumerable<bibliotecaModel.ModelPets>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_pet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome_pet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ft_pet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nasc_pet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RGA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_cli)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_raca)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_pet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome_pet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ft_pet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nasc_pet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RGA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_cli)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_raca)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Atualizar", new { Id= item.id_pet }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Excluir", new { Id = item.id_pet })
+        </td>
+    </tr>
+}
+
+</table>

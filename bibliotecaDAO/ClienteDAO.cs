@@ -49,7 +49,7 @@ namespace bibliotecaDAO
         public string SelectEmailDoCliente(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectEmailCli(@email_cli);";
+            comand.CommandText = "call SelectEmailCli(@email_cli);";
             comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = vEmail;
             comand.Connection = conexao;
             string Email = (string)comand.ExecuteScalar();
@@ -98,7 +98,7 @@ namespace bibliotecaDAO
         public string SelectCPFDoCliente(string vCPF)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectCPFDoCli(@CPF_cli);";
+            comand.CommandText = "call SelectCPFDoCli(@CPF_cli);";
             comand.Parameters.Add("@CPF_cli", MySqlDbType.String).Value = vCPF;
             comand.Connection = conexao;
             string CPF = (string)comand.ExecuteScalar();

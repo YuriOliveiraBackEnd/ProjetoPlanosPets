@@ -41,7 +41,7 @@ namespace bibliotecaDAO
         public string SelectEmailFunc(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call  spSelectEmailFunc(@email_func);";
+            comand.CommandText = "call SelectEmailFunc(@email_func);";
             comand.Parameters.Add("@email_func", MySqlDbType.String).Value = vEmail;
             comand.Connection = conexao;
             string Email = (string)comand.ExecuteScalar();
@@ -53,7 +53,7 @@ namespace bibliotecaDAO
         public string SelectCPFFunc(string vCPF)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectCPFDoFunc(@CPF_func);";
+            comand.CommandText = "call SelectCPFDoFunc(@CPF_func);";
             comand.Parameters.Add("@CPF_func", MySqlDbType.VarChar).Value = vCPF;
             comand.Connection = conexao;
             string CPF = (string)comand.ExecuteScalar();

@@ -13,7 +13,7 @@ namespace bibliotecaBanco
     public class Banco : IDisposable
     {
         private readonly MySqlConnection conexao;
-        public static string msg;
+        
 
         public Banco()
         {

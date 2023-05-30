@@ -41,8 +41,8 @@ namespace bibliotecaDAO
         public string SelectNomeCategoria(string vNome)
         {
             conexao.Open();
-            comand.CommandText = "call SelectNomeCategoria(@nome_categoria);";
-            comand.Parameters.Add("@nome_categoria", MySqlDbType.String).Value = vNome;
+            comand.CommandText = "call SelectNomeRaca(@nome_raca);";
+            comand.Parameters.Add("@nome_raca", MySqlDbType.String).Value = vNome;
             comand.Connection = conexao;
             string nome = (string)comand.ExecuteScalar();
             conexao.Close();

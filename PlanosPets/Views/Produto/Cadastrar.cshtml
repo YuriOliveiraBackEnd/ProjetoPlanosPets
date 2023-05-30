@@ -1,4 +1,7 @@
 ﻿@model bibliotecaModel.ModelProduto
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
 <!DOCTYPE html>
 
@@ -8,10 +11,10 @@
     <title>Cadastrar</title>
 </head>
 <body>
-    @using (Html.BeginForm("Cadastrar", "Produto",FormMethod.Post, new { enctype = "multipart/form-data" })) 
+    @using (Html.BeginForm("Cadastrar", "Produto", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-        
+
     <div class="form-horizontal">
         <h4>ModelProduto</h4>
         <hr />
@@ -53,65 +56,73 @@
         </div>
 
 
-      
-        <br />
-
-        @Html.DropDownList("categoria", "Escolha a categoria")
 
         <br />
-
-        <br />
-
-
-
-
-        
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_func, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.id_func, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.id_func, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-12">
+            @Html.DropDownList("categoria", "Categorias")
         </div>
 
-        <div class="form-group center">
+            <br />
 
-            <div>
+            <br />
 
-                <label class="control-label col-md-2" for="file">Foto</label>
+
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.id_func, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.id_func, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.id_func, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group center">
+
+                <div>
+
+                    <label class="control-label col-md-2" for="file">Foto</label>
+
+                </div>
+
+                <div class="col-md-10">
+
+                    <input type="file" name="file" id="file" /> <br />
+
+                </div>
 
             </div>
 
-            <div class="col-md-10">
 
-                <input type="file" name="file" id="file" /> <br />
+
+            <div class="form-group center">
+
+                <div class="col-md-10">
+
+                    @ViewBag.msg <br />
+
+                </div>
 
             </div>
-
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
         </div>
+        }
 
-
-
-        <div class="form-group center">
-
-            <div class="col-md-10">
-
-                @ViewBag.msg <br />
-
-            </div>
-
+        <div>
+            @Html.ActionLink("Back to List", "ListaProduto")
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "ListaProduto")
-    </div>
 </body>
 </html>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#categoria').chosen();
+        });
+    </script>
+}

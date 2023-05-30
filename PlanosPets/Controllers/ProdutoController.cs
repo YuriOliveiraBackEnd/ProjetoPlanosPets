@@ -67,7 +67,7 @@ namespace PlanosPets.Controllers
 
                 produto.ft_prod = file2;
 
-            modelproduto.id_categoria = int.Parse(Request["categoria"]);
+           
 
             ModelProduto novoproduto = new ModelProduto()
             {
@@ -93,6 +93,7 @@ namespace PlanosPets.Controllers
 
         public ActionResult Atualizar(int id)
         {
+            CarregaCategoria();
             var metodoproduto = new ProdutoDAO();
             var produto = metodoproduto.ListarId(id);
             if (produto == null)
@@ -110,6 +111,7 @@ namespace PlanosPets.Controllers
             if (ModelState.IsValid)
             {
                 var metodoproduto = new ProdutoDAO();
+                produto.id_categoria = int.Parse(Request["categoria"]);
                 metodoproduto.UpdateProduto(produto);
                 return RedirectToAction("ListaProduto");
             }

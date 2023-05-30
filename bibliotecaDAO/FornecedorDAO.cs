@@ -118,7 +118,7 @@ namespace bibliotecaDAO
         public string SelectEmailForn(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call  spSelecEmailDoForn(@email_forn);";
+            comand.CommandText = "call  SelectEmailDoForn(@email_forn);";
             comand.Parameters.Add("@email_forn", MySqlDbType.String).Value = vEmail;
             comand.Connection = conexao;
             string Email = (string)comand.ExecuteScalar();
@@ -130,7 +130,7 @@ namespace bibliotecaDAO
         public string SelectCNPJFonc(string vCNPJ)
         {
             conexao.Open();
-            comand.CommandText = "call spSelectCNPJDoForn(@CNPJ_forn);";
+            comand.CommandText = "call SelectCNPJDoForn(@CNPJ_forn);";
             comand.Parameters.Add("@CNPJ_forn", MySqlDbType.VarChar).Value = vCNPJ;
             comand.Connection = conexao;
             string CNPJ = (string)comand.ExecuteScalar();
