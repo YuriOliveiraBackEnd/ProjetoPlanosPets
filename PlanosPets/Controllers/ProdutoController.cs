@@ -68,7 +68,6 @@ namespace PlanosPets.Controllers
         [HttpPost]
         public ActionResult Cadastrar(ModelProduto produto, HttpPostedFileBase file)
         {
-            var modelproduto =  new ModelProduto();
             var metodoProduto = new ProdutoDAO();
             string Email = Session["FuncLogado"] as string;
             string id = new ProdutoDAO().SelectIdDofunc(Email);

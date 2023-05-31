@@ -51,8 +51,9 @@ namespace PlanosPets.Controllers
                 ViewBag.Raca = "raça já cadastrada";
                 return View(raca);
             }
-            var modelRaca = new ModelProduto();
-            var metodoRaca = new ProdutoDAO();
+            string Email = Session["FuncLogado"] as string;
+            string id = new ProdutoDAO().SelectIdDofunc(Email);
+            raca.id_func = id;
 
             string arquivo = Path.GetFileName(file.FileName);
 
@@ -69,6 +70,7 @@ namespace PlanosPets.Controllers
                 nome_raca= raca.nome_raca,
                 ft_raca = raca.ft_raca,
                 tipo_animal = raca.tipo_animal,
+                id_func = raca.id_func,
             };
             novaRacaDAO.InsertRaca(novaraca);
 

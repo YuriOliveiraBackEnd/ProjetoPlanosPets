@@ -25,7 +25,6 @@ namespace bibliotecaModel
         [MaxLength(50, ErrorMessage = "o Email deve conter no maximo 15 caracteres")]
         [RegularExpression(@"^[a-zA-Z]+(([\'\,\.\-][a-zA-Z ])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})$", ErrorMessage = "Digite um Email válido")]
         [Required(ErrorMessage = "insira seu email")]
-        [Remote("SelectEmailCli", "Autenticação", ErrorMessage = "Email já foi casdastrado")]
         public string email_cli { get; set; }
 
 
@@ -62,7 +61,6 @@ namespace bibliotecaModel
 
         [DisplayName("Senha do Cliente")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "insira sua senha")]
         [SenhaBrasil(CaracterEspecialRequerido = true, SenhaForteRequerida = true, SenhaTamanhoMinimo = 5)]
         public string senha_cli { get; set; }
 

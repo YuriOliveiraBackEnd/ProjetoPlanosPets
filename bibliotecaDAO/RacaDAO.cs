@@ -30,6 +30,21 @@ namespace bibliotecaDAO
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+        public string SelectIdDofunc(string Email)
+        {
+            string VEmail = "";
+            conexao.Open();
+            comand.CommandText = "call SelectIdfunc(@email_func);";
+            comand.Parameters.Add("@email_func", MySqlDbType.VarChar).Value = Email;
+            comand.Connection = conexao;
+            object result = comand.ExecuteScalar();
+            if (result != null)
+            {
+                int id = (int)result; // Converte o resultado para int
+                VEmail = id.ToString();
+            }
+            return VEmail;
+        }
         public string SelectNomeRaca(string vNome)
         {
             conexao.Open();

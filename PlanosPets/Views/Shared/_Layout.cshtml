@@ -22,8 +22,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Página Inicial", "Listarproduto", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Lista de Produtos", "Listarproduto", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Cadastrar Pet", "Cadastrar", "Pets", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Lista de Raças", "ListaRaca", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (Session["FuncLogado"] != null)
+                    {
+                        <li>@Html.ActionLink("Área Adiministrativa", "IndexFunc", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">

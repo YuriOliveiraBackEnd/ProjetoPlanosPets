@@ -43,14 +43,7 @@
                     @Html.ValidationMessageFor(model => model.tipo_animal, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.id_func, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.id_func, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.id_func, "", new { @class = "text-danger" })
-
-                </div>
-            </div>
+         
 
 
             <div class="form-group center">
@@ -89,7 +82,7 @@
     }
 
     <div>
-        @Html.ActionLink("Back to List", "ListaProduto")
+        @Html.ActionLink("Back to List", "Index")
     </div>
 </body>
 </html>

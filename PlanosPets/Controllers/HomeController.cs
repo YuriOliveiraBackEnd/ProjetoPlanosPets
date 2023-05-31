@@ -18,6 +18,12 @@ namespace PlanosPets.Controllers
             var listaProduto = metodoProduto.Listar();
             return View(listaProduto);
         }
+        public ActionResult ListaRaca()
+        { 
+                var metodoRaca = new RacaDAO();
+                var listaRaca = metodoRaca.Listar();
+                return View(listaRaca);    
+        }
         public ActionResult Index()
         {
             return View();

@@ -1,72 +1,54 @@
 ﻿@model IEnumerable<bibliotecaModel.ModelRacas>
 
 @{
-    if (Session["Funclogado"] != null)
-    {
-        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
-    }
-
-
+    ViewBag.Title = "Index";
 }
 
-<div class="">
+<h2>Index</h2>
 
-    <div class="row center">
+<p>
+    @Html.ActionLink("Create New", "Cadastrar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_raca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nome_raca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ft_raca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipo_animal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_func)
+        </th>
+        <th></th>
+    </tr>
 
-        <div class="col-lg-9">
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_raca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome_raca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ft_raca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipo_animal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_func)
+        </td>
+      
+    </tr>
+}
 
-            <div class="row">
-
-                @foreach (var item in Model)
-
-                {
-
-                    <div class="col-lg-3 col-md-6 mb-4" style="margin:2% 4%">
-
-                        <div class="card h-100">
-
-                            <a href="/Produto/Detalhes/@item.id_raca">
-
-                                @if (@item.ft_raca != null)
-
-                                {<img class="card-img-right flex-auto d-none d-md-block" data-src=" " alt="Thumbnail [300x300]" style="width: 300px; height: 300px;" src="@item.ft_raca" data-holder-rendered="true">}
-
-                                else
-
-                                {<img class="card-img-right flex-auto d-none d-md-block" data-src=" " alt="Thumbnail [300x300]" style="width: 300px; height: 300px;" src="~/Images/image-not-found.jpg" data-holder-rendered="true">}
-
-                            </a>
-
-                            <div class="card-body">
-
-                                <h4 class="card-title">
-
-                                    <a href="@item.ft_raca">@item.nome_raca</a>
-                                    <br />
-                                    @Html.ActionLink("Excluir", "Excluir", new { Id = item.id_raca })
-                                    @Html.ActionLink("Create New", "Cadastrar")
-                                </h4>
-
-
-
-                            </div>
-
-                            <div class="card-footer space-between-flex" style="width:90%">
-
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                }
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div> 
+</table>
