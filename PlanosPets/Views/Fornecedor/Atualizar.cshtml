@@ -1,7 +1,11 @@
 ﻿@model bibliotecaModel.ModelFornecedor
 
 @{
-    ViewBag.Title = "Cadastrar";
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
 }
 
 <h2>Cadastrar</h2>

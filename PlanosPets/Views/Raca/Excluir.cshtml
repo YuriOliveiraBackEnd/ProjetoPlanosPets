@@ -1,7 +1,11 @@
 ﻿@model bibliotecaModel.ModelRacas
 
 @{
-    Layout = null;
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
 }
 
 <!DOCTYPE html>
@@ -20,32 +24,33 @@
             <dt>
                 @Html.DisplayNameFor(model => model.id_raca)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.id_raca)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.nome_raca)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.nome_raca)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.ft_raca)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.ft_raca)
             </dd>
-    
+
         </dl>
-    
-        @using (Html.BeginForm()) {
+
+        @using (Html.BeginForm())
+        {
             @Html.AntiForgeryToken()
-    
+
             <div class="form-actions no-color">
                 <input type="submit" value="Delete" class="btn btn-default" /> |
                 @Html.ActionLink("Back to List", "Index")

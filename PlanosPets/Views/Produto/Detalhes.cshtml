@@ -1,7 +1,12 @@
 ﻿@model bibliotecaModel.ModelProduto
 
 @{
-    Layout = null;
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
+
 }
 
 <!DOCTYPE html>
@@ -19,67 +24,67 @@
             <dt>
                 @Html.DisplayNameFor(model => model.id_prod)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.id_prod)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.nome_prod)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.nome_prod)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.valor_unitario)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.valor_unitario)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.quant)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.quant)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.desc_prod)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.desc_prod)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.ft_prod)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.ft_prod)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.id_categoria)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.id_categoria)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.id_func)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.id_func)
             </dd>
-    
+
         </dl>
     </div>
     <p>

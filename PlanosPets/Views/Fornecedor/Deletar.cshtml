@@ -1,9 +1,13 @@
 ﻿@model bibliotecaModel.ModelFornecedor
 
 @{
-    ViewBag.Title = "Deletar";
-}
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
 
+
+}
 <h2>Deletar</h2>
 
 @using (Html.BeginForm())

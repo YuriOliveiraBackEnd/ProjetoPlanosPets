@@ -56,8 +56,11 @@ namespace PlanosPets.Controllers
         {
             var modelproduto =  new ModelProduto();
             var metodoProduto = new ProdutoDAO();
+            string Email = Session["FuncLogado"] as string;
+            string id = new ProdutoDAO().SelectIdDofunc(Email);
+            produto.id_func = int.Parse(id);
 
-               string arquivo = Path.GetFileName(file.FileName);
+            string arquivo = Path.GetFileName(file.FileName);
 
                 string file2 = "/images/" + Path.GetFileName(file.FileName);
 

@@ -41,7 +41,7 @@ namespace bibliotecaDAO
         public string SelectEmailFunc(string vEmail)
         {
             conexao.Open();
-            comand.CommandText = "call SelectEmailFunc(@email_func);";
+            comand.CommandText = "call SelectEmailDoFunc(@email_func);";
             comand.Parameters.Add("@email_func", MySqlDbType.String).Value = vEmail;
             comand.Connection = conexao;
             string Email = (string)comand.ExecuteScalar();

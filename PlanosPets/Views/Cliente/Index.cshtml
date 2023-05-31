@@ -2,7 +2,12 @@
 
 
 @{
-    ViewBag.Title = "Lista de Clientes";
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
+
 }
 
 <h2>Listar usuario</h2>
@@ -43,8 +48,8 @@
                 @Html.DisplayFor(modelItem => item.tel_cli)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Atualizar", new { id = item.id_cli }) 
-                @Html.ActionLink("Detalhes", "Detalhes", new { id = item.id_cli }) 
+                @Html.ActionLink("Editar", "Atualizar", new { id = item.id_cli })
+                @Html.ActionLink("Detalhes", "Detalhes", new { id = item.id_cli })
                 @Html.ActionLink("Excluir", "Excluir", new { id = item.id_cli })
             </td>
         </tr>

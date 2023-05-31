@@ -1,5 +1,14 @@
 ﻿@model bibliotecaModel.ModelPets
 
+
+@{
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
+
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

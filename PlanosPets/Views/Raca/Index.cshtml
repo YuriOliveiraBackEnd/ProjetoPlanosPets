@@ -1,6 +1,13 @@
 ﻿@model IEnumerable<bibliotecaModel.ModelRacas>
 
+@{
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
 
+
+}
 
 <div class="">
 
@@ -37,9 +44,10 @@
                                     <a href="@item.ft_raca">@item.nome_raca</a>
                                     <br />
                                     @Html.ActionLink("Excluir", "Excluir", new { Id = item.id_raca })
+                                    @Html.ActionLink("Create New", "Cadastrar")
                                 </h4>
 
-                               
+
 
                             </div>
 

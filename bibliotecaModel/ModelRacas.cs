@@ -19,5 +19,12 @@ namespace bibliotecaModel
         [DisplayName("Foto da raça")]
         [Required(ErrorMessage = "insira a descrição do produto ")]
         public string ft_raca { get; set; }
+        
+        [DisplayName("Tipo animal")]
+        [Required(ErrorMessage = "insira se o animal é um gato ou cachoro ")]
+        public string tipo_animal { get; set; }
+       
+        [DisplayName("Código funcionário")]
+        public string id_func { get; set; }
     }
 }

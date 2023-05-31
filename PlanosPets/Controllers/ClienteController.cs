@@ -27,7 +27,7 @@ namespace PlanosPets.Controllers
         public ActionResult Cadastrar(ModelCliente cliente)
         {
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                
                 ClienteDAO novoClienteDAO = new ClienteDAO();

@@ -32,14 +32,14 @@ namespace PlanosPets.Controllers
                 while (rdr.Read())
                 {
                     raca.Add(new SelectListItem
-                    {
+                    {                       
                         Text = rdr[1].ToString(),
                         Value = rdr[0].ToString()
                     });
                 }
                 con.Close();
             }
-            ViewBag.raca = new SelectList(raca, "Value", "Text");
+            ViewBag.raca = new SelectList(raca, "Value", "Text","Text1");
         }
         public ActionResult Index()
         {
@@ -60,6 +60,9 @@ namespace PlanosPets.Controllers
             if (!ModelState.IsValid)
                 return View(pets);
             PetDAO novapetsDAO = new PetDAO();
+            string Email = Session["ClienteLogado"] as string;
+            string id = new PetDAO().SelectIdDoCli(Email);
+            pets.id_cli = int.Parse(id);
             //string RGA = new PetDAO().SelectRGA(pets.RGA);
             //if (RGA == pets.RGA)
             //{
@@ -76,7 +79,7 @@ namespace PlanosPets.Controllers
             file.SaveAs(_path);
 
             pets.ft_pet = file2;
-
+          
 
 
             ModelPets novopet = new ModelPets()

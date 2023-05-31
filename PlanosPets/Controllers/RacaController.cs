@@ -12,6 +12,7 @@ namespace PlanosPets.Controllers
     public class RacaController : Controller
     {
         // GET: Raca
+        
         public ActionResult Index()
         {
             var metodoRaca = new RacaDAO();
@@ -27,7 +28,7 @@ namespace PlanosPets.Controllers
         [HttpPost]
         public ActionResult Cadastrar(ModelRacas raca, HttpPostedFileBase file)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
                 return View(raca);
             RacaDAO novaRacaDAO = new RacaDAO();
             string nome = new RacaDAO().SelectNomeRaca(raca.nome_raca);
@@ -52,7 +53,8 @@ namespace PlanosPets.Controllers
             ModelRacas novaraca = new ModelRacas()
             {
                 nome_raca= raca.nome_raca,
-                ft_raca = raca.ft_raca
+                ft_raca = raca.ft_raca,
+                tipo_animal = raca.tipo_animal,
             };
             novaRacaDAO.InsertRaca(novaraca);
 

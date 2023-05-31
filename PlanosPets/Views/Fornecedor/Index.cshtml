@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<bibliotecaModel.ModelFornecedor>
 
-
 @{
-    ViewBag.Title = "Lista de Fornecedores";
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
+
 }
 
 <h2>Listar Fornecedor</h2>

@@ -49,8 +49,22 @@ namespace bibliotecaDAO
             return RGA;
 
         }
-        public List<ModelPets> Listar()
+        public string SelectIdDoCli(string Email)
         {
+            string VEmail = "";
+            conexao.Open();
+            comand.CommandText = "call SelectIdcli(@email_cli);";
+            comand.Parameters.Add("@email_cli", MySqlDbType.VarChar).Value = Email;
+            comand.Connection = conexao;
+            object result = comand.ExecuteScalar();
+            if (result != null)
+            {
+                int id = (int)result; // Converte o resultado para int
+                VEmail = id.ToString();
+            }
+            return VEmail;
+        }
+            public List<ModelPets> Listar() { 
             using (db = new Banco())
             {
                 var strQuery = "Select * from Pets;";

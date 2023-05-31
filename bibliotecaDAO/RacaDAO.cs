@@ -20,9 +20,11 @@ namespace bibliotecaDAO
         public void InsertRaca(ModelRacas racas)
         {
             conexao.Open();
-            comand.CommandText = "call InsertRaca(@nome_raca, @ft_raca);";
+            comand.CommandText = "call InsertRaca(@nome_raca, @ft_raca,@tipo_animal,@id_func);";
             comand.Parameters.Add("@nome_raca", MySqlDbType.VarChar).Value = racas.nome_raca;
             comand.Parameters.Add("@ft_raca", MySqlDbType.VarChar).Value = racas.ft_raca; 
+            comand.Parameters.Add("@tipo_animal", MySqlDbType.VarChar).Value = racas.tipo_animal; 
+            comand.Parameters.Add("@id_func", MySqlDbType.VarChar).Value = racas.id_func; 
 
             comand.Connection = conexao;
             comand.ExecuteNonQuery();
@@ -59,7 +61,9 @@ namespace bibliotecaDAO
                 {
                     id_raca = int.Parse(retorno["id_raca"].ToString()),
                     ft_raca = retorno["ft_raca"].ToString(),
-                    nome_raca = retorno["nome_raca"].ToString()
+                    nome_raca = retorno["nome_raca"].ToString(),
+                    id_func = retorno["id_func"].ToString(),
+                    tipo_animal = retorno["tipo_animal"].ToString(),
 
                 };
 
@@ -82,7 +86,7 @@ namespace bibliotecaDAO
         {
             var strQuery = "";
             strQuery += "update Raca set ";
-            strQuery += string.Format("nome_raca = '{0}', ft_raca = '{1}', id_func = '{2}' where id_raca = {3};", raca.nome_raca, raca.ft_raca, raca.id_raca);
+            strQuery += string.Format("nome_raca = '{0}', ft_raca = '{1}', id_func = '{2}', id_func = '{3}' where id_raca = {4};", raca.nome_raca, raca.ft_raca,raca.id_func,raca.tipo_animal, raca.id_raca);
 
             using (db = new Banco())
             {

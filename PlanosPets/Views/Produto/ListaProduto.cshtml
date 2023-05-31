@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<bibliotecaModel.ModelProduto>
 
 @{
-    Layout = null;
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
+
 }
 
 <!DOCTYPE html>
@@ -23,7 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.nome_prod)
             </th>
-        
+
             <th>
                 @Html.DisplayNameFor(model => model.valor_unitario)
             </th>
@@ -33,7 +38,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.desc_prod)
             </th>
-         
+
             <th>
                 @Html.DisplayNameFor(model => model.id_categoria)
             </th>
@@ -42,39 +47,40 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_prod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nome_prod)
-            </td>
-          
-            <td>
-                @Html.DisplayFor(modelItem => item.valor_unitario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.quant)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.desc_prod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.id_func)
-            </td>
-            <td>
-                @Html.ActionLink("Atualizar", "Atualizar", new { Id = item.id_prod }) |
-                @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_prod }) |
-                @Html.ActionLink("Excluir", "Excluir", new { Id = item.id_prod })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_prod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nome_prod)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.valor_unitario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.desc_prod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_func)
+                </td>
+                <td>
+                    @Html.ActionLink("Atualizar", "Atualizar", new { Id = item.id_prod }) |
+                    @Html.ActionLink("Detalhes", "Detalhes", new { Id = item.id_prod }) |
+                    @Html.ActionLink("Excluir", "Excluir", new { Id = item.id_prod })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

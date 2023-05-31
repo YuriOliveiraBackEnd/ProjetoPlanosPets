@@ -1,75 +1,49 @@
-﻿
-<!DOCTYPE html>
-
-
+﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar</title>
-    <link href="~/CSS/Stylecss.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
     <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
-
 <body>
-
-
-
-    <header>
-        <!--Header com pesquisar-->
-        <section class="primeiro-header">
-            <!--Logo Header-->
-            <div class="logo">
-                <img class="imagem-logo" src="~/Images/logo-branca.svg">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Nome do aplicativo", "Index", "", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar a navegação" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-            <!--Barra de Pesquisa-->
-            <div class="barra-pesquisa">
-                @using (Html.BeginForm("Buscar", "Home", FormMethod.Post))
-                {
-                    <input type="text" name="pesquisar" id="pesquisar" placeholder="Pesquise aqui!">
-                    <input type="submit" text="Buscar" />
-                }
-                <!--Lupa da Barra de Pesquisa-->
-                <i class="fa-solid fa-magnifying-glass" id="lupa-pesquisar"></i>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Página Inicial", "Listarproduto", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Cadastrar Pet", "Cadastrar", "Pets", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
             </div>
-            <!--Botões de Login e Carrinho-->
-            <div class="botoes-header">
-                <!--Login-->
-                <div class="botao-login">
-                    <i class="fa-solid fa-user"></i>
-                    <a class="login" href="login.html">Login</a>
-                </div>
-                <!--Carrinho-->
-                <div class="botao-carrinho">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <p>Carrinho</p>
-                </div>
-            </div>
-        </section>
-        <!--Nav de Categorias-->
-        <section class="segundo-header">
-            <nav class="nav">
-                <a class="nav-botao" href="index.html">Inicio</a>
-                <a class="nav-botao" href="#">Cadastrar Func</a>
-                <a class="nav-botao" href="#">Gerenciar Cliente</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link" })</li>
 
-                <a class="nav-botao" href="#">Gerenciar Produto</a>
-                <a class="nav-botao" href="#">Adiconar Raça</a>
-                <a class="nav-botao" href="#">Adicionar categoria</a>
-            </nav>
-        </section>
-    </header>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Cadastra-se", "Cadastrar", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
+
+            </ul>
+        </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Meu Aplicativo ASP.NET</p>
         </footer>
     </div>
-
-
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -77,3 +51,5 @@
     <script src="~/Scripts/chosen.jquery.js"></script>
 </body>
 </html>
+
+

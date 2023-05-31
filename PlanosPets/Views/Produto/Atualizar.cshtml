@@ -1,9 +1,13 @@
 ﻿@model bibliotecaModel.ModelProduto
 
 @{
-    Layout = null;
-}
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
 
+
+}
 <!DOCTYPE html>
 
 <html>

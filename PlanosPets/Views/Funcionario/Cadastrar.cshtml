@@ -1,7 +1,12 @@
 ﻿@model bibliotecaModel.ModelFuncionario
 
+@{
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
 
-<link href="~/CSS/Stylecss.css" rel="stylesheet" type="text/css" />
+}
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
                integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
@@ -18,6 +23,8 @@
 
 
 @using (Html.BeginForm())
+
+
 
 {
 

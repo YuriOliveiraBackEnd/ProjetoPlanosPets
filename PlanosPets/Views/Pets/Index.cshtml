@@ -1,7 +1,13 @@
 ﻿@model IEnumerable<bibliotecaModel.ModelPets>
+@{
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
 
+}
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Cadastrar")
 </p>
 <table class="table">
     <tr>
@@ -29,35 +35,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nome_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ft_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nasc_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RGA)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.id_cli)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.id_raca)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Atualizar", new { Id= item.id_pet }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Excluir", new { Id = item.id_pet })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_pet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nome_pet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ft_pet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nasc_pet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RGA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_cli)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_raca)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Atualizar", new { Id = item.id_pet }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Excluir", new { Id = item.id_pet })
+            </td>
+        </tr>
+    }
 
 </table>
