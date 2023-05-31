@@ -15,14 +15,28 @@ namespace PlanosPets.Controllers
         
         public ActionResult Index()
         {
-            var metodoRaca = new RacaDAO();
-            var listaRaca = metodoRaca.Listar();
-            return View(listaRaca);
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoRaca = new RacaDAO();
+                var listaRaca = metodoRaca.Listar();
+                return View(listaRaca);
+            }
         }
 
         public ActionResult Cadastrar()
         {
-            return View();
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -64,13 +78,20 @@ namespace PlanosPets.Controllers
       
         public ActionResult Excluir(int id)
         {
-            var metodoRaca = new RacaDAO();
-            var raca = metodoRaca.ListarId(id);
-            if (raca == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(raca);
+            else
+            {
+                var metodoRaca = new RacaDAO();
+                var raca = metodoRaca.ListarId(id);
+                if (raca == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(raca);
+            }
         }
 
         [HttpPost, ActionName("Excluir")]

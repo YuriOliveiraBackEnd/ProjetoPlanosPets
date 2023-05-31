@@ -13,9 +13,16 @@ namespace PlanosPets.Controllers
         // GET: Cliente
         public ActionResult Index()
         {
-            var metodoCliente = new ClienteDAO();
-            var listaCliente = metodoCliente.Listar();
-            return View(listaCliente);
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoCliente = new ClienteDAO();
+                var listaCliente = metodoCliente.Listar();
+                return View(listaCliente);
+            }
         }
 
         public ActionResult Cadastrar()
@@ -72,15 +79,22 @@ namespace PlanosPets.Controllers
 
         public ActionResult Atualizar(int id)
         {
-            var metodoCliente = new ClienteDAO();
-            var cliente = metodoCliente.ListarId(id);
-         
-            
-            if (cliente == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(cliente);
+            else
+            {
+                var metodoCliente = new ClienteDAO();
+                var cliente = metodoCliente.ListarId(id);
+
+
+                if (cliente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cliente);
+            }
         }
 
         [HttpPost]
@@ -97,13 +111,20 @@ namespace PlanosPets.Controllers
 
         public ActionResult Excluir(int id)
         {
-            var metodoCliente = new ClienteDAO();
-            var cliente = metodoCliente.ListarId(id);
-            if (cliente == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(cliente);
+            else
+            {
+                var metodoCliente = new ClienteDAO();
+                var cliente = metodoCliente.ListarId(id);
+                if (cliente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cliente);
+            }
         }
         [HttpPost, ActionName("Excluir")]
         public ActionResult ExcluirConfirma(int id)
@@ -118,13 +139,20 @@ namespace PlanosPets.Controllers
 
         public ActionResult Detalhes(int id)
         {
-            var metodoCliente = new ClienteDAO();
-            var cliente = metodoCliente.ListarId(id);
-            if (cliente == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(cliente);
+            else
+            {
+                var metodoCliente = new ClienteDAO();
+                var cliente = metodoCliente.ListarId(id);
+                if (cliente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cliente);
+            }
         }
        
 

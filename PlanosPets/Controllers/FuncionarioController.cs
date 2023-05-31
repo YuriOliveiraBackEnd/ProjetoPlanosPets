@@ -18,16 +18,30 @@ namespace PlanosPets.Controllers
         // GET: Funcionario
         public ActionResult Index()
         {
-            var metodoFuncionario = new FuncionarioDAO();
-            var listaFuncionario = metodoFuncionario.Listar();
-            return View(listaFuncionario);
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                var listaFuncionario = metodoFuncionario.Listar();
+                return View(listaFuncionario);
+            }
         }
 
 
         [HttpGet]
         public ActionResult Cadastrar()
         {
-            return View();
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
 
@@ -92,13 +106,20 @@ namespace PlanosPets.Controllers
            
         public ActionResult Atualizar(int id)
         {
-            var metodoFuncionario = new FuncionarioDAO();
-            var funcionario = metodoFuncionario.ListarId(id);
-            if (funcionario == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(funcionario);
+            else
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                var funcionario = metodoFuncionario.ListarId(id);
+                if (funcionario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionario);
+            }
         }
 
 
@@ -119,13 +140,20 @@ namespace PlanosPets.Controllers
 
         public ActionResult Excluir(int id)
         {
-            var metodoFuncionario = new FuncionarioDAO();
-            var funcionario = metodoFuncionario.ListarId(id);
-            if (funcionario == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(funcionario);
+            else
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                var funcionario = metodoFuncionario.ListarId(id);
+                if (funcionario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionario);
+            }
         }
         [HttpPost, ActionName("Excluir")]
         public ActionResult ExcluirConfirma(int id)
@@ -142,13 +170,20 @@ namespace PlanosPets.Controllers
 
         public ActionResult Detalhes(int id)
         {
-            var metodoFuncionario = new FuncionarioDAO();
-            var funcionario = metodoFuncionario.ListarId(id);
-            if (funcionario == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(funcionario);
+            else
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                var funcionario = metodoFuncionario.ListarId(id);
+                if (funcionario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionario);
+            }
         }
     }
 }

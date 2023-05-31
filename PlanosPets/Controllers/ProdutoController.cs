@@ -41,15 +41,29 @@ namespace PlanosPets.Controllers
         }
         public ActionResult ListaProduto()
         {
-            var metodoProduto = new ProdutoDAO();
-            var listaProduto = metodoProduto.Listar();
-            return View(listaProduto);
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoProduto = new ProdutoDAO();
+                var listaProduto = metodoProduto.Listar();
+                return View(listaProduto);
+            }
         }
         [HttpGet]
         public ActionResult Cadastrar()
         {
-            CarregaCategoria();
-            return View();
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                CarregaCategoria();
+                return View();
+            }
         }
         [HttpPost]
         public ActionResult Cadastrar(ModelProduto produto, HttpPostedFileBase file)
@@ -96,14 +110,21 @@ namespace PlanosPets.Controllers
 
         public ActionResult Atualizar(int id)
         {
-            CarregaCategoria();
-            var metodoproduto = new ProdutoDAO();
-            var produto = metodoproduto.ListarId(id);
-            if (produto == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(produto);
+            else
+            {
+                CarregaCategoria();
+                var metodoproduto = new ProdutoDAO();
+                var produto = metodoproduto.ListarId(id);
+                if (produto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(produto);
+            }
         }
 
 
@@ -123,13 +144,20 @@ namespace PlanosPets.Controllers
 
         public ActionResult Excluir(int id)
         {
-            var metodoproduto = new ProdutoDAO();
-            var produto = metodoproduto.ListarId(id);
-            if (produto == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(produto);
+            else
+            {
+                var metodoproduto = new ProdutoDAO();
+                var produto = metodoproduto.ListarId(id);
+                if (produto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(produto);
+            }
         }
         [HttpPost, ActionName("Excluir")]
         public ActionResult ExcluirConfirma(int id)
@@ -142,13 +170,20 @@ namespace PlanosPets.Controllers
         }
         public ActionResult Detalhes(int id)
         {
-            var metodoProduto = new ProdutoDAO();
-            var produto = metodoProduto.ListarId(id);
-            if (produto == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(produto);
+            else
+            {
+                var metodoProduto = new ProdutoDAO();
+                var produto = metodoProduto.ListarId(id);
+                if (produto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(produto);
+            }
         }
     }
 }

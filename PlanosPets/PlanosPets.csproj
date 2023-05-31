@@ -413,6 +413,7 @@
     <Content Include="Views\Pets\Atualizar.cshtml" />
     <Content Include="Views\Pets\Excluir.cshtml" />
     <Content Include="Views\Login\SemAcesso.cshtml" />
+    <Content Include="Views\Pets\Detalhes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

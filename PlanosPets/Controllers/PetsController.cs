@@ -43,9 +43,16 @@ namespace PlanosPets.Controllers
         }
         public ActionResult Index()
         {
-            var metodoPet = new PetDAO();
-            var listaPet = metodoPet.Listar();
-            return View(listaPet);
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoPet = new PetDAO();
+                var listaPet = metodoPet.Listar();
+                return View(listaPet);
+            }
         }
        
        
@@ -98,14 +105,21 @@ namespace PlanosPets.Controllers
 
         public ActionResult Atualizar(int id)
         {
-            CarregaRaca();
-            var metodopet = new PetDAO();
-            var pet = metodopet.ListarId(id);
-            if (pet == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(pet);
+            else
+            {
+                CarregaRaca();
+                var metodopet = new PetDAO();
+                var pet = metodopet.ListarId(id);
+                if (pet == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pet);
+            }
         }
 
 
@@ -124,13 +138,20 @@ namespace PlanosPets.Controllers
         }
         public ActionResult Excluir(int id)
         {
-            var metodopet = new PetDAO();
-            var pet = metodopet.ListarId(id);
-            if (pet == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(pet);
+            else
+            {
+                var metodopet = new PetDAO();
+                var pet = metodopet.ListarId(id);
+                if (pet == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pet);
+            }
         }
         [HttpPost, ActionName("Excluir")]
         public ActionResult ExcluirConfirma(int id)
@@ -141,6 +162,22 @@ namespace PlanosPets.Controllers
             metodopet.DeletePet(pet);
             return RedirectToAction("Index");
         }
-
+        public ActionResult Detalhes(int id)
+        {
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodopet = new PetDAO();
+                var pet = metodopet.ListarId(id);
+                if (pet == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pet);
+            }
+        }
     }
 }

@@ -24,7 +24,14 @@ namespace PlanosPets.Controllers
         }
         public ActionResult IndexFunc()
         {
-            return View();
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                return View();
+            }
         }
        
         public ActionResult Buscar(string pesquisar)
