@@ -27,11 +27,22 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link" })</li>
 
+                @if (Session["ClienteLogado"] == null)
+                {
+                    <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link" })</li>
+                }
+
+
+                @if (Session["ClienteLogado"] != null)
+                {
+
+                    <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, new { @class = "nav-link" })</li>
+                }
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+               
                 <li>@Html.ActionLink("Cadastra-se", "Cadastrar", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
 
             </ul>

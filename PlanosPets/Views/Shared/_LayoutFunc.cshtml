@@ -31,7 +31,10 @@
                     <li>@Html.ActionLink("Gerenciar Pets", "ListaProduto", "Produto", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
-        </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+</div>
     </nav>
     <div class="container body-content">
         @RenderBody()

@@ -26,7 +26,7 @@ namespace PlanosPets.Controllers
         {
             return View();
         }
-      
+       
         public ActionResult Buscar(string pesquisar)
         {
             if (pesquisar == "Planos")

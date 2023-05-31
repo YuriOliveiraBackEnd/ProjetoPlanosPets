@@ -60,5 +60,20 @@ namespace PlanosPets.Controllers
             }
             return View();
         }
+        public ActionResult SemAcesso()
+        {
+            Response.Write("<script>alert('Sem acesso')</script>");
+            ViewBag.message = "Você não tem acesso a essa página";
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            Session["FuncLogado"] = null;
+            Session["senhalogado"] = null;
+            Session["ClienteLogado"] = null;
+            return RedirectToAction("Index", "Home");
+        } 
+
+
     }
 }
