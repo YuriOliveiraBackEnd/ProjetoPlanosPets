@@ -1,5 +1,6 @@
 ﻿@model bibliotecaModel.ModelCliente
 
+
 @{
     if (Session["Funclogado"] != null)
     {
@@ -10,6 +11,9 @@
 }
 
 <h2>Detalhes</h2>
+
+<li>@Html.ActionLink("Cadastre seu pet", "Cadastrar", "Pets", new { area = "" }, new { @class = "nav-link" })</li>
+
 
 <div>
     <h4>Cliente</h4>
@@ -79,10 +83,56 @@
         <dd>
             @Html.DisplayFor(model => model.logradouro_cli)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nome_pet)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.nome_pet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ft_pet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ft_pet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nasc_pet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nasc_pet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RGA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RGA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.id_cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.id_raca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_raca)
+        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Atualizar", new { Id = Model.id_cli }) 
+    @Html.ActionLink("Editar", "Atualizar", new { Id = Model.id_cli })
     @Html.ActionLink("cancelar", "Index")
 </p>

@@ -1,0 +1,106 @@
+﻿@model bibliotecaModel.ModelFuncionario
+
+@{
+    ViewBag.Title = "DetalhesEmail";
+}
+
+<h2>DetalhesEmail</h2>
+
+<div>
+    <h4>ModelFuncionario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nome_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nome_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPF_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPF_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cep_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cep_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.num_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.num_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.logradouro_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.logradouro_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nasc_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nasc_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.senha_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.senha_func)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.confirmar_senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.confirmar_senha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tel_func)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tel_func)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

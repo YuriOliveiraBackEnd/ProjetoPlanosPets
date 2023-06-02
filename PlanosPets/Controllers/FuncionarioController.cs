@@ -185,6 +185,19 @@ namespace PlanosPets.Controllers
                 return View(funcionario);
             }
         }
+
+        public ActionResult DetalhesEmail()
+        {
+            string Login = Session["FuncLogado"] as string;
+
+            var metodoFuncionario = new FuncionarioDAO();
+            var funcionario = metodoFuncionario.ListarEmail(Login);
+            if (funcionario == null)
+            {
+                return HttpNotFound();
+            }
+            return View(funcionario);
+        }
     }
 }
 

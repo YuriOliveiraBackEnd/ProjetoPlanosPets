@@ -19,12 +19,10 @@ namespace PlanosPets.Controllers
         {
             List<SelectListItem> raca = new List<SelectListItem>();
 
-
-
             using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from raca", con);
+                MySqlCommand cmd = new MySqlCommand("select * from Raca", con);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
 
@@ -39,43 +37,39 @@ namespace PlanosPets.Controllers
                 }
                 con.Close();
             }
-            ViewBag.raca = new SelectList(raca, "Value", "Text","Text1");
+            ViewBag.raca = new SelectList(raca, "Value", "Text");
         }
+
         public ActionResult Index()
         {
-            if (Session["FuncLogado"] == null)
+
+            var metodoPet = new PetDAO();
+            var listaPet = metodoPet.Listar();
+            return View(listaPet);
+            
+        }
+
+        public ActionResult Cadastrar()
+        {
+            if (Session["ClienteLogado"] == null)
             {
-                return RedirectToAction("SemAcesso", "Login");
+                return RedirectToAction("Login", "Login");
             }
             else
             {
-                var metodoPet = new PetDAO();
-                var listaPet = metodoPet.Listar();
-                return View(listaPet);
+                CarregaRaca();
+                return View();
             }
         }
-       
-       
-     public ActionResult Cadastrar()
-        {
-            CarregaRaca();
-            return View();
-        }
         [HttpPost]
-        public ActionResult Cadastrar(ModelPets pets, HttpPostedFileBase file)
+        public ActionResult Cadastrar(ModelCliente pets, HttpPostedFileBase file)
         {
-            if (!ModelState.IsValid)
-                return View(pets);
+
             PetDAO novapetsDAO = new PetDAO();
             string Email = Session["ClienteLogado"] as string;
             string id = new PetDAO().SelectIdDoCli(Email);
             pets.id_cli = int.Parse(id);
-            //string RGA = new PetDAO().SelectRGA(pets.RGA);
-            //if (RGA == pets.RGA)
-            //{
-            //    ViewBag.RGA = "RGA já cadastrado";
-            //    return View();
-            //}
+
 
             string arquivo = Path.GetFileName(file.FileName);
 
@@ -86,10 +80,10 @@ namespace PlanosPets.Controllers
             file.SaveAs(_path);
 
             pets.ft_pet = file2;
-          
 
 
-            ModelPets novopet = new ModelPets()
+
+            ModelCliente novopet = new ModelCliente()
             {
                 nome_pet = pets.nome_pet,
                 nasc_pet = pets.nasc_pet,
@@ -100,32 +94,28 @@ namespace PlanosPets.Controllers
             };
             novapetsDAO.InsertPet(novopet);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
+    
 
         public ActionResult Atualizar(int id)
         {
-            if (Session["FuncLogado"] == null)
+
+            CarregaRaca();
+            var metodopet = new PetDAO();
+            var pet = metodopet.ListarId(id);
+            if (pet == null)
             {
-                return RedirectToAction("SemAcesso", "Login");
+                return HttpNotFound();
             }
-            else
-            {
-                CarregaRaca();
-                var metodopet = new PetDAO();
-                var pet = metodopet.ListarId(id);
-                if (pet == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(pet);
-            }
+            return View(pet);
+            
         }
 
 
 
         [HttpPost]
-        public ActionResult Atualizar(ModelPets pet)
+        public ActionResult Atualizar(ModelCliente pet)
         {
             if (ModelState.IsValid)
             {
@@ -136,48 +126,41 @@ namespace PlanosPets.Controllers
             }
             return View(pet);
         }
+
         public ActionResult Excluir(int id)
         {
-            if (Session["FuncLogado"] == null)
+
+            var metodopet = new PetDAO();
+            var pet = metodopet.ListarId(id);
+            if (pet == null)
             {
-                return RedirectToAction("SemAcesso", "Login");
+                return HttpNotFound();
             }
-            else
-            {
-                var metodopet = new PetDAO();
-                var pet = metodopet.ListarId(id);
-                if (pet == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(pet);
-            }
+            return View(pet);
+            
         }
+
         [HttpPost, ActionName("Excluir")]
         public ActionResult ExcluirConfirma(int id)
         {
             var metodopet = new PetDAO();
-            ModelPets pet = new ModelPets();
+            ModelCliente pet = new ModelCliente();
             pet.id_pet = id;
             metodopet.DeletePet(pet);
             return RedirectToAction("Index");
         }
+
         public ActionResult Detalhes(int id)
         {
-            if (Session["FuncLogado"] == null)
+
+            var metodopet = new PetDAO();
+            var pet = metodopet.ListarId(id);
+            if (pet == null)
             {
-                return RedirectToAction("SemAcesso", "Login");
+                return HttpNotFound();
             }
-            else
-            {
-                var metodopet = new PetDAO();
-                var pet = metodopet.ListarId(id);
-                if (pet == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(pet);
-            }
+            return View(pet);
+            
         }
     }
 }

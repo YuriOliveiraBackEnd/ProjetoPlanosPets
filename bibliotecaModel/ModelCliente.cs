@@ -15,20 +15,20 @@ namespace bibliotecaModel
         [DisplayName("Id do Cliente")]
         public int id_cli { get; set; }
 
-        [DisplayName("Nome do Cliente")]
+        [DisplayName("Nome Completo")]
         [MaxLength(80, ErrorMessage = "O nome deve conter no maximo 80 caracteres")]
         [Required(ErrorMessage = "insira seu nome")]
         public string nome_cli { get; set; }
 
 
-        [DisplayName("Email do Cliente")]
+        [DisplayName("Email")]
         [MaxLength(50, ErrorMessage = "o Email deve conter no maximo 15 caracteres")]
         [RegularExpression(@"^[a-zA-Z]+(([\'\,\.\-][a-zA-Z ])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})$", ErrorMessage = "Digite um Email válido")]
         [Required(ErrorMessage = "insira seu email")]
         public string email_cli { get; set; }
 
 
-        [DisplayName("CPF do Cliente")]
+        [DisplayName("CPF")]
         [MaxLength(11, ErrorMessage = "O CPF deve conter 11 caracteres")]
         [MinLength(11, ErrorMessage = "O CPF deve conter 11 caracters")]
         [RegularExpression(@"^[0-9]+${11,11}", ErrorMessage = "Somente números")]
@@ -37,7 +37,7 @@ namespace bibliotecaModel
 
 
         [RegularExpression(@"^[0-9]+${11,11}", ErrorMessage = "Somente números")]
-        [DisplayName("Cep do Cliente")]
+        [DisplayName("CEP")]
         [MaxLength(8, ErrorMessage = "O cep deve conter 8 caracteres")]
         [MinLength(8, ErrorMessage = "O cep deve conter 8 caracters")]
         [Required(ErrorMessage = "insira seu cep")]
@@ -50,18 +50,19 @@ namespace bibliotecaModel
         public string num_cli { get; set; }
 
 
-        [DisplayName("Logradouro do Cliente")]
+        [DisplayName("Logradouro")]
         [Required(ErrorMessage = "insira seu logradouro")]
         public string logradouro_cli { get; set; }
 
-        [DisplayName("Data de nascimento do Cliente")]
+        [DisplayName("Data de nascimento")]
         [Required(ErrorMessage = "insira sua data de nascimento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime nasc_cli { get; set; }
 
-        [DisplayName("Senha do Cliente")]
+   
         [DataType(DataType.Password)]
-        [SenhaBrasil(CaracterEspecialRequerido = true, SenhaForteRequerida = true, SenhaTamanhoMinimo = 5)]
+        [DisplayName("Senha ")]
+        [Required(ErrorMessage = "insira sua senha")]
         public string senha_cli { get; set; }
 
 
@@ -71,11 +72,29 @@ namespace bibliotecaModel
         [Compare(nameof(senha_cli), ErrorMessage = "Senhas digitadas não conferem.")]
         public string confirmar_senha { get; set; }
 
-        [DisplayName("Telefone do Cliente")]
+        [DisplayName("Telefone")]
         [MaxLength(11, ErrorMessage = "O telefone deve conter 11 caracteres")]
         [MinLength(11, ErrorMessage = "O telefone deve conter 11 caracteres")]
         [RegularExpression(@"^[0-9]+${11,11}", ErrorMessage = "Somente números")]
         [Required(ErrorMessage = "insira seu telefone")]
         public string tel_cli { get; set; }
+
+        [DisplayName("Código pet")]
+        public int id_pet { get; set; }
+        [DisplayName("Nome pet")]
+        [Required(ErrorMessage = "insira o nome do seu pet")]
+        public string nome_pet { get; set; }
+        [DisplayName("foto pet")]
+        public string ft_pet { get; set; }
+        [DisplayName("Data de nascimento")]
+        [Required(ErrorMessage = "insira a data de nascimento do seu pet")]
+        public DateTime nasc_pet { get; set; }
+
+        [DisplayName("RGA")]
+        [Required(ErrorMessage = "insira o RGA do pet")]
+        public string RGA { get; set; }
+
+        [DisplayName("Código raça")]
+        public int id_raca { get; set; }
     }
 }

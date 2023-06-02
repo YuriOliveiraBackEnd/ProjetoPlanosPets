@@ -18,7 +18,7 @@ namespace bibliotecaDAO
         MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
 
-        public void InsertPet(ModelPets pets)
+        public void InsertPet(ModelCliente pets)
         {
             conexao.Open();
             comand.CommandText = "call InsertPet(@nome_pet, @ft_pet, @nasc_pet, @RGA, @id_cli, @id_raca);";
@@ -43,7 +43,7 @@ namespace bibliotecaDAO
             conexao.Close();
             if (RGA == null)
 
-
+                    
 
                 RGA = "";
             return RGA;
@@ -64,7 +64,8 @@ namespace bibliotecaDAO
             }
             return VEmail;
         }
-            public List<ModelPets> Listar() { 
+        public List<ModelCliente> Listar() 
+        { 
             using (db = new Banco())
             {
                 var strQuery = "Select * from Pets;";
@@ -73,12 +74,12 @@ namespace bibliotecaDAO
             }
 
         }
-        public List<ModelPets> ListaDePets(MySqlDataReader retorno)
+        public List<ModelCliente> ListaDePets(MySqlDataReader retorno)
         {
-            var pets = new List<ModelPets>();
+            var pets = new List<ModelCliente>();
             while (retorno.Read())
             {
-                var TempPets = new ModelPets()
+                var TempPets = new ModelCliente()
                 {
                     id_pet = int.Parse(retorno["id_pet"].ToString()),
                     id_cli = int.Parse(retorno["id_cli"].ToString()),
@@ -87,7 +88,6 @@ namespace bibliotecaDAO
                     ft_pet = retorno["ft_pet"].ToString(),
                     RGA = retorno["RGA"].ToString(),
                     nasc_pet = DateTime.Parse(retorno["nasc_pet"].ToString())
-
                 };
 
                 pets.Add(TempPets);
@@ -97,7 +97,7 @@ namespace bibliotecaDAO
         }
   
               
-        public ModelPets ListarId(int Id)
+        public ModelCliente ListarId(int Id)
         {
             using (db = new Banco())
             {
@@ -107,7 +107,7 @@ namespace bibliotecaDAO
             }
         }
 
-        public void UpdatePet(ModelPets pets)
+        public void UpdatePet(ModelCliente pets)
         {
             var strQuery = "";
             strQuery += "update Pets set ";
@@ -127,7 +127,7 @@ namespace bibliotecaDAO
 
 
 
-        public void DeletePet(ModelPets pet)
+        public void DeletePet(ModelCliente pet)
         {
 
             using (db = new Banco())
@@ -138,7 +138,7 @@ namespace bibliotecaDAO
 
         }
 
-        public void Save(ModelPets pets)
+        public void Save(ModelCliente pets)
         {
             if (pets.id_pet > 0)
             {

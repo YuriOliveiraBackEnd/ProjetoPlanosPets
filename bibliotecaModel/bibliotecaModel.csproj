@@ -110,7 +110,6 @@
     <Compile Include="ModelCompra.cs" />
     <Compile Include="ModelFornecedor.cs" />
     <Compile Include="ModelFuncionario.cs" />
-    <Compile Include="ModelPets.cs" />
     <Compile Include="ModelProduto.cs" />
     <Compile Include="ModelRacas.cs" />
     <Compile Include="ModelVenda.cs" />

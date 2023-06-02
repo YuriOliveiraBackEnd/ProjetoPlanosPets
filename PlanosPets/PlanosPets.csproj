@@ -411,9 +411,9 @@
     <Content Include="Views\Pets\Atualizar.cshtml" />
     <Content Include="Views\Pets\Excluir.cshtml" />
     <Content Include="Views\Login\SemAcesso.cshtml" />
-    <Content Include="Views\Pets\Detalhes.cshtml" />
     <Content Include="Views\Home\ListaRaca.cshtml" />
     <Content Include="Views\Raca\Index.cshtml" />
+    <Content Include="Views\Funcionario\DetalhesEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,19 +24,23 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Gerenciar categoria", "Index", "Categoria", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Gerenciar raças", "Index", "Raca", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Gerenciar cliente", "Index", "Raca", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Gerenciar cliente", "Index", "CLiente", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Gerenciar produto", "ListaProduto", "Produto", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Gerenciar funcionário", "Index", "Funcionario", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Gerenciar fornecedor", "Index", "Fornecedor", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Gerenciar Pets", "Index", "Pets", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, new { @class = "nav-link" })</li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("Área Cliente", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-            </ul>
+            @if (Session["FuncLogado"] != null)
+            {
+            <div class="nav navbar-nav navbar-right">
+                <i class="fa-solid fa-user"></i>
+                @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })
+
+                @Html.ActionLink(@Session["FuncLogado"].ToString(), "DetalhesEmail", "Funcionario"new { area = "" }, new { @class = "nav-link" })
+
+            </div>
+            }
         </div>
     </nav>
     <div class="container body-content">

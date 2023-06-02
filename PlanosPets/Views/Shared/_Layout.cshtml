@@ -31,26 +31,45 @@
                     }
                 </ul>
             </div>
-            <ul class="nav navbar-nav navbar-right">
+            <!--Header com pesquisar-->
+            <!--Logo Header-->
+            @*<div class="logo">
+            <img class="imagem-logo" src="~/Images/logo-branca.svg">
+        </div>
+        <!--Barra de Pesquisa-->
+        <div class="barra-pesquisa">
+            @using (Html.BeginForm("Buscar", "Produto", FormMethod.Post))
+            {
+                <input type="text" name="pesquisar" id="pesquisar" placeholder="Pesquise aqui!">
+                <input type="submit" text="Buscar" />
+            }
+            <!--Lupa da Barra de Pesquisa-->
+            <i class="fa-solid fa-magnifying-glass" id="lupa-pesquisar"></i>
+        </div>*@
+            <!--CRIANDO UM IF PARA A SESSÃO VERIFICAR SE O USUARIO ESTARÁ LOGADO -->
+            @if (Session["ClienteLogado"] != null)
+            {
+                <!--criando o actionLink do login na barra de menu -->
+                <ul class="nav navbar-nav navbar-right">
 
-                @if (Session["ClienteLogado"] == null)
-                {
-                    <li>@Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link" })</li>
-                }
+                    <li> @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    <li> @Html.ActionLink(@Session["ClienteLogado"].ToString(), "Detalhes", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+
+            }
+
+            else
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    <!--caso o login não esteja correto ele volta para novamente para o login -->
+
+                    <li>  @Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>  @Html.ActionLink("Cadastre-se", "Cadastrar", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            }
 
 
-                @if (Session["ClienteLogado"] != null)
-                {
-
-                    <li>@Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, new { @class = "nav-link" })</li>
-                }
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-               
-                <li>@Html.ActionLink("Cadastra-se", "Cadastrar", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
-
-            </ul>
         </div>
     </nav>
     <div class="container body-content">

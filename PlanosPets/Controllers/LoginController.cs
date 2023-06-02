@@ -29,10 +29,13 @@ namespace PlanosPets.Controllers
             }
             ModelFuncionario funcionario = new ModelFuncionario();
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+
             ModelCliente cliente = new ModelCliente();
             ClienteDAO clienteDAO = new ClienteDAO();
+
             funcionario = funcionarioDAO.SelectFuncionario(vielmodel.Email);
             cliente = clienteDAO.SelectCliente(vielmodel.Email);
+
             if (funcionario == null | funcionario.email_func != vielmodel.Email && cliente == null | cliente.email_cli != vielmodel.Email)
             {
                 ModelState.AddModelError("Email", "Email incorreto");
@@ -58,7 +61,10 @@ namespace PlanosPets.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
         }
         public ActionResult SemAcesso()
         {
@@ -73,7 +79,5 @@ namespace PlanosPets.Controllers
             Session["ClienteLogado"] = null;
             return RedirectToAction("Index", "Home");
         } 
-
-
     }
 }

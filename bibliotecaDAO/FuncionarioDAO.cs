@@ -145,6 +145,16 @@ namespace bibliotecaDAO
             }
         }
 
+        public ModelFuncionario ListarEmail(string Login)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Funcionario where email_func = '{0}';", Login);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeFuncionarios(retorno).FirstOrDefault();
+            }
+        }
+
 
         public void UpdateFuncionario(ModelFuncionario funcionario)
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace PlanosPets.Controllers
 {
@@ -34,47 +35,49 @@ namespace PlanosPets.Controllers
         public ActionResult Cadastrar(ModelCliente cliente)
         {
 
-            if (ModelState.IsValid)
+
+            ClienteDAO novoClienteDAO = new ClienteDAO();
+            string cpf = new ClienteDAO().SelectCPFDoCliente(cliente.CPF_cli);
+            string email = new ClienteDAO().SelectEmailDoCliente(cliente.email_cli);
+            if (cpf == cliente.CPF_cli && email == cliente.email_cli)
             {
-               
-                ClienteDAO novoClienteDAO = new ClienteDAO();
-                string cpf = new ClienteDAO().SelectCPFDoCliente(cliente.CPF_cli);
-                string email = new ClienteDAO().SelectEmailDoCliente(cliente.email_cli);
-                if (cpf == cliente.CPF_cli && email == cliente.email_cli)
-                {
-                    ViewBag.Email = "Email já existente";
-                    ViewBag.CPF = "CPF já existente";
-                    return View(cliente);
-                }
-
-                else if (cpf == cliente.CPF_cli)
-                {
-                    ViewBag.CPF = "CPF já existente";
-                    return View(cliente);
-                }
-
-                else if (email == cliente.email_cli)
-                {
-                    ViewBag.Email = "Email já existente";
-                    return View(cliente);
-                };
-                ModelCliente novoCliente = new ModelCliente()
-                {
-                    nome_cli = cliente.nome_cli,
-                    email_cli = cliente.email_cli,
-                    CPF_cli = cliente.CPF_cli,
-                    cep_cli = cliente.cep_cli,
-                    num_cli = cliente.num_cli,
-                    logradouro_cli = cliente.logradouro_cli,
-                    nasc_cli = cliente.nasc_cli,
-                    tel_cli = cliente.tel_cli,
-                    senha_cli = cliente.senha_cli
-                };
-                novoClienteDAO.InsertCliente(novoCliente);
-
-                return RedirectToAction("Index", "Home");
+                ViewBag.Email = "Email já existente";
+                ViewBag.CPF = "CPF já existente";
+                return View(cliente);   
             }
-            return View(cliente);
+
+            else if (cpf == cliente.CPF_cli)
+            {
+                ViewBag.CPF = "CPF já existente";
+                return View(cliente);
+            }
+
+            else if (email == cliente.email_cli)
+            {
+                ViewBag.Email = "Email já existente";
+                return View(cliente);
+            };
+            ModelCliente novoCliente = new ModelCliente()
+            {
+                nome_cli = cliente.nome_cli,
+                email_cli = cliente.email_cli,
+                CPF_cli = cliente.CPF_cli,
+                cep_cli = cliente.cep_cli,
+                num_cli = cliente.num_cli,
+                logradouro_cli = cliente.logradouro_cli,
+                nasc_cli = cliente.nasc_cli,
+                tel_cli = cliente.tel_cli,
+                senha_cli = cliente.senha_cli
+            };
+            novoClienteDAO.InsertCliente(novoCliente);
+
+
+            FormsAuthentication.SetAuthCookie(cliente.email_cli, false);
+            Session["ClienteLogado"] = cliente.email_cli.ToString();
+            Session["senhaLogado"] = cliente.senha_cli.ToString();
+
+            return RedirectToAction("Index", "Home");
+            
         }
 
         public ActionResult Atualizar(int id)
@@ -137,25 +140,35 @@ namespace PlanosPets.Controllers
 
         }
 
-        public ActionResult Detalhes(int id)
-        {
-            if (Session["FuncLogado"] == null)
-            {
-                return RedirectToAction("SemAcesso", "Login");
-            }
-            else
-            {
-                var metodoCliente = new ClienteDAO();
-                var cliente = metodoCliente.ListarId(id);
-                if (cliente == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(cliente);
-            }
-        }
-       
+        //public ActionResult Detalhes(int id)
+        //{
+        //    if (Session["FuncLogado"] == null)
+        //    {
+        //        return RedirectToAction("SemAcesso", "Login");
+        //    }
+        //    else
+        //    {
+        //        var metodoCliente = new ClienteDAO();
+        //        var cliente = metodoCliente.ListarId(id);
+        //        if (cliente == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        return View(cliente);
+        //    }
+        //}
 
-        
+        public ActionResult Detalhes()
+        {
+            string Login = Session["ClienteLogado"] as string;
+
+            var metodoCliente = new ClienteDAO();
+            var cliente = metodoCliente.ListarEmail(Login);
+            if (cliente == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cliente);
+        }
     }
 }

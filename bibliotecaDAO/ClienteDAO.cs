@@ -170,6 +170,16 @@ namespace bibliotecaDAO
             }
         }
 
+        public ModelCliente ListarEmail(string Login)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select c.nome_cli as cliente, c.tel_cli as telefone, c.email_cli as email, c.CPF_cli as CPF, c.cep_cli as CEP, c.num_cli as numero, c.logradouro_cli as rua, c.nasc_cli as nascimento, c.senha_cli as senha,  p.nome_pet as pet, p.nasc_pet as nascimento_pet, p.RGA as RGA, r.nome_raca as raça, r.tipo_animal as tipo from db4luck.Cliente c, db4luck.Pets p, db4luck.Raca r where c.id_cli = p.id_cli and r.id_raca = p.id_raca  and email_cli = '{0}'; ", Login);
+               var retorno = db.Retornar(strQuery);
+                return ListaDeClientes(retorno).FirstOrDefault();
+            }
+        }
+
 
 
         public void UpdateCliente(ModelCliente cliente)
