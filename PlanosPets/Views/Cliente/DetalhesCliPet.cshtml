@@ -1,26 +1,16 @@
 ﻿@model bibliotecaModel.ModelCliente
 
 @{
-    ViewBag.Title = "Detalhes";
+    ViewBag.Title = "DetalhesCliPet";
 }
 
-<h2>Detalhes</h2>
-
-<p>
-    @Html.ActionLink("Cadastre seu pet", "Cadastrar", "Pets")
-</p>
+<h2>DetalhesCliPet</h2>
 
 <div>
     <h4>ModelCliente</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.id_cli)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.id_cli)
-        </dd>
+     
 
         <dt>
             @Html.DisplayNameFor(model => model.nome_cli)
@@ -78,21 +68,7 @@
             @Html.DisplayFor(model => model.nasc_cli)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.senha_cli)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.senha_cli)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.confirmar_senha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.confirmar_senha)
-        </dd>
+        
 
         <dt>
             @Html.DisplayNameFor(model => model.tel_cli)
@@ -102,9 +78,11 @@
             @Html.DisplayFor(model => model.tel_cli)
         </dd>
 
+
     </dl>
 </div>
 <p>
     @Html.ActionLink("Atualizar seus dados", "Atualizar", new { email = Model.email_cli }) |
-    @Html.ActionLink("Voltar", "Index", "Home")
+    @Html.ActionLink("Seus pets", "ListarPet")
+    @Html.ActionLink("Voltar", "Detalhes")
 </p>

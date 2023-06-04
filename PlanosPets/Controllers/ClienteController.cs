@@ -1,5 +1,6 @@
 ﻿using bibliotecaDAO;
 using bibliotecaModel;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,34 @@ namespace PlanosPets.Controllers
     public class ClienteController : Controller
     {
         // GET: Cliente
+
+        //metodo para carregar as raças cadastradas no banco
+        public void CarregaRaca()
+        {
+            List<SelectListItem> raca = new List<SelectListItem>();
+
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Raca", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+
+
+                while (rdr.Read())
+                {
+                    raca.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+            }
+            ViewBag.raca = new SelectList(raca, "Value", "Text");
+        }
+
+        
         public ActionResult Index()
         {
             if (Session["FuncLogado"] == null)
@@ -26,11 +55,12 @@ namespace PlanosPets.Controllers
             }
         }
 
+        //tela de cadastro do cliente
         public ActionResult Cadastrar()
         {
             return View();
         }
-
+        //action com todas as validações de cadastro
         [HttpPost]
         public ActionResult Cadastrar(ModelCliente cliente)
         {
@@ -80,26 +110,24 @@ namespace PlanosPets.Controllers
             
         }
 
-        public ActionResult Atualizar(int id)
+        //action que lista o cliente
+        //seleciona o cliente que está logado através da session
+        public ActionResult Atualizar()
         {
-            if (Session["FuncLogado"] == null)
-            {
-                return RedirectToAction("SemAcesso", "Login");
-            }
-            else
-            {
-                var metodoCliente = new ClienteDAO();
-                var cliente = metodoCliente.ListarId(id);
+            string Login = Session["ClienteLogado"] as string;
+
+            var metodoCliente = new ClienteDAO();
+            var cliente = metodoCliente.ListarId(Login);
 
 
-                if (cliente == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(cliente);
+            if (cliente == null)
+            {
+                return HttpNotFound();
             }
+            return View(cliente);
+            
         }
-
+        //action que aciona o método de atualizar
         [HttpPost]
         public ActionResult Atualizar(ModelCliente cliente)
         {
@@ -107,27 +135,24 @@ namespace PlanosPets.Controllers
             {
                 var metodoCliente = new ClienteDAO();
                 metodoCliente.UpdateCliente(cliente);
-                return RedirectToAction("Index");
+                return RedirectToAction("DetalhesCliPet", "Cliente");
             }
             return View(cliente);
         }
 
-        public ActionResult Excluir(int id)
+
+        public ActionResult Excluir()
         {
-            if (Session["FuncLogado"] == null)
+            string Login = Session["ClienteLogado"] as string;
+
+            var metodoCliente = new ClienteDAO();
+            var cliente = metodoCliente.ListarId(Login);
+            if (cliente == null)
             {
-                return RedirectToAction("SemAcesso", "Login");
+                return HttpNotFound();
             }
-            else
-            {
-                var metodoCliente = new ClienteDAO();
-                var cliente = metodoCliente.ListarId(id);
-                if (cliente == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(cliente);
-            }
+            return View(cliente);
+            
         }
         [HttpPost, ActionName("Excluir")]
         public ActionResult ExcluirConfirma(int id)
@@ -140,25 +165,22 @@ namespace PlanosPets.Controllers
 
         }
 
-        //public ActionResult Detalhes(int id)
-        //{
-        //    if (Session["FuncLogado"] == null)
-        //    {
-        //        return RedirectToAction("SemAcesso", "Login");
-        //    }
-        //    else
-        //    {
-        //        var metodoCliente = new ClienteDAO();
-        //        var cliente = metodoCliente.ListarId(id);
-        //        if (cliente == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-        //        return View(cliente);
-        //    }
-        //}
-
+        //action que mostra o perfil com os dados do cliente logado
         public ActionResult Detalhes()
+        {
+            string Login = Session["ClienteLogado"] as string;
+
+            var metodoCliente = new ClienteDAO();
+            var cliente = metodoCliente.ListarId(Login);
+            if (cliente == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cliente);
+        }
+
+        //action que mostra o perfil com os dados do cliente logado, junto com seus pets cadastrados
+        public ActionResult DetalhesCliPet()
         {
             string Login = Session["ClienteLogado"] as string;
 
@@ -166,9 +188,56 @@ namespace PlanosPets.Controllers
             var cliente = metodoCliente.ListarEmail(Login);
             if (cliente == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Detalhes");
             }
             return View(cliente);
         }
+
+
+
+
+
+
+
+
+
+        public ActionResult ListarPet()
+        {
+            string Login = Session["ClienteLogado"] as string;
+
+            var metodoPet = new PetDAO();
+            var listaPet = metodoPet.ListarPetCli(Login);
+            return View(listaPet);
+
+        }
+
+        //action que lista o pet pelo id
+        public ActionResult AtualizarPet(int Id)
+        {
+            CarregaRaca();
+            var metodopet = new PetDAO();
+            var pet = metodopet.ListarIdPet(Id);
+            if(pet == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pet);
+        }
+        //action que aciona o método de atualizar
+        [HttpPost]
+        public ActionResult AtualizarPet(ModelCliente pets,int id)
+        {
+            string Email = Session["ClienteLogado"] as string;
+            string idCli = new PetDAO().SelectIdDoCli(Email);
+            pets.id_cli = int.Parse(idCli);
+            var metodoUsuario = new ClienteDAO();
+            pets.id_raca = int.Parse(Request["raca"]);
+            pets.id_pet = id;
+            metodoUsuario.UpdatePet(pets);
+            return RedirectToAction("ListarPet");
+
+        }
+
+
     }
 }

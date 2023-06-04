@@ -27,7 +27,7 @@ namespace bibliotecaDAO
         MySqlCommand comand = new MySqlCommand();
 
 
-
+        //insere o cliente
         public void InsertCliente(ModelCliente cliente)
         {
             conexao.Open();
@@ -46,6 +46,7 @@ namespace bibliotecaDAO
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+
         public string SelectEmailDoCliente(string vEmail)
         {
             conexao.Open();
@@ -85,7 +86,7 @@ namespace bibliotecaDAO
                 tempcli.cep_cli = readcli["cep_cli"].ToString();
                 tempcli.tel_cli = readcli["tel_cli"].ToString();
                 tempcli.email_cli = readcli["email_cli"].ToString();
-                tempcli.nasc_cli = DateTime.Parse(readcli["nasc_cli"].ToString());
+                tempcli.nasc_cli = readcli["nasc_cli"].ToString();
                 tempcli.logradouro_cli = readcli["logradouro_cli"].ToString();
                 tempcli.senha_cli = readcli["senha_cli"].ToString();
                 tempcli.CPF_cli = readcli["CPF_cli"].ToString();
@@ -111,21 +112,9 @@ namespace bibliotecaDAO
             return CPF;
 
         }
-        public List<ModelCliente> Listar()
-        {
-            using (db = new Banco())
-            {
-                var strQuery = "Select * from Cliente;";
-                var retorno = db.Retornar(strQuery);
-                return ListaDeClientes(retorno);
-            }
 
 
-
-        }
-
-
-
+        //cria uma lista com os dados do cliente
         public List<ModelCliente> ListaDeClientes(MySqlDataReader retorno)
         {
             var clientes = new List<ModelCliente>();
@@ -137,51 +126,119 @@ namespace bibliotecaDAO
                     nome_cli = retorno["nome_cli"].ToString(),
                     email_cli = retorno["email_cli"].ToString(),
                     CPF_cli = retorno["CPF_cli"].ToString(),
-                    senha_cli = retorno["senha_cli"].ToString(),
                     tel_cli = retorno["tel_cli"].ToString(),
                     num_cli = retorno["num_cli"].ToString(),
                     cep_cli = retorno["cep_cli"].ToString(),
                     logradouro_cli = retorno["logradouro_cli"].ToString(),
-                    nasc_cli = DateTime.Parse(retorno["nasc_cli"].ToString())
-
-
-
+                    nasc_cli = retorno["nasc_cli"].ToString()
                 };
-
-
-
                 clientes.Add(TempCliente);
             }
+
             retorno.Close();
             return clientes;
         }
-
-
-
-
-        public ModelCliente ListarId(int Id)
+        // lista um cliente pelo email
+        public ModelCliente ListarId(string Login)
         {
             using (db = new Banco())
             {
                 var db = new Banco();
-                var strQuery = string.Format("select * from Cliente where id_cli = '{0}';", Id);
+                var strQuery = string.Format("select * from Cliente where email_cli = '{0}';", Login);
                 var retorno = db.Retornar(strQuery);
                 return ListaDeClientes(retorno).FirstOrDefault();
             }
         }
 
-        public ModelCliente ListarEmail(string Login)
+
+        //seleciona todos os clientes cadastrados
+        public List<ModelCliente> Listar()
         {
             using (db = new Banco())
             {
-                var strQuery = string.Format("select c.nome_cli as cliente, c.tel_cli as telefone, c.email_cli as email, c.CPF_cli as CPF, c.cep_cli as CEP, c.num_cli as numero, c.logradouro_cli as rua, c.nasc_cli as nascimento, c.senha_cli as senha,  p.nome_pet as pet, p.nasc_pet as nascimento_pet, p.RGA as RGA, r.nome_raca as raça, r.tipo_animal as tipo from db4luck.Cliente c, db4luck.Pets p, db4luck.Raca r where c.id_cli = p.id_cli and r.id_raca = p.id_raca  and email_cli = '{0}'; ", Login);
-               var retorno = db.Retornar(strQuery);
-                return ListaDeClientes(retorno).FirstOrDefault();
+                var strQuery = "Select * from Cliente;";
+                var retorno = db.Retornar(strQuery);
+                return ListaDeClientes(retorno);
             }
         }
 
 
 
+
+        //cria uma lista com os dados do cliente e dos pets dele
+        public List<ModelCliente> ListaDeClientesePet(MySqlDataReader retorno)
+        {
+            var clientes = new List<ModelCliente>();
+            while (retorno.Read())
+            {
+                var TempCliente = new ModelCliente()
+                {
+                    nome_cli = retorno["cliente"].ToString(),
+                    email_cli = retorno["email"].ToString(),
+                    CPF_cli = retorno["CPF"].ToString(),
+                    tel_cli = retorno["telefone"].ToString(),
+                    num_cli = retorno["numero"].ToString(),
+                    cep_cli = retorno["CEP"].ToString(),
+                    logradouro_cli = retorno["rua"].ToString(),
+                    nasc_cli = retorno["nascimento"].ToString(),
+                    nome_pet = retorno["pet"].ToString(),
+                    RGA = retorno["RGA"].ToString(),
+                    id_pet = int.Parse(retorno["id_pet"].ToString()),
+                    nasc_pet = retorno["nascimento_pet"].ToString()
+                };
+                clientes.Add(TempCliente);
+            }
+
+            retorno.Close();
+            return clientes;
+        }
+        // lista um cliente e seus pets pelo email
+        public ModelCliente ListarEmail(string Login)
+        {
+            using (db = new Banco())
+            {
+                var db = new Banco();
+                var strQuery = string.Format("select c.nome_cli as cliente, c.tel_cli as telefone, c.email_cli as email, c.CPF_cli as CPF, c.cep_cli as CEP, c.num_cli as numero, " +
+                    "c.logradouro_cli as rua, c.nasc_cli as nascimento, c.senha_cli as senha, p.nome_pet as pet, p.nasc_pet as nascimento_pet, p.RGA as RGA, p.id_pet as id_pet, r.nome_raca as raca, " +
+                    "r.tipo_animal as tipo from db4luck.Cliente c, db4luck.Pets p, db4luck.Raca r " +
+                    "where c.id_cli = p.id_cli and r.id_raca = p.id_raca and c.email_cli = '{0}';", Login);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeClientesePet(retorno).FirstOrDefault();
+            }
+        }
+
+
+        // cria uma lista com os dados do pet
+        public List<ModelCliente> ListaDePet(MySqlDataReader retorno)
+        {
+            var pet = new List<ModelCliente>();
+            while (retorno.Read())
+            {
+                var TempPet = new ModelCliente()
+                {
+                    id_pet = int.Parse(retorno["id_pet"].ToString()),
+                    nome_pet = retorno["nome_pet"].ToString(),
+                    RGA = retorno["RGA"].ToString(),
+                    nasc_pet = retorno["nasc_pet"].ToString()
+                };
+                pet.Add(TempPet);
+            }
+            retorno.Close();
+            return pet;
+        }
+        // lista os pets pelo id
+        public ModelCliente ListarIdPet(int Id)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select * from Pets where id_pet = {0};", Id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDePet(retorno).FirstOrDefault();
+            }
+        }
+
+
+        //atualiza o cliente
         public void UpdateCliente(ModelCliente cliente)
         {
             var strQuery = "";
@@ -193,16 +250,34 @@ namespace bibliotecaDAO
             strQuery += string.Format("num_cli = '{0}',", cliente.num_cli);
             strQuery += string.Format("cep_cli = '{0}',", cliente.cep_cli);
             strQuery += string.Format("logradouro_cli = '{0}',", cliente.logradouro_cli);
-            strQuery += string.Format("nasc_cli = STR_TO_DATE('{0}', '%d/%m/%Y %H :%i: %s')", cliente.nasc_cli);
+            strQuery += string.Format("nasc_cli = '{0}' ", cliente.nasc_cli);
           
             strQuery += string.Format("where id_cli = '{0}'", cliente.id_cli);
-
-
 
             using (db = new Banco())
             {
                 db.Executar(strQuery);
             }
+        }
+
+        //atualiza os dados do pet do cliente
+        public void UpdatePet(ModelCliente pets)
+        {
+            var strQuery = "";
+            strQuery += "update Pets set ";
+            strQuery += string.Format("nome_pet = '{0}',", pets.nome_pet);
+            strQuery += string.Format("ft_pet = '{0}',", pets.ft_pet);
+            strQuery += string.Format("nasc_pet= '{0}',", pets.nasc_pet);
+            strQuery += string.Format(" RGA = '{0}',", pets.RGA);
+            strQuery += string.Format(" id_raca = '{0}',", pets.id_raca);
+            strQuery += string.Format(" id_cli = '{0}'", pets.id_cli);
+            strQuery += string.Format("where id_pet = '{0}'", pets.id_pet);
+
+            using (db = new Banco())
+            {
+                db.Executar(strQuery);
+            }
+
         }
 
 
@@ -218,18 +293,5 @@ namespace bibliotecaDAO
 
         }
 
-
-
-        public void Save(ModelCliente cliente)
-        {
-            if (cliente.id_cli > 0)
-            {
-                UpdateCliente(cliente);
-            }
-            else
-            {
-                InsertCliente(cliente);
-            }
-        }
     }
 }

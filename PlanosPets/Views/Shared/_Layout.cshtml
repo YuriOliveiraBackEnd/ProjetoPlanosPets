@@ -49,12 +49,12 @@
             <!--CRIANDO UM IF PARA A SESSÃO VERIFICAR SE O USUARIO ESTARÁ LOGADO -->
             @if (Session["ClienteLogado"] != null)
             {
-                <!--criando o actionLink do login na barra de menu -->
+                        <!--criando o actionLink do login na barra de menu -->
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li> @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })</li>
+                    @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })
 
-                    <li> @Html.ActionLink(@Session["ClienteLogado"].ToString(), "Detalhes", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
+                    @Html.ActionLink(@Session["ClienteLogado"].ToString(), "DetalhesCliPet", "Cliente", new { area = "" }, new { @class = "nav-link" })
                 </ul>
 
             }

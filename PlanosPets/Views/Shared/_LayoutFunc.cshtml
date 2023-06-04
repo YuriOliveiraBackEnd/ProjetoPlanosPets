@@ -37,7 +37,7 @@
                 <i class="fa-solid fa-user"></i>
                 @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })
 
-                @Html.ActionLink(@Session["FuncLogado"].ToString(), "DetalhesEmail", "Funcionario"new { area = "" }, new { @class = "nav-link" })
+                @Html.ActionLink(@Session["FuncLogado"].ToString(), "DetalhesEmail", "Funcionario", new { area = "" }, new { @class = "nav-link" })
 
             </div>
             }

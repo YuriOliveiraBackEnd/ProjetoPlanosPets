@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 using bibliotecaDAO;
 using bibliotecaModel;
 using System.IO;
+using System.Web.UI.WebControls;
 
 namespace PlanosPets.Controllers
 {
@@ -40,11 +41,12 @@ namespace PlanosPets.Controllers
             ViewBag.raca = new SelectList(raca, "Value", "Text");
         }
 
-        public ActionResult Index()
+        public ActionResult ListarPet()
         {
+            string Login = Session["ClienteLogado"] as string;
 
             var metodoPet = new PetDAO();
-            var listaPet = metodoPet.Listar();
+            var listaPet = metodoPet.ListarPetCli(Login);
             return View(listaPet);
             
         }
@@ -94,16 +96,17 @@ namespace PlanosPets.Controllers
             };
             novapetsDAO.InsertPet(novopet);
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("DetalhesCliPet", "Cliente");
         }
     
 
-        public ActionResult Atualizar(int id)
+        public ActionResult Atualizar()
         {
+            string Login = Session["ClienteLogado"] as string;
 
             CarregaRaca();
             var metodopet = new PetDAO();
-            var pet = metodopet.ListarId(id);
+            var pet = metodopet.ListarPetCli(Login);
             if (pet == null)
             {
                 return HttpNotFound();
@@ -111,9 +114,6 @@ namespace PlanosPets.Controllers
             return View(pet);
             
         }
-
-
-
         [HttpPost]
         public ActionResult Atualizar(ModelCliente pet)
         {
@@ -122,16 +122,19 @@ namespace PlanosPets.Controllers
                 var metodopet = new PetDAO();
                 pet.id_raca = int.Parse(Request["raca"]);
                 metodopet.UpdatePet(pet);
-                return RedirectToAction("Index");
+                return RedirectToAction("DetalhesCliPet", "Cliente");
             }
             return View(pet);
         }
 
-        public ActionResult Excluir(int id)
+
+
+        public ActionResult Excluir()
         {
+            string Login = Session["ClienteLogado"] as string;
 
             var metodopet = new PetDAO();
-            var pet = metodopet.ListarId(id);
+            var pet = metodopet.ListarPetCli(Login);
             if (pet == null)
             {
                 return HttpNotFound();
@@ -150,11 +153,12 @@ namespace PlanosPets.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Detalhes(int id)
+        public ActionResult Detalhes()
         {
+            string Login = Session["ClienteLogado"] as string;
 
             var metodopet = new PetDAO();
-            var pet = metodopet.ListarId(id);
+            var pet = metodopet.ListarPetCli(Login);
             if (pet == null)
             {
                 return HttpNotFound();

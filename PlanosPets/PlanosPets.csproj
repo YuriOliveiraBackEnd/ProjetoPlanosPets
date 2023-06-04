@@ -382,7 +382,6 @@
     <Content Include="Views\Funcionario\Cadastrar.cshtml" />
     <Content Include="Views\Cliente\Atualizar.cshtml" />
     <Content Include="Views\Cliente\Excluir.cshtml" />
-    <Content Include="Views\Cliente\Detalhes.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Funcionario\Atualizar.cshtml" />
     <Content Include="Views\Funcionario\Excluir.cshtml" />
@@ -406,7 +405,6 @@
     <Content Include="Views\Produto\Excluir.cshtml" />
     <Content Include="Views\Produto\Detalhes.cshtml" />
     <Content Include="Views\Raca\Cadastrar.cshtml" />
-    <Content Include="Views\Pets\Index.cshtml" />
     <Content Include="Views\Pets\Cadastrar.cshtml" />
     <Content Include="Views\Pets\Atualizar.cshtml" />
     <Content Include="Views\Pets\Excluir.cshtml" />
@@ -414,6 +412,11 @@
     <Content Include="Views\Home\ListaRaca.cshtml" />
     <Content Include="Views\Raca\Index.cshtml" />
     <Content Include="Views\Funcionario\DetalhesEmail.cshtml" />
+    <Content Include="Views\Cliente\Detalhes.cshtml" />
+    <Content Include="Views\Cliente\DetalhesCliPet.cshtml" />
+    <Content Include="Views\Pets\ListarPet.cshtml" />
+    <Content Include="Views\Cliente\ListarPet.cshtml" />
+    <Content Include="Views\Cliente\AtualizarPet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

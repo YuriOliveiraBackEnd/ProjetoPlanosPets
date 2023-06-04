@@ -24,7 +24,7 @@ namespace bibliotecaDAO
             comand.CommandText = "call InsertPet(@nome_pet, @ft_pet, @nasc_pet, @RGA, @id_cli, @id_raca);";
             comand.Parameters.Add("@nome_pet", MySqlDbType.VarChar).Value = pets.nome_pet;
             comand.Parameters.Add("@ft_pet", MySqlDbType.VarChar).Value = pets.ft_pet;
-            comand.Parameters.Add("@nasc_pet", MySqlDbType.DateTime).Value = pets.nasc_pet;
+            comand.Parameters.Add("@nasc_pet", MySqlDbType.VarChar).Value = pets.nasc_pet;
             comand.Parameters.Add("@RGA", MySqlDbType.VarChar).Value = pets.RGA;
             comand.Parameters.Add("@id_cli", MySqlDbType.VarChar).Value = pets.id_cli;
             comand.Parameters.Add("@id_raca", MySqlDbType.VarChar).Value = pets.id_raca;
@@ -70,10 +70,34 @@ namespace bibliotecaDAO
             {
                 var strQuery = "Select * from Pets;";
                 var retorno = db.Retornar(strQuery);
-                return ListaDePets(retorno);
+                return ListaPets(retorno);
             }
 
         }
+        //lista de pets gerais
+        public List<ModelCliente> ListaPets(MySqlDataReader retorno)
+        {
+            var pets = new List<ModelCliente>();
+            while (retorno.Read())
+            {
+                var TempPets = new ModelCliente()
+                {
+                    id_pet = int.Parse(retorno["id_pet"].ToString()),
+                    nome_pet = retorno["nome_pet"].ToString(),
+                    ft_pet = retorno["ft_pet"].ToString(),
+                    RGA = retorno["RGA"].ToString(),
+                    nasc_pet = retorno["nasc_pet"].ToString(),
+                    id_raca = int.Parse(retorno["id_raca"].ToString())
+                };
+
+                pets.Add(TempPets);
+            }
+            retorno.Close();
+            return pets;
+        }
+
+
+        //lista de pets do cliente
         public List<ModelCliente> ListaDePets(MySqlDataReader retorno)
         {
             var pets = new List<ModelCliente>();
@@ -82,12 +106,11 @@ namespace bibliotecaDAO
                 var TempPets = new ModelCliente()
                 {
                     id_pet = int.Parse(retorno["id_pet"].ToString()),
-                    id_cli = int.Parse(retorno["id_cli"].ToString()),
-                    id_raca = int.Parse(retorno["id_raca"].ToString()),
-                    nome_pet = retorno["nome_pet"].ToString(),
-                    ft_pet = retorno["ft_pet"].ToString(),
+                    nome_pet = retorno["pet"].ToString(),
+                    ft_pet = retorno["foto"].ToString(),
                     RGA = retorno["RGA"].ToString(),
-                    nasc_pet = DateTime.Parse(retorno["nasc_pet"].ToString())
+                    nasc_pet = retorno["nascimento_pet"].ToString(),
+                    id_raca = int.Parse(retorno["raca"].ToString())
                 };
 
                 pets.Add(TempPets);
@@ -95,15 +118,31 @@ namespace bibliotecaDAO
             retorno.Close();
             return pets;
         }
-  
-              
-        public ModelCliente ListarId(int Id)
+
+
+        public ModelCliente ListarIdPet(int Id)
         {
             using (db = new Banco())
             {
-                var strQuery = string.Format("select * from Pets where id_pet = {0};", Id);
+                var db = new Banco();
+                var strQuery = string.Format("select * from Pets where id_cli = {0};", Id);
                 var retorno = db.Retornar(strQuery);
-                return ListaDePets(retorno).FirstOrDefault();
+                return ListaPets(retorno).FirstOrDefault();
+            }
+        }
+
+        public List<ModelCliente> ListarPetCli(string Login)
+        {
+            using (db = new Banco())
+            {
+                var strQuery = string.Format("select p.nome_pet as pet, p.nasc_pet as nascimento_pet, p.RGA as RGA, p.ft_pet as foto, p.id_raca as raca, p.id_pet as id_pet, " +
+                      "r.nome_raca as raca, r.tipo_animal as tipo " +
+                      "from db4luck.Cliente c, db4luck.Pets p, db4luck.Raca r " +
+                      "where c.id_cli = p.id_cli " +
+                      "and r.id_raca = p.id_raca " +
+                      "and email_cli = '{0}';", Login);
+                var retorno = db.Retornar(strQuery);
+                return ListaDePets(retorno);
             }
         }
 
@@ -111,19 +150,21 @@ namespace bibliotecaDAO
         {
             var strQuery = "";
             strQuery += "update Pets set ";
-            strQuery += string.Format("nome_pet = '{0}',", pets.nome_pet);
-            strQuery += string.Format("ft_pet = '{0}',", pets.ft_pet);
-            strQuery += string.Format ("nasc_pet= STR_TO_DATE('{0}', '%d/%m/%Y %H :%i: %s'),", pets.nasc_pet);
-            strQuery += string.Format(" RGA = '{0}',", pets.RGA);
-            strQuery += string.Format(" id_raca = '{0}',", pets.id_raca);
-            strQuery += string.Format(" id_cli = '{0}'", pets.id_cli);
-            strQuery += string.Format("where id_pet = '{0}'", pets.id_pet);
+            strQuery += string.Format("nome_pet = '{0}', ", pets.nome_pet);
+            strQuery += string.Format("ft_pet = '{0}', ", pets.ft_pet);
+            strQuery += string.Format("nasc_pet= STR_TO_DATE('{0}', '%d/%m/%Y %H :%i: %s'), ", pets.nasc_pet);
+            strQuery += string.Format("RGA = '{0}', ", pets.RGA);
+            strQuery += string.Format("id_raca = {0}, ", pets.id_raca);
+            strQuery += string.Format("id_cli = {0} ", pets.id_cli);
+
+            strQuery += string.Format("where id_pet = {0};", pets.id_pet);
 
             using (db = new Banco())
             {
                 db.Executar(strQuery);
             }
         }
+
 
 
 
@@ -136,18 +177,6 @@ namespace bibliotecaDAO
                 db.Executar(strQuery);
             }
 
-        }
-
-        public void Save(ModelCliente pets)
-        {
-            if (pets.id_pet > 0)
-            {
-                UpdatePet(pets);
-            }
-            else
-            {
-                InsertPet(pets);
-            }
         }
 
 

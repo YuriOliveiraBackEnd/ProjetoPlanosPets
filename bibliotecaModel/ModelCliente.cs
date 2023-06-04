@@ -57,7 +57,7 @@ namespace bibliotecaModel
         [DisplayName("Data de nascimento")]
         [Required(ErrorMessage = "insira sua data de nascimento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime nasc_cli { get; set; }
+        public string nasc_cli { get; set; }
 
    
         [DataType(DataType.Password)]
@@ -88,7 +88,8 @@ namespace bibliotecaModel
         public string ft_pet { get; set; }
         [DisplayName("Data de nascimento")]
         [Required(ErrorMessage = "insira a data de nascimento do seu pet")]
-        public DateTime nasc_pet { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public string nasc_pet { get; set; }
 
         [DisplayName("RGA")]
         [Required(ErrorMessage = "insira o RGA do pet")]
