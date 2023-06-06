@@ -1,11 +1,8 @@
-﻿
-@{
-    if (Session["Funclogado"] != null)
-    {
-        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
-    }
-
+﻿@{
+    ViewBag.Title = "Buscar";
 }
+
+<h2>Buscar</h2>
 
 
 
@@ -45,9 +42,10 @@
 
                                 </h4>
 
-                                <h5>Preço: R$@item.valor_unitario</h5>
-                                <h5>Descrição: @item.desc_prod</h5>
-                                <h5>Quantidade: @item.quant</h5>
+                                <h5>@item.valor_unitario</h5>
+                                <h5>@item.desc_prod</h5>
+                                <h5>@item.id_categoria</h5>
+                                <h5>@item.quant</h5>
 
                             </div>
 

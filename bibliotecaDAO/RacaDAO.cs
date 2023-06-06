@@ -20,10 +20,10 @@ namespace bibliotecaDAO
         public void InsertRaca(ModelRacas racas)
         {
             conexao.Open();
-            comand.CommandText = "call InsertRaca(@nome_raca, @ft_raca,@tipo_animal,@id_func);";
+            comand.CommandText = "call InsertRaca(@nome_raca,@tipo_animal, @ft_raca,@id_func);";
             comand.Parameters.Add("@nome_raca", MySqlDbType.VarChar).Value = racas.nome_raca;
-            comand.Parameters.Add("@ft_raca", MySqlDbType.VarChar).Value = racas.ft_raca; 
-            comand.Parameters.Add("@tipo_animal", MySqlDbType.VarChar).Value = racas.tipo_animal; 
+            comand.Parameters.Add("@tipo_animal", MySqlDbType.VarChar).Value = racas.tipo_animal;
+            comand.Parameters.Add("@ft_raca", MySqlDbType.VarChar).Value = racas.ft_raca;
             comand.Parameters.Add("@id_func", MySqlDbType.VarChar).Value = racas.id_func; 
 
             comand.Connection = conexao;

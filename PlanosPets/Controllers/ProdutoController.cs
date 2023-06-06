@@ -13,32 +13,33 @@ namespace PlanosPets.Controllers
     public class ProdutoController : Controller
     {
         // GET: Produto
+
         public void CarregaCategoria()
-        {
-            List<SelectListItem> categoria = new List<SelectListItem>();
+        {
+            List<SelectListItem> categoria = new List<SelectListItem>();
 
- 
 
-            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
-            {
-                con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Categorias", con);
-                MySqlDataReader rdr = cmd.ExecuteReader();
 
- 
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=12345678"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Categorias", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
 
-                while (rdr.Read())
-                {
-                    categoria.Add(new SelectListItem
-                    {
-                        Text = rdr[1].ToString(),
-                        Value = rdr[0].ToString()
-                    });
-                }
-                con.Close();
-            }
-            ViewBag.categoria = new SelectList(categoria, "Value", "Text");
-        }
+
+
+                while (rdr.Read())
+                {
+                    categoria.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+            }
+            ViewBag.categoria = new SelectList(categoria, "Value", "Text");
+        }
         public ActionResult ListaProduto()
         {
             if (Session["FuncLogado"] == null)
@@ -75,15 +76,15 @@ namespace PlanosPets.Controllers
 
             string arquivo = Path.GetFileName(file.FileName);
 
-                string file2 = "/images/" + Path.GetFileName(file.FileName);
+            string file2 = "/images/" + Path.GetFileName(file.FileName);
 
-                string _path = Path.Combine(Server.MapPath("~/images"), arquivo);
+            string _path = Path.Combine(Server.MapPath("~/images"), arquivo);
 
-                file.SaveAs(_path);
+            file.SaveAs(_path);
 
-                produto.ft_prod = file2;
+            produto.ft_prod = file2;
 
-           
+
 
             ModelProduto novoproduto = new ModelProduto()
             {
@@ -94,14 +95,14 @@ namespace PlanosPets.Controllers
                 ft_prod = produto.ft_prod,
                 id_func = produto.id_func,
                 id_categoria = int.Parse(Request["categoria"]),
-                
+
             };
 
             metodoProduto.InsertProduto(novoproduto);
 
-                ViewBag.msg = "Cadastro realizado";
+            ViewBag.msg = "Cadastro realizado";
 
-               return RedirectToAction("ListaProduto");
+            return RedirectToAction("ListaProduto");
 
         }
 
@@ -141,48 +142,25 @@ namespace PlanosPets.Controllers
             return View(produto);
         }
 
+
         public ActionResult Excluir(int id)
         {
-            if (Session["FuncLogado"] == null)
-            {
-                return RedirectToAction("SemAcesso", "Login");
-            }
-            else
-            {
-                var metodoproduto = new ProdutoDAO();
-                var produto = metodoproduto.ListarId(id);
-                if (produto == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(produto);
-            }
-        }
-        [HttpPost, ActionName("Excluir")]
-        public ActionResult ExcluirConfirma(int id)
-        {
             var metodoproduto = new ProdutoDAO();
-            ModelProduto produto = new ModelProduto();
-            produto.id_prod = id;
-            metodoproduto.DeleteProduto(produto);
+            metodoproduto.DeleteProduto(id);
             return RedirectToAction("ListaProduto");
         }
+
         public ActionResult Detalhes(int id)
         {
-            if (Session["FuncLogado"] == null)
+
+            var metodoProduto = new ProdutoDAO();
+            var produto = metodoProduto.ListarId(id);
+            if (produto == null)
             {
-                return RedirectToAction("SemAcesso", "Login");
+                return HttpNotFound();
             }
-            else
-            {
-                var metodoProduto = new ProdutoDAO();
-                var produto = metodoProduto.ListarId(id);
-                if (produto == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(produto);
-            }
+            return View(produto);
+
         }
     }
 }

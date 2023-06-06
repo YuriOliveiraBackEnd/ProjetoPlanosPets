@@ -140,7 +140,7 @@ namespace bibliotecaDAO
                       "from db4luck.Cliente c, db4luck.Pets p, db4luck.Raca r " +
                       "where c.id_cli = p.id_cli " +
                       "and r.id_raca = p.id_raca " +
-                      "and email_cli = '{0}';", Login);
+                      "and c.email_cli = '{0}';", Login);
                 var retorno = db.Retornar(strQuery);
                 return ListaDePets(retorno);
             }
@@ -168,12 +168,12 @@ namespace bibliotecaDAO
 
 
 
-        public void DeletePet(ModelCliente pet)
+        public void DeletePet(int id)
         {
 
             using (db = new Banco())
             {
-                var strQuery = string.Format("Delete from pets where id_pet = '{0}'",pet.id_pet);
+                var strQuery = string.Format("Delete from pets where id_pet = {0};", id);
                 db.Executar(strQuery);
             }
 

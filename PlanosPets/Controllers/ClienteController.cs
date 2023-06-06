@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace PlanosPets.Controllers
 {
@@ -15,7 +16,7 @@ namespace PlanosPets.Controllers
         // GET: Cliente
 
         //metodo para carregar as raças cadastradas no banco
-        public void CarregaRaca()
+        public void CarregaRaca(string varCachorro)
         {
             List<SelectListItem> raca = new List<SelectListItem>();
 
@@ -40,7 +41,7 @@ namespace PlanosPets.Controllers
             ViewBag.raca = new SelectList(raca, "Value", "Text");
         }
 
-        
+
         public ActionResult Index()
         {
             if (Session["FuncLogado"] == null)
@@ -141,26 +142,12 @@ namespace PlanosPets.Controllers
         }
 
 
-        public ActionResult Excluir()
-        {
-            string Login = Session["ClienteLogado"] as string;
+        public ActionResult Excluir(int id)
 
-            var metodoCliente = new ClienteDAO();
-            var cliente = metodoCliente.ListarId(Login);
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
-            
-        }
-        [HttpPost, ActionName("Excluir")]
-        public ActionResult ExcluirConfirma(int id)
         {
             var metodoCliente = new ClienteDAO();
-            ModelCliente cliente = new ModelCliente();
-            cliente.id_cli = id;
-            metodoCliente.Excluir(cliente);
+            metodoCliente.Excluir(id);
+
             return RedirectToAction("Index");
 
         }
@@ -214,7 +201,6 @@ namespace PlanosPets.Controllers
         //action que lista o pet pelo id
         public ActionResult AtualizarPet(int Id)
         {
-            CarregaRaca();
             var metodopet = new PetDAO();
             var pet = metodopet.ListarIdPet(Id);
             if(pet == null)
@@ -235,6 +221,23 @@ namespace PlanosPets.Controllers
             pets.id_pet = id;
             metodoUsuario.UpdatePet(pets);
             return RedirectToAction("ListarPet");
+
+        }
+
+        //action para excluir um pet, retornando para a lista caso o cliente ainda tenha pets cadastrados
+        //ou retornando para o perfil do cliente, caso não tenha mais
+        public ActionResult ExcluirPet(int id)
+        {
+            string Login = Session["ClienteLogado"] as string;
+
+            var metodopet = new PetDAO();
+            metodopet.DeletePet(id);
+
+            if (metodopet.ListarPetCli(Login) == null)
+                return RedirectToAction("Detalhes");
+
+            else
+                return RedirectToAction("ListarPet");
 
         }
 

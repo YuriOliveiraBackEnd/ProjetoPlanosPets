@@ -20,7 +20,7 @@ namespace PlanosPets.Controllers
         {
             List<SelectListItem> raca = new List<SelectListItem>();
 
-            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=12345678"))
             {
                 con.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from Raca", con);
@@ -31,7 +31,7 @@ namespace PlanosPets.Controllers
                 while (rdr.Read())
                 {
                     raca.Add(new SelectListItem
-                    {                       
+                    {
                         Text = rdr[1].ToString(),
                         Value = rdr[0].ToString()
                     });
@@ -48,7 +48,7 @@ namespace PlanosPets.Controllers
             var metodoPet = new PetDAO();
             var listaPet = metodoPet.ListarPetCli(Login);
             return View(listaPet);
-            
+
         }
 
         public ActionResult Cadastrar()
@@ -96,9 +96,12 @@ namespace PlanosPets.Controllers
             };
             novapetsDAO.InsertPet(novopet);
 
+            ViewBag.msg = "Cadastro realizado";
+
             return RedirectToAction("DetalhesCliPet", "Cliente");
         }
-    
+
+
 
         public ActionResult Atualizar()
         {
@@ -112,7 +115,7 @@ namespace PlanosPets.Controllers
                 return HttpNotFound();
             }
             return View(pet);
-            
+
         }
         [HttpPost]
         public ActionResult Atualizar(ModelCliente pet)
@@ -128,31 +131,6 @@ namespace PlanosPets.Controllers
         }
 
 
-
-        public ActionResult Excluir()
-        {
-            string Login = Session["ClienteLogado"] as string;
-
-            var metodopet = new PetDAO();
-            var pet = metodopet.ListarPetCli(Login);
-            if (pet == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pet);
-            
-        }
-
-        [HttpPost, ActionName("Excluir")]
-        public ActionResult ExcluirConfirma(int id)
-        {
-            var metodopet = new PetDAO();
-            ModelCliente pet = new ModelCliente();
-            pet.id_pet = id;
-            metodopet.DeletePet(pet);
-            return RedirectToAction("Index");
-        }
-
         public ActionResult Detalhes()
         {
             string Login = Session["ClienteLogado"] as string;
@@ -164,7 +142,6 @@ namespace PlanosPets.Controllers
                 return HttpNotFound();
             }
             return View(pet);
-            
         }
     }
 }

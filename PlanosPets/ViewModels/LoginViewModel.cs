@@ -13,7 +13,8 @@ namespace PlanosPets.ViewModels
     {
 
 
-
+       
+        public int Id_cli { get; set; }
         [Required(ErrorMessage = "Informe o email")]
         [MaxLength(50, ErrorMessage = "o email deve ter até 50 caracteres")]
         public string Email { get; set; }

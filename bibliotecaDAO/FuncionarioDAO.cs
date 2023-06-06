@@ -30,7 +30,7 @@ namespace bibliotecaDAO
             comand.Parameters.Add("@cep_func", MySqlDbType.VarChar).Value = funcionario.cep_func;
             comand.Parameters.Add("@num_func", MySqlDbType.VarChar).Value = funcionario.num_func;
             comand.Parameters.Add("@logradouro_func", MySqlDbType.VarChar).Value = funcionario.logradouro_func;
-            comand.Parameters.Add("@nasc_func", MySqlDbType.DateTime).Value = funcionario.nasc_func;
+            comand.Parameters.Add("@nasc_func", MySqlDbType.VarChar).Value = funcionario.nasc_func;
             comand.Parameters.Add("@tel_func", MySqlDbType.VarChar).Value = funcionario.tel_func;
             comand.Parameters.Add("@senha_func", MySqlDbType.VarChar).Value = funcionario.senha_func;
             comand.Connection = conexao;

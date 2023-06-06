@@ -6,58 +6,65 @@
 
 <h2>ListarPet</h2>
 
+
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Cadastrar pet", "Cadastrar", "Pets")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.id_pet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nome_pet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ft_pet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nasc_pet)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RGA)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.id_raca)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.id_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nome_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ft_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nasc_pet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RGA)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.id_raca)
-        </td>
-        <td>
-            @Html.ActionLink("Atualizar dados do pet", "AtualizarPet", new { id=item.id_pet }) |
-            @Html.ActionLink("Apagar pet", "Deletar", new { id=item.id_pet})
-        </td>
-    </tr>
-}
 
-</table>
+<div class="">
 
+    <div class="row center">
+
+        <div class="col-lg-9">
+
+            <div class="row">
+
+                @foreach (var item in Model)
+
+                {
+
+                    <div class="col-lg-3 col-md-6 mb-4" style="margin:2% 4%">
+
+                        <div class="card h-100">
+
+                            <a href="/Produto/Detalhes/@item.id_pet">
+
+                                @if (@item.ft_pet != null)
+
+                                {<img class="card-img-right flex-auto d-none d-md-block" data-src=" " alt="Thumbnail [300x300]" style="width: 300px; height: 300px;" src="@item.ft_pet" data-holder-rendered="true">}
+
+                                else
+
+                                {<img class="card-img-right flex-auto d-none d-md-block" data-src=" " alt="Thumbnail [300x300]" style="width: 300px; height: 300px;" src="~/Images/image-not-found.jpg" data-holder-rendered="true">}
+
+                            </a>
+
+                            <div class="card-body">
+
+                                <h5>Nome: @item.nome_pet</h5>
+                                <h5>Data de nascimento: @item.nasc_pet</h5>
+                                <h5>RGA: @item.RGA</h5>
+
+                            </div>
+
+                            <div class="card-footer space-between-flex" style="width:90%">
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    @Html.ActionLink("Atualizar dados do pet", "AtualizarPet", new { id = item.id_pet })
+                    @Html.ActionLink("Excluir", "ExcluirPet", new { id = item.id_pet }, new { onclick = "return confirm('Deseja excluir?');" })
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

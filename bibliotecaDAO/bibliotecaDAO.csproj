@@ -86,6 +86,7 @@
     <Compile Include="CompraDAO.cs" />
     <Compile Include="FornecedorDAO.cs" />
     <Compile Include="FuncionarioDAO.cs" />
+    <Compile Include="ItemCarrinhoDAO.cs" />
     <Compile Include="PetDAO.cs" />
     <Compile Include="ProdutoDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

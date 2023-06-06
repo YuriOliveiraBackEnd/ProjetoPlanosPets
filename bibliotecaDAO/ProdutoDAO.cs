@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace bibliotecaDAO
             comand.ExecuteNonQuery();
             conexao.Close();
         }
+
         public string SelectIdDofunc(string Email)
         {
             string VEmail = "";
@@ -72,7 +74,6 @@ namespace bibliotecaDAO
                     id_prod = int.Parse(retorno["id_prod"].ToString()),
                     nome_prod = retorno["nome_prod"].ToString(),
                     id_categoria = int.Parse(retorno["id_categoria"].ToString()),
-                    id_func = int.Parse(retorno["id_func"].ToString()),
                     quant = int.Parse(retorno["quant"].ToString()),
                     valor_unitario = double.Parse(retorno["valor_unitario"].ToString()),
                     desc_prod = retorno["desc_prod"].ToString(),
@@ -84,6 +85,35 @@ namespace bibliotecaDAO
             }
             retorno.Close();
             return produtos;
+        }
+        public List<ModelProduto> GetConsProd(int id)
+        {
+            conexao.Open();
+            List<ModelProduto> Produtoslist = new List<ModelProduto>(); 
+         
+            MySqlCommand cmd = new MySqlCommand("select * from produto where id_prod=@cod",conexao);
+            cmd.Parameters.AddWithValue("@cod", id);
+            MySqlDataAdapter sd = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            sd.Fill(dt);
+            conexao.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                Produtoslist.Add(
+                    new ModelProduto
+                    {
+                        id_prod = Convert.ToInt32(dr["id_prod"]),
+                        nome_prod = Convert.ToString(dr["nome_prod"]),
+                        id_categoria = Convert.ToInt32(dr["id_categoria"]),
+                        quant = Convert.ToInt32(dr["quant"]),
+                        valor_unitario = Convert.ToDouble(dr["valor_unitario"]),
+                        desc_prod = Convert.ToString(dr["desc_prod"]),
+                        ft_prod = Convert.ToString(dr["ft_prod"])
+                    });
+            }
+            return Produtoslist;
         }
         public ModelProduto Pesquisa(string pesquisar)
         {
@@ -130,27 +160,15 @@ namespace bibliotecaDAO
             
         }
 
-        public void DeleteProduto(ModelProduto produto)
+        public void DeleteProduto(int id)
         {
-            var strQuery = "";
-            strQuery += "delete from produto ";
-            strQuery += string.Format("where id_prod = '{0}';", produto.id_prod);
 
             using (db = new Banco())
             {
+                var strQuery = string.Format("Delete from Produto where id_prod = {0};", id);
                 db.Executar(strQuery);
             }
-        }
-        public void Save(ModelProduto produto)
-        {
-            if (produto.id_prod > 0)
-            {
-                UpdateProduto(produto);
-            }
-            else
-            {
-                InsertProduto(produto);
-            }
+
         }
 
     }

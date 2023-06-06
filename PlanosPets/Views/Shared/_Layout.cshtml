@@ -22,9 +22,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Lista de Produtos", "Listarproduto", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Cadastrar Pet", "Cadastrar", "Pets", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Lista de Raças", "ListaRaca", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Planos", "Planos", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @if (Session["FuncLogado"] != null)
                     {
                         <li>@Html.ActionLink("Área Adiministrativa", "IndexFunc", "Home", new { area = "" }, new { @class = "nav-link" })</li>
@@ -33,28 +32,28 @@
             </div>
             <!--Header com pesquisar-->
             <!--Logo Header-->
-            @*<div class="logo">
-            <img class="imagem-logo" src="~/Images/logo-branca.svg">
-        </div>
-        <!--Barra de Pesquisa-->
-        <div class="barra-pesquisa">
-            @using (Html.BeginForm("Buscar", "Produto", FormMethod.Post))
-            {
-                <input type="text" name="pesquisar" id="pesquisar" placeholder="Pesquise aqui!">
-                <input type="submit" text="Buscar" />
-            }
-            <!--Lupa da Barra de Pesquisa-->
-            <i class="fa-solid fa-magnifying-glass" id="lupa-pesquisar"></i>
-        </div>*@
+            <div class="logo">
+                <img class="imagem-logo" src="~/Images/logo-branca.svg">
+            </div>
+            <!--Barra de Pesquisa-->
+            <div class="barra-pesquisa">
+                @using (Html.BeginForm("Buscar", "Home", FormMethod.Post))
+                {
+                    <input type="text" name="pesquisar" id="pesquisar" placeholder="Pesquise aqui!">
+                    <input type="submit" text="Buscar" />
+                }
+                <!--Lupa da Barra de Pesquisa-->
+                <i class="fa-solid fa-magnifying-glass" id="lupa-pesquisar"></i>
+            </div>
             <!--CRIANDO UM IF PARA A SESSÃO VERIFICAR SE O USUARIO ESTARÁ LOGADO -->
             @if (Session["ClienteLogado"] != null)
             {
-                        <!--criando o actionLink do login na barra de menu -->
+                <!--criando o actionLink do login na barra de menu -->
                 <ul class="nav navbar-nav navbar-right">
 
-                    @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "login" })
 
-                    @Html.ActionLink(@Session["ClienteLogado"].ToString(), "DetalhesCliPet", "Cliente", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink(@Session["ClienteLogado"].ToString(), "DetalhesCliPet", "Cliente")
                 </ul>
 
             }

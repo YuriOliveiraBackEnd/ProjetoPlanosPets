@@ -1,7 +1,11 @@
 ﻿@model bibliotecaModel.ModelFuncionario
 
 @{
-    ViewBag.Title = "DetalhesEmail";
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
 }
 
 <h2>DetalhesEmail</h2>

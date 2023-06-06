@@ -20,7 +20,7 @@ namespace bibliotecaDAO
         public void InsertCompra(ModelCompra compra)
         {
             conexao.Open();
-            comand.CommandText = "call spInsertCompra(@pagamento, @valor_total, @id_cli);";
+            comand.CommandText = "call InsertCompra(@pagamento, @valor_total, @id_cli);";
             comand.Parameters.Add("@pagamento", MySqlDbType.VarChar).Value = compra.pagamento;
             comand.Parameters.Add("@valor_total", MySqlDbType.VarChar).Value = compra.valor_total;
             comand.Parameters.Add("@id_cli", MySqlDbType.VarChar).Value = compra.id_cli;
@@ -39,6 +39,7 @@ namespace bibliotecaDAO
             }
 
         }
+
         public List<ModelCompra> ListaDeCompras(MySqlDataReader retorno)
         {
             var compras = new List<ModelCompra>();

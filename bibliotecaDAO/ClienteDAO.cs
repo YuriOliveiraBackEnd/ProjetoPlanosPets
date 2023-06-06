@@ -39,7 +39,7 @@ namespace bibliotecaDAO
             comand.Parameters.Add("@cep_cli", MySqlDbType.VarChar).Value = cliente.cep_cli;
             comand.Parameters.Add("@num_cli", MySqlDbType.VarChar).Value = cliente.num_cli;
             comand.Parameters.Add("@logradouro_cli", MySqlDbType.VarChar).Value = cliente.logradouro_cli;
-            comand.Parameters.Add("@nasc_cli", MySqlDbType.DateTime).Value = cliente.nasc_cli;
+            comand.Parameters.Add("@nasc_cli", MySqlDbType.VarChar).Value = cliente.nasc_cli;
             comand.Parameters.Add("@senha_cli", MySqlDbType.VarChar).Value = cliente.senha_cli;
 
             comand.Connection = conexao;
@@ -181,10 +181,7 @@ namespace bibliotecaDAO
                     cep_cli = retorno["CEP"].ToString(),
                     logradouro_cli = retorno["rua"].ToString(),
                     nasc_cli = retorno["nascimento"].ToString(),
-                    nome_pet = retorno["pet"].ToString(),
-                    RGA = retorno["RGA"].ToString(),
-                    id_pet = int.Parse(retorno["id_pet"].ToString()),
-                    nasc_pet = retorno["nascimento_pet"].ToString()
+                    senha_cli = retorno["senha"].ToString()
                 };
                 clientes.Add(TempCliente);
             }
@@ -199,9 +196,9 @@ namespace bibliotecaDAO
             {
                 var db = new Banco();
                 var strQuery = string.Format("select c.nome_cli as cliente, c.tel_cli as telefone, c.email_cli as email, c.CPF_cli as CPF, c.cep_cli as CEP, c.num_cli as numero, " +
-                    "c.logradouro_cli as rua, c.nasc_cli as nascimento, c.senha_cli as senha, p.nome_pet as pet, p.nasc_pet as nascimento_pet, p.RGA as RGA, p.id_pet as id_pet, r.nome_raca as raca, " +
-                    "r.tipo_animal as tipo from db4luck.Cliente c, db4luck.Pets p, db4luck.Raca r " +
-                    "where c.id_cli = p.id_cli and r.id_raca = p.id_raca and c.email_cli = '{0}';", Login);
+                    "c.logradouro_cli as rua, c.nasc_cli as nascimento, c.senha_cli as senha " +
+                    "from db4luck.Cliente c, db4luck.Pets p " +
+                    "where c.id_cli = p.id_cli and c.email_cli = '{0}';", Login);
                 var retorno = db.Retornar(strQuery);
                 return ListaDeClientesePet(retorno).FirstOrDefault();
             }
@@ -269,8 +266,8 @@ namespace bibliotecaDAO
             strQuery += string.Format("ft_pet = '{0}',", pets.ft_pet);
             strQuery += string.Format("nasc_pet= '{0}',", pets.nasc_pet);
             strQuery += string.Format(" RGA = '{0}',", pets.RGA);
-            strQuery += string.Format(" id_raca = '{0}',", pets.id_raca);
-            strQuery += string.Format(" id_cli = '{0}'", pets.id_cli);
+            strQuery += string.Format("id_raca = '{0}',", pets.id_raca);
+            strQuery += string.Format("id_cli = '{0}' ", pets.id_cli);
             strQuery += string.Format("where id_pet = '{0}'", pets.id_pet);
 
             using (db = new Banco())
@@ -282,12 +279,12 @@ namespace bibliotecaDAO
 
 
 
-        public void Excluir(ModelCliente cliente)
+        public void Excluir(int id)
         {
 
             using (db = new Banco())
             {
-                var strQuery = string.Format("Delete from cliente where id_cli = {0}", cliente.id_cli);
+                var strQuery = string.Format("Delete from cliente where id_cli = {0}", id);
                 db.Executar(strQuery);
             }
 

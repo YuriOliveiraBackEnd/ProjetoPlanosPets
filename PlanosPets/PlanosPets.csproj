@@ -180,6 +180,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
@@ -381,7 +382,6 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Funcionario\Cadastrar.cshtml" />
     <Content Include="Views\Cliente\Atualizar.cshtml" />
-    <Content Include="Views\Cliente\Excluir.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Funcionario\Atualizar.cshtml" />
     <Content Include="Views\Funcionario\Excluir.cshtml" />
@@ -402,21 +402,21 @@
     <Content Include="Views\Home\Listarproduto.cshtml" />
     <Content Include="Views\Produto\ListaProduto.cshtml" />
     <Content Include="Views\Produto\Atualizar.cshtml" />
-    <Content Include="Views\Produto\Excluir.cshtml" />
     <Content Include="Views\Produto\Detalhes.cshtml" />
     <Content Include="Views\Raca\Cadastrar.cshtml" />
     <Content Include="Views\Pets\Cadastrar.cshtml" />
-    <Content Include="Views\Pets\Atualizar.cshtml" />
-    <Content Include="Views\Pets\Excluir.cshtml" />
     <Content Include="Views\Login\SemAcesso.cshtml" />
     <Content Include="Views\Home\ListaRaca.cshtml" />
     <Content Include="Views\Raca\Index.cshtml" />
     <Content Include="Views\Funcionario\DetalhesEmail.cshtml" />
     <Content Include="Views\Cliente\Detalhes.cshtml" />
     <Content Include="Views\Cliente\DetalhesCliPet.cshtml" />
-    <Content Include="Views\Pets\ListarPet.cshtml" />
     <Content Include="Views\Cliente\ListarPet.cshtml" />
     <Content Include="Views\Cliente\AtualizarPet.cshtml" />
+    <Content Include="Views\Carrinho\Carrinho.cshtml" />
+    <Content Include="Views\Carrinho\confVenda.cshtml" />
+    <Content Include="Views\Carrinho\vendaRealizada.cshtml" />
+    <Content Include="Views\Home\Buscar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

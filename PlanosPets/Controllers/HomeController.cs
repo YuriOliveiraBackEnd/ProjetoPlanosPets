@@ -11,22 +11,18 @@ namespace PlanosPets.Controllers
 {
     public class HomeController : Controller
     {
-      
-        public ActionResult Listarproduto()
-        {
-            var metodoProduto = new ProdutoDAO();
-            var listaProduto = metodoProduto.Listar();
-            return View(listaProduto);
-        }
-        public ActionResult ListaRaca()
-        { 
-                var metodoRaca = new RacaDAO();
-                var listaRaca = metodoRaca.Listar();
-                return View(listaRaca);    
-        }
+
+        //public ActionResult ListaRaca()
+        //{ 
+        //        var metodoRaca = new RacaDAO();
+        //        var listaRaca = metodoRaca.Listar();
+        //        return View(listaRaca);    
+        //}
         public ActionResult Index()
         {
-            return View();
+            var metodoProduto = new ProdutoDAO();
+            var produto = metodoProduto.Listar();
+            return View(produto);
         }
         public ActionResult IndexFunc()
         {
@@ -36,10 +32,12 @@ namespace PlanosPets.Controllers
             }
             else
             {
-                return View();
+                var metodoProduto = new ProdutoDAO();
+                var listaProduto = metodoProduto.Listar();
+                return View(listaProduto);
             }
         }
-       
+
         public ActionResult Buscar(string pesquisar)
         {
             if (pesquisar == "Planos")
@@ -53,7 +51,8 @@ namespace PlanosPets.Controllers
                 {
                     return HttpNotFound();
                 }
-                return View(produto);
+                else
+                    return View(produto);
             }
 
         }

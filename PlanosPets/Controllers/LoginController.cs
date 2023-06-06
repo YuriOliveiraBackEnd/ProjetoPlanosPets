@@ -58,6 +58,7 @@ namespace PlanosPets.Controllers
             {
                 Session["ClienteLogado"] = vielmodel.Email.ToString();
                 Session["senhaLogado"] = vielmodel.senha.ToString();
+                
 
                 return RedirectToAction("Index", "Home");
             }
