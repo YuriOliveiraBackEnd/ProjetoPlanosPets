@@ -118,7 +118,7 @@ namespace PlanosPets.Controllers
             return View(fornecedor);
         }
 
-        public ActionResult Deletar(int id)
+        public ActionResult Excluir(int id)
         {
             if (Session["FuncLogado"] == null)
             {
@@ -127,7 +127,7 @@ namespace PlanosPets.Controllers
             else
             {
                 var metodoFornecedor = new FornecedorDAO();
-                var fornecedor = metodoFornecedor.ListarId(id);
+                var fornecedor  = metodoFornecedor.ListarId(id);
                 if (fornecedor == null)
                 {
                     return HttpNotFound();
@@ -135,19 +135,19 @@ namespace PlanosPets.Controllers
                 return View(fornecedor);
             }
         }
-
-        [HttpPost]
-        public ActionResult Deletar(ModelFornecedor fornecedor)
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
         {
+            var metodoFornecedor = new FornecedorDAO();
+            ModelFornecedor fornecedor = new ModelFornecedor();
+            fornecedor.id_forn = id;
+            metodoFornecedor.Excluir(fornecedor);
+            return RedirectToAction("Index");
 
-            if (ModelState.IsValid)
-            {
-                var metodoFornecedor = new FornecedorDAO();
-                metodoFornecedor.Deletefornecedor(fornecedor);
-                return RedirectToAction("Index");
-            }
-            return View(fornecedor);
         }
+
+
+
 
         public ActionResult Detalhes(int id)
         {

@@ -375,7 +375,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cliente\Cadastrar.cshtml" />
     <Content Include="Views\Shared\_LayoutFunc.cshtml" />
     <Content Include="Views\Home\IndexFunc.cshtml" />
@@ -389,7 +388,7 @@
     <Content Include="Views\Funcionario\Index.cshtml" />
     <Content Include="Views\Fornecedor\Atualizar.cshtml" />
     <Content Include="Views\Fornecedor\Cadastrar.cshtml" />
-    <Content Include="Views\Fornecedor\Deletar.cshtml" />
+    <Content Include="Views\Fornecedor\Excluir.cshtml" />
     <Content Include="Views\Fornecedor\Detalhes.cshtml" />
     <Content Include="Views\Fornecedor\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -399,8 +398,7 @@
     <Content Include="Views\Categoria\Excluir.cshtml" />
     <Content Include="Views\Categoria\Detalhes.cshtml" />
     <Content Include="Views\Produto\Cadastrar.cshtml" />
-    <Content Include="Views\Home\Listarproduto.cshtml" />
-    <Content Include="Views\Produto\ListaProduto.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Produto\Atualizar.cshtml" />
     <Content Include="Views\Produto\Detalhes.cshtml" />
     <Content Include="Views\Raca\Cadastrar.cshtml" />
@@ -409,7 +407,6 @@
     <Content Include="Views\Home\ListaRaca.cshtml" />
     <Content Include="Views\Raca\Index.cshtml" />
     <Content Include="Views\Funcionario\DetalhesEmail.cshtml" />
-    <Content Include="Views\Cliente\Detalhes.cshtml" />
     <Content Include="Views\Cliente\DetalhesCliPet.cshtml" />
     <Content Include="Views\Cliente\ListarPet.cshtml" />
     <Content Include="Views\Cliente\AtualizarPet.cshtml" />
@@ -417,6 +414,16 @@
     <Content Include="Views\Carrinho\confVenda.cshtml" />
     <Content Include="Views\Carrinho\vendaRealizada.cshtml" />
     <Content Include="Views\Home\Buscar.cshtml" />
+    <Content Include="Views\Carrinho\VendaHistorico.cshtml" />
+    <Content Include="Views\Produto\ListaProduto.cshtml" />
+    <Content Include="Views\Home\Detalhes.cshtml" />
+    <Content Include="Views\Pets\Index.cshtml" />
+    <Content Include="Views\Pets\Excluir.cshtml" />
+    <Content Include="Views\Raca\Excluir.cshtml" />
+    <Content Include="Views\Produto\Excluir.cshtml" />
+    <Content Include="Views\Funcionario\AtualizarPerfil.cshtml" />
+    <Content Include="Views\Cliente\Detalhes.cshtml" />
+    <Content Include="Views\Home\ListarPlanos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

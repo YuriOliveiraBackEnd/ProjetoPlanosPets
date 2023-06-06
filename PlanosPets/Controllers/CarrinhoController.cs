@@ -141,5 +141,18 @@ namespace PlanosPets.Controllers
         {
             return View();
         }
+        public ActionResult VendaHistorico()
+        {
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodovenda = new VendaDAO();
+                var listavenda= metodovenda.Listar();
+                return View(listavenda);
+            }
+        }
     }
 }

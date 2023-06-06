@@ -51,8 +51,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.id_func)
             </td>
-
+            
+            <td>
+                @Html.ActionLink("Deletar", "Excluir", new { id = item.id_raca })
+            </td>
         </tr>
-    }
 
-</table>
+    }
+    </table>

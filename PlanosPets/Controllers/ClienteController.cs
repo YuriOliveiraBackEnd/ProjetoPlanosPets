@@ -16,21 +16,21 @@ namespace PlanosPets.Controllers
         // GET: Cliente
 
         //metodo para carregar as raças cadastradas no banco
-        public void CarregaRaca(string varCachorro)
+        public void CarregaRacaCachorro( )
         {
-            List<SelectListItem> raca = new List<SelectListItem>();
+            List<SelectListItem> cachorro = new List<SelectListItem>();
 
             using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Raca", con);
+                MySqlCommand cmd = new MySqlCommand("select * from Raca where tipo_animal = 'cachorro'", con);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
 
 
                 while (rdr.Read())
                 {
-                    raca.Add(new SelectListItem
+                    cachorro.Add(new SelectListItem
                     {
                         Text = rdr[1].ToString(),
                         Value = rdr[0].ToString()
@@ -38,7 +38,31 @@ namespace PlanosPets.Controllers
                 }
                 con.Close();
             }
-            ViewBag.raca = new SelectList(raca, "Value", "Text");
+            ViewBag.cachorro = new SelectList(cachorro, "Value", "Text");
+        }
+        public void CarregaRacaGato()
+        {
+            List<SelectListItem> gato = new List<SelectListItem>();
+
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Raca where tipo_animal = 'gato'", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+
+
+                while (rdr.Read())
+                {
+                    gato.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+            }
+            ViewBag.gato = new SelectList(gato, "Value", "Text");
         }
 
 
@@ -152,19 +176,7 @@ namespace PlanosPets.Controllers
 
         }
 
-        //action que mostra o perfil com os dados do cliente logado
-        public ActionResult Detalhes()
-        {
-            string Login = Session["ClienteLogado"] as string;
-
-            var metodoCliente = new ClienteDAO();
-            var cliente = metodoCliente.ListarId(Login);
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
-        }
+       
 
         //action que mostra o perfil com os dados do cliente logado, junto com seus pets cadastrados
         public ActionResult DetalhesCliPet()
@@ -179,14 +191,24 @@ namespace PlanosPets.Controllers
             }
             return View(cliente);
         }
-
-
-
-
-
-
-
-
+        public ActionResult Detalhes(int id)
+        {
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoCliente = new ClienteDAO();
+                var cliente = metodoCliente.ListarporID(id);
+                if (cliente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cliente);
+              
+            }
+        }
 
         public ActionResult ListarPet()
         {
@@ -203,21 +225,37 @@ namespace PlanosPets.Controllers
         {
             var metodopet = new PetDAO();
             var pet = metodopet.ListarIdPet(Id);
+
             if(pet == null)
             {
                 return HttpNotFound();
             }
+            CarregaRacaCachorro();
+            CarregaRacaGato();
             return View(pet);
         }
         //action que aciona o método de atualizar
         [HttpPost]
         public ActionResult AtualizarPet(ModelCliente pets,int id)
         {
+            pets.id_gato = Request["gato"];
+            if (pets.id_gato == "")
+            {
+                pets.id_cachorro = Request["cachorro"];
+                if (pets.id_cachorro != "")
+                {
+                    pets.id_raca = int.Parse(pets.id_cachorro);
+                }
+            }
+            else
+            {
+                pets.id_raca = int.Parse(pets.id_gato);
+            }
             string Email = Session["ClienteLogado"] as string;
             string idCli = new PetDAO().SelectIdDoCli(Email);
             pets.id_cli = int.Parse(idCli);
             var metodoUsuario = new ClienteDAO();
-            pets.id_raca = int.Parse(Request["raca"]);
+            pets.id_raca = pets.id_raca;
             pets.id_pet = id;
             metodoUsuario.UpdatePet(pets);
             return RedirectToAction("ListarPet");

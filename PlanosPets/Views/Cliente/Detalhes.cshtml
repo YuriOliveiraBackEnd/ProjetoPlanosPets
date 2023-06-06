@@ -1,14 +1,14 @@
 ﻿@model bibliotecaModel.ModelCliente
 
 @{
-    ViewBag.Title = "Detalhes";
+    if (Session["Funclogado"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutFunc.cshtml";
+    }
+
 }
 
 <h2>Detalhes</h2>
-
-<p>
-    @Html.ActionLink("Cadastre seu pet", "Cadastrar", "Pets")
-</p>
 
 <div>
     <h4>ModelCliente</h4>
@@ -102,9 +102,10 @@
             @Html.DisplayFor(model => model.tel_cli)
         </dd>
 
+
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Atualizar seus dados", "Atualizar", new { email = Model.email_cli }) |
-    @Html.ActionLink("Voltar", "Index", "Home")
+    @Html.ActionLink("Back to List", "Index")
 </p>

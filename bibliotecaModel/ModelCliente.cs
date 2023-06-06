@@ -96,6 +96,8 @@ namespace bibliotecaModel
 
         [DisplayName("Código raça")]
         public int id_raca { get; set; }
-        public bool tipo_animal { get; set; }
+        public string id_gato { get; set; }
+        public string id_cachorro { get; set; }
+
     }
 }

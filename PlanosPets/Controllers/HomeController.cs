@@ -24,6 +24,12 @@ namespace PlanosPets.Controllers
             var produto = metodoProduto.Listar();
             return View(produto);
         }
+        public ActionResult ListarPlanos()
+        {
+            var metodoProduto = new ProdutoDAO();
+            var produto = metodoProduto.ListarPlanos();
+            return View(produto);
+        }
         public ActionResult IndexFunc()
         {
             if (Session["FuncLogado"] == null)
@@ -54,6 +60,18 @@ namespace PlanosPets.Controllers
                 else
                     return View(produto);
             }
+
+        }
+        public ActionResult Detalhes(int id)
+        {
+
+            var metodoProduto = new ProdutoDAO();
+            var produto = metodoProduto.ListarId(id);
+            if (produto == null)
+            {
+                return HttpNotFound();
+            }
+            return View(produto);
 
         }
     }

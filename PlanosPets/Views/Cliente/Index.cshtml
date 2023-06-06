@@ -12,9 +12,7 @@
 
 <h2>Listar usuario</h2>
 
-<p>
-    @Html.ActionLink("Adicionar novo Cliente", "Cadastrar")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -48,9 +46,7 @@
                 @Html.DisplayFor(modelItem => item.tel_cli)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Atualizar", new { id = item.id_cli })
                 @Html.ActionLink("Detalhes", "Detalhes", new { id = item.id_cli })
-                @Html.ActionLink("Excluir", "Excluir", new { id = item.id_cli })
             </td>
         </tr>
     }

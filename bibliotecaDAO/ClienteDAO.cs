@@ -150,7 +150,16 @@ namespace bibliotecaDAO
             }
         }
 
-
+        public ModelCliente ListarporID(int id)
+        {
+            using (db = new Banco())
+            {
+                var db = new Banco();
+                var strQuery = string.Format("select * from Cliente where id_cli = '{0}';", id);
+                var retorno = db.Retornar(strQuery);
+                return ListaDeClientes(retorno).FirstOrDefault();
+            }
+        }
         //seleciona todos os clientes cadastrados
         public List<ModelCliente> Listar()
         {

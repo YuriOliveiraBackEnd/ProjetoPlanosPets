@@ -35,5 +35,7 @@ namespace bibliotecaModel
         [DisplayName("Código do funcionário")]
         [Required(ErrorMessage = "insira seu código")]
         public int id_func { get; set; }
+
+        public string tipo_cate { get; set; }
     }
 }

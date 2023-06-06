@@ -64,6 +64,16 @@ namespace bibliotecaDAO
             }
 
         }
+        public List<ModelProduto> ListarPlanos()
+        {
+            using (db = new Banco())
+            {
+                var strQuery = "Select * from Produto where categoria = ?;";
+                var retorno = db.Retornar(strQuery);
+                return ListaDeProduto(retorno);
+            }
+
+        }
         public List<ModelProduto> ListaDeProduto(MySqlDataReader retorno)
         {
             var produtos = new List<ModelProduto>();
@@ -115,13 +125,13 @@ namespace bibliotecaDAO
             }
             return Produtoslist;
         }
-        public ModelProduto Pesquisa(string pesquisar)
+        public List<ModelProduto> Pesquisa(string pesquisar)
         {
             using (db = new Banco())
             {
-                var strQuery = string.Format("select * from Produto where nome_prod = '%{0}%';", pesquisar);
+                var strQuery = string.Format("select * from Produto where nome_prod like '%{0}%';", pesquisar);
                 var retorno = db.Retornar(strQuery);
-                return ListaDeProduto(retorno).FirstOrDefault();
+                return ListaDeProduto(retorno);
             }
         }
 
@@ -160,12 +170,12 @@ namespace bibliotecaDAO
             
         }
 
-        public void DeleteProduto(int id)
+        public void Excluir(ModelProduto produto)
         {
 
             using (db = new Banco())
             {
-                var strQuery = string.Format("Delete from Produto where id_prod = {0};", id);
+                var strQuery = string.Format("Delete from Produto where id_prod = {0};", produto.id_prod);
                 db.Executar(strQuery);
             }
 

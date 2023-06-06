@@ -34,46 +34,39 @@ namespace bibliotecaDAO
 
         
         }
-        //public List<ModelVenda> Listar()
-        //{
-        //    using (db = new Banco())
-        //    {
-        //        var strquery = ("select * from vendas;");
-        //        var retorno = db.Retornar(strquery);
-        //        return ListaDeVendas(retorno);
+        public List<ModelVenda> Listar()
+        {
+            using (db = new Banco())
+            {
+                var strquery = ("select * from vendas;");
+                var retorno = db.Retornar(strquery);
+                return ListaDeVendas(retorno);
 
-        //    }
-        //}
-        //public List<ModelVenda> ListaDeVendas(MySqlDataReader retorno)
-        //{
-        //    var vendas = new List<ModelVenda>();
-        //    while (retorno.Read())
-        //    {
-        //        var TempVendas = new ModelVenda()
-        //        {
-        //            id_venda = int.Parse(retorno["id_venda"].ToString()),
-        //            id_compra = int.Parse(retorno["id_compra"].ToString()),
-        //            id_prod = int.Parse(retorno["id_prod"].ToString()),
-        //            data_venda = DateTime.Parse(retorno["data_venda"].ToString()),
-        //            quant_venda = int.Parse(retorno["quant_venda"].ToString()),
+            }
+        }
+        public List<ModelVenda> ListaDeVendas(MySqlDataReader retorno)
+        {
+            var vendas = new List<ModelVenda>();
+            while (retorno.Read())
+            {
+                var TempVendas = new ModelVenda()
+                {
+                    id_venda = retorno["id_venda"].ToString(),
+                    pagamento= retorno["pagamento"].ToString(),
+                    id_cli = retorno["id_cli"].ToString(),
+                    data_venda = retorno["data_venda"].ToString(),
+                    horaVenda = retorno["horaVenda"].ToString(),
+                    ValorTotal = int.Parse(retorno["valorFinal"].ToString()),
 
-        //        };
+                };
 
-        //        vendas.Add(TempVendas);
-        //    }
-        //    retorno.Close();
-        //    return vendas;
-        //}
+                vendas.Add(TempVendas);
+            }
+            retorno.Close();
+            return vendas;
+        }
 
-        //public ModelVenda ListarId(int Id)
-        //{
-        //    using (db = new Banco())
-        //    {
-        //        var strQuery = string.Format("select * from Venda where id_venda = {0};", Id);
-        //        var retorno = db.Retornar(strQuery);
-        //        return ListaDeVendas(retorno).FirstOrDefault();
-        //    }
-        //}
+  
         MySqlDataReader dr;
         public void buscaIdVenda(ModelVenda vend)
         {
@@ -88,29 +81,7 @@ namespace bibliotecaDAO
         }
       
 
-        public void DeleteVenda(ModelVenda venda)
-        {
-            var strQuery = "";
-            strQuery += "delete from Venda ";
-            strQuery += string.Format("where id_venda = {0};", venda.id_venda);
 
-            using (db = new Banco())
-            {
-                db.Executar(strQuery);
-            }
-        }
-
-        //public void Save(ModelVenda venda)
-        //{
-        //    if (venda.id_venda > 0)
-        //    {
-        //        UpdateVenda(venda);
-        //    }
-        //    else
-        //    {
-        //        InsertVenda(venda);
-        //    }
-        //}
 
     }
 }

@@ -92,18 +92,14 @@ namespace bibliotecaDAO
             }
         }
 
-        public void Deletefornecedor(ModelFornecedor fornecedor)
+        public void Excluir(ModelFornecedor fornecedor)
         {
-            var strQuery = "";
-            strQuery += "delete from Fornecedor ";
-            strQuery += string.Format("where id_forn = {0};", fornecedor.id_forn);
-
             using (db = new Banco())
             {
+                var strQuery = string.Format("Delete from fornecedor where id_forn = {0}", fornecedor.id_forn);
                 db.Executar(strQuery);
             }
         }
-
         public void Save(ModelFornecedor fornecedor)
         {
             if (fornecedor.id_forn > 0)

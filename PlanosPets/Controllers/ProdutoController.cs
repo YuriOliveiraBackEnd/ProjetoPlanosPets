@@ -20,7 +20,7 @@ namespace PlanosPets.Controllers
 
 
 
-            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=12345678"))
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
             {
                 con.Open();
                 MySqlCommand cmd = new MySqlCommand("select * from Categorias", con);
@@ -135,31 +135,60 @@ namespace PlanosPets.Controllers
             if (ModelState.IsValid)
             {
                 var metodoproduto = new ProdutoDAO();
-                produto.id_categoria = int.Parse(Request["categoria"]);
+                produto.tipo_cate = Request["categoria"];
+                if (produto.tipo_cate != "")
+                {
+                    produto.id_categoria = int.Parse(produto.tipo_cate);
+                }
+                produto.id_categoria= produto.id_categoria;
                 metodoproduto.UpdateProduto(produto);
                 return RedirectToAction("ListaProduto");
             }
             return View(produto);
         }
-
-
         public ActionResult Excluir(int id)
         {
-            var metodoproduto = new ProdutoDAO();
-            metodoproduto.DeleteProduto(id);
-            return RedirectToAction("ListaProduto");
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoProduto = new ProdutoDAO();
+                var produto = metodoProduto.ListarId(id);
+                if (produto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(produto);
+            }
         }
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
+        {
+            var metodoProduto = new ProdutoDAO();
+            ModelProduto produto = new ModelProduto();
+            produto.id_prod = id;
+            metodoProduto.Excluir(produto);
+            return RedirectToAction("Index");
 
+        }
         public ActionResult Detalhes(int id)
         {
-
-            var metodoProduto = new ProdutoDAO();
-            var produto = metodoProduto.ListarId(id);
-            if (produto == null)
+            if (Session["FuncLogado"] == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("SemAcesso", "Login");
             }
-            return View(produto);
+            else
+            {
+                var metodoProduto = new ProdutoDAO();
+                var produto = metodoProduto.ListarId(id);
+                if (produto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(produto);
+            }
 
         }
     }

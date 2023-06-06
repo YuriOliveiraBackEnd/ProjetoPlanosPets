@@ -55,9 +55,16 @@
         </div>
         <br />
         <div class="col-md-12">
-            @Html.DropDownList("raca", "Escolha a raça"))
+            @Html.DropDownList("cachorro", "Raças cachorro")
         </div>
+
         <br />
+        <div class="col-md-12">
+            @Html.DropDownList("gato", "Raças gato")
+        </div>
+
+        <br />
+
 
 
         <br />
@@ -92,7 +99,12 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#raca').chosen();
+            $('#gato').chosen();
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#cachorro').chosen();
         });
     </script>
 }

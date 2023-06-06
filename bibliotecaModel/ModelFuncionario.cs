@@ -15,20 +15,20 @@ namespace bibliotecaModel
         [DisplayName("Id do funcionário")]
         public int id_func { get; set; }
 
-        [DisplayName("Nome do funcionário")]
+        [DisplayName("Nome ")]
         [MaxLength(80, ErrorMessage = "O nome deve conter no maximo 80 caracteres")]
         [Required(ErrorMessage = "insira seu nome")]
         public string nome_func { get; set; }
 
 
-        [DisplayName("Email do funcionário")]
+        [DisplayName("Email ")]
         [MaxLength(50, ErrorMessage = "o Email deve conter no maximo 50 caracteres")]
         [RegularExpression(@"^[a-zA-Z]+(([\'\,\.\-][a-zA-Z ])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})$", ErrorMessage = "Digite um Email válido")]
         [Required(ErrorMessage = "insira seu email")]
         public string email_func { get; set; }
 
 
-        [DisplayName("CPF do funcionário")]
+        [DisplayName("CPF")]
         [MaxLength(11, ErrorMessage = "O CPF deve conter 11 caracteres")]
         [MinLength(11, ErrorMessage = "O CPF deve conter 11 caracters")]
         [RegularExpression(@"^[0-9]+${11,11}", ErrorMessage = "Somente números")]
@@ -50,17 +50,17 @@ namespace bibliotecaModel
         public string num_func { get; set; }
 
 
-        [DisplayName("Logradouro do funcionário")]
+        [DisplayName("Logradouro")]
         [Required(ErrorMessage = "insira seu logradouro")]
         public string logradouro_func { get; set; }
 
-        [DisplayName("Data de nascimento do funcionário")]
+        [DisplayName("Data de nascimento")]
         [Required(ErrorMessage = "insira sua data de nascimento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime nasc_func { get; set; }
 
         [DataType(DataType.Password)]
-        [DisplayName("Senha do funcionário")]
+        [DisplayName("Senha")]
         [Required(ErrorMessage = "insira sua senha")]
         public string senha_func { get; set; }
 
@@ -70,7 +70,7 @@ namespace bibliotecaModel
         [Compare(nameof(senha_func), ErrorMessage = "Senhas digitadas não conferem.")]
         public string confirmar_senha { get; set; }
 
-        [DisplayName("Telefone do funcionário")]
+        [DisplayName("Telefone ")]
         [MaxLength(11, ErrorMessage = "O telefone deve conter 11 caracteres")]
         [MinLength(11, ErrorMessage = "O telefone deve conter 11 caracteres")]
         [RegularExpression(@"^[0-9]+${11,11}", ErrorMessage = "Somente números")]

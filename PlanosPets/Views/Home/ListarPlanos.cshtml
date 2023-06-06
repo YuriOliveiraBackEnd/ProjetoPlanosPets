@@ -1,4 +1,11 @@
-﻿@model IEnumerable<bibliotecaModel.ModelProduto>
+﻿
+@{
+    ViewBag.Title = "ListarPlanos";
+}
+
+<h2>ListarPlanos</h2>
+
+@model IEnumerable<bibliotecaModel.ModelProduto>
 
 
 @{
@@ -12,7 +19,7 @@
                 {
                     <div class="col-lg-3 col-md-6 mb-4" style="margin:2% 4%">
                         <div class="card h-100">
-                            <a href="/Produto/Detalhes/@item.id_prod">
+                            <a href="/Home/Detalhes/@item.id_prod">
                                 @if (@item.ft_prod != null)
                                 {<img class="card-img-right flex-auto d-none d-md-block" data-src=" " alt="Thumbnail [300x300]" style="width: 300px; height: 300px;" src="@item.ft_prod" data-holder-rendered="true">}
                                 else
@@ -26,7 +33,7 @@
                             </div>
                             <div class="card-footer space-between-flex" style="width:90%">
                                 <div>
-                                    @Html.ActionLink("Descubra mais", "Detalhes", "Produto", new { id = item.id_prod }, new { @class = "btn btn-default btn-acao" })
+                                    @Html.ActionLink("Descubra mais", "Detalhes", "Home", new { id = item.id_prod }, new { @class = "btn btn-default btn-acao" })
                                 </div>
                                 <div>
                                     @using (Html.BeginForm("AdicionarCarrinho", "Carrinho", FormMethod.Post))

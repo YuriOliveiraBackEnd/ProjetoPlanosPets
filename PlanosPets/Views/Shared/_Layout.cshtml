@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             <div class="navbar-header">
-                @Html.ActionLink("Nome do aplicativo", "Index", "", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar a navegação" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,8 +22,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Planos", "Planos", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Planos", "ListarPlanos", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @if (Session["FuncLogado"] != null)
                     {
                         <li>@Html.ActionLink("Área Adiministrativa", "IndexFunc", "Home", new { area = "" }, new { @class = "nav-link" })</li>
@@ -51,9 +50,9 @@
                 <!--criando o actionLink do login na barra de menu -->
                 <ul class="nav navbar-nav navbar-right">
 
-                    @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "login" })
+                    @Html.ActionLink("Logout", "Login", "Login/Logout", new { area = "" }, new { @class = "nav-link" })
 
-                    @Html.ActionLink(@Session["ClienteLogado"].ToString(), "DetalhesCliPet", "Cliente")
+                    @Html.ActionLink(@Session["ClienteLogado"].ToString(), "DetalhesCliPet", "Cliente", new { area = "" }, new { @class = "nav-link" })
                 </ul>
 
             }
@@ -64,11 +63,14 @@
                     <!--caso o login não esteja correto ele volta para novamente para o login -->
 
                     <li>  @Html.ActionLink("Login", "Login", "Login", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>  @Html.ActionLink("Cadastre-se", "Cadastrar", "Cliente", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             }
 
+            <ul class="nav navbar-nav navbar-right">
+                <!--caso o login não esteja correto ele volta para novamente para o login -->
 
+                <li>  @Html.ActionLink("Carrinho", "Carrinho", "Carrinho", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
         </div>
     </nav>
     <div class="container body-content">

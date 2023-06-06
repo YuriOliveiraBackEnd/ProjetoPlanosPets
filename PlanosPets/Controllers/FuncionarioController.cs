@@ -125,6 +125,37 @@ namespace PlanosPets.Controllers
 
 
         [HttpPost]
+        public ActionResult AtualizarPerfil(ModelFuncionario funcionario)
+        {
+            if (!ModelState.IsValid)
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                metodoFuncionario.UpdateFuncionario(funcionario);
+                return RedirectToAction("Index");
+            }
+            return View(funcionario);
+        }
+        public ActionResult AtualizarPerfil(int id)
+        {
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoFuncionario = new FuncionarioDAO();
+                var funcionario = metodoFuncionario.ListarId(id);
+                if (funcionario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionario);
+            }
+        }
+
+
+
+        [HttpPost]
         public ActionResult Atualizar(ModelFuncionario funcionario)
         {
             if (!ModelState.IsValid)
@@ -135,7 +166,6 @@ namespace PlanosPets.Controllers
             }
             return View(funcionario);
         }
-
 
 
         public ActionResult Excluir(int id)

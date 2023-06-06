@@ -21,7 +21,7 @@ namespace bibliotecaDAO
         public void InsertPet(ModelCliente pets)
         {
             conexao.Open();
-            comand.CommandText = "call InsertPet(@nome_pet, @ft_pet, @nasc_pet, @RGA, @id_cli, @id_raca);";
+            comand.CommandText = "call InsertPet(@nome_pet, @ft_pet, @nasc_pet, @RGA, @id_raca,@id_cli );";
             comand.Parameters.Add("@nome_pet", MySqlDbType.VarChar).Value = pets.nome_pet;
             comand.Parameters.Add("@ft_pet", MySqlDbType.VarChar).Value = pets.ft_pet;
             comand.Parameters.Add("@nasc_pet", MySqlDbType.VarChar).Value = pets.nasc_pet;
@@ -125,7 +125,7 @@ namespace bibliotecaDAO
             using (db = new Banco())
             {
                 var db = new Banco();
-                var strQuery = string.Format("select * from Pets where id_cli = {0};", Id);
+                var strQuery = string.Format("select * from Pets where id_pet = {0};", Id);
                 var retorno = db.Retornar(strQuery);
                 return ListaPets(retorno).FirstOrDefault();
             }

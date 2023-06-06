@@ -16,21 +16,21 @@ namespace PlanosPets.Controllers
     public class PetsController : Controller
     {
         // GET: Pets
-        public void CarregaRaca()
+        public void CarregaRacaCachorro()
         {
-            List<SelectListItem> raca = new List<SelectListItem>();
+            List<SelectListItem> cachorro = new List<SelectListItem>();
 
-            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=12345678"))
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from Raca", con);
+                MySqlCommand cmd = new MySqlCommand("select * from Raca where tipo_animal = 'cachorro'", con);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
 
 
                 while (rdr.Read())
                 {
-                    raca.Add(new SelectListItem
+                    cachorro.Add(new SelectListItem
                     {
                         Text = rdr[1].ToString(),
                         Value = rdr[0].ToString()
@@ -38,9 +38,74 @@ namespace PlanosPets.Controllers
                 }
                 con.Close();
             }
-            ViewBag.raca = new SelectList(raca, "Value", "Text");
+            ViewBag.cachorro = new SelectList(cachorro, "Value", "Text");
+        }
+        public void CarregaRacaGato()
+        {
+            List<SelectListItem> gato = new List<SelectListItem>();
+
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;DataBase=db4luck;User=root;pwd=metranca789456123"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from Raca where tipo_animal = 'gato'", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+
+
+                while (rdr.Read())
+                {
+                    gato.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+            }
+            ViewBag.gato = new SelectList(gato, "Value", "Text");
         }
 
+        public ActionResult Index()
+        {
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoPet = new PetDAO();
+                var listaPet = metodoPet.Listar();
+                return View(listaPet);
+            }
+
+        }
+        public ActionResult Excluir(int id)
+        {
+            if (Session["FuncLogado"] == null)
+            {
+                return RedirectToAction("SemAcesso", "Login");
+            }
+            else
+            {
+                var metodoPet = new PetDAO();
+                var pet = metodoPet.ListarIdPet(id);
+                if (pet == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pet);
+            }
+        }
+        [HttpPost, ActionName("Excluir")]
+        public ActionResult ExcluirConfirma(int id)
+        {
+            var metodoPet = new PetDAO();
+            ModelCliente pet = new ModelCliente();
+            pet.id_pet = id;
+            metodoPet.DeletePet(id);
+            return RedirectToAction("Index");
+
+        }
         public ActionResult ListarPet()
         {
             string Login = Session["ClienteLogado"] as string;
@@ -59,7 +124,8 @@ namespace PlanosPets.Controllers
             }
             else
             {
-                CarregaRaca();
+                CarregaRacaCachorro();
+                CarregaRacaGato();
                 return View();
             }
         }
@@ -83,18 +149,29 @@ namespace PlanosPets.Controllers
 
             pets.ft_pet = file2;
 
-
-
-            ModelCliente novopet = new ModelCliente()
+            pets.id_gato = Request["gato"];
+            if (pets.id_gato == "")
             {
-                nome_pet = pets.nome_pet,
-                nasc_pet = pets.nasc_pet,
-                RGA = pets.RGA,
-                id_cli = pets.id_cli,
-                ft_pet = pets.ft_pet,
-                id_raca = int.Parse(Request["raca"])
-            };
-            novapetsDAO.InsertPet(novopet);
+                pets.id_cachorro = Request["cachorro"];
+                pets.id_raca = int.Parse(pets.id_cachorro);
+            }
+            else
+            {
+                pets.id_raca = int.Parse(pets.id_gato);
+            }
+                ModelCliente novopet = new ModelCliente()
+                {
+                    nome_pet = pets.nome_pet,
+                    nasc_pet = pets.nasc_pet,
+                    RGA = pets.RGA,
+                    id_cli = pets.id_cli,
+                    ft_pet = pets.ft_pet,
+                    id_raca = pets.id_raca,
+                };
+                novapetsDAO.InsertPet(novopet);
+            
+
+          
 
             ViewBag.msg = "Cadastro realizado";
 
@@ -107,7 +184,8 @@ namespace PlanosPets.Controllers
         {
             string Login = Session["ClienteLogado"] as string;
 
-            CarregaRaca();
+            CarregaRacaGato();
+            CarregaRacaCachorro();
             var metodopet = new PetDAO();
             var pet = metodopet.ListarPetCli(Login);
             if (pet == null)

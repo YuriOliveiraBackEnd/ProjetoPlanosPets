@@ -60,7 +60,7 @@
                     @Html.ActionLink("Atualizar dados do pet", "AtualizarPet", new { id = item.id_pet })
                     @Html.ActionLink("Excluir", "ExcluirPet", new { id = item.id_pet }, new { onclick = "return confirm('Deseja excluir?');" })
                 }
-
+                @Html.ActionLink("Voltar", "DetalhesCliPet")
             </div>
 
         </div>

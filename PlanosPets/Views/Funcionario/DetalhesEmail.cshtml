@@ -78,21 +78,6 @@
             @Html.DisplayFor(model => model.nasc_func)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.senha_func)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.senha_func)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.confirmar_senha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.confirmar_senha)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.tel_func)
@@ -105,6 +90,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "AtualizarPerfil", new { id = Model.id_func}) 
 </p>

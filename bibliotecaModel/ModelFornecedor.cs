@@ -10,6 +10,7 @@ namespace bibliotecaModel
 {
     public class ModelFornecedor
     {
+        [DisplayName("Código Fornecedor")]
         public int id_forn { get; set; }
         [DisplayName("Nome")]
         [Required(ErrorMessage = "Insira o nome do forncedor")]
